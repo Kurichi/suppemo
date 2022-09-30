@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from '@rneui/base';
 import { Feather } from '@expo/vector-icons';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,18 +13,24 @@ export default function Footer() {
   return (
     <View style={styles.footerContainer}>
       <View style={styles.footerContent}>
-        <Button onPress={console.log('test')} title="Home">
+        <Button type="clear">
           <Feather name="grid" size={42} color="black" />
         </Button>
       </View>
       <View style={styles.footerContent}>
-        <Feather name="message-square" size={42} color="black" />
+        <Button type="clear">
+          <Feather name="message-square" size={42} color="black" />
+        </Button>
       </View>
       <View style={styles.footerContent}>
-        <Feather name="smile" size={42} color="black" />
+        <Button type="clear">
+          <Feather name="smile" size={42} color="black" />
+        </Button>
       </View>
       <View style={styles.footerContent}>
-        <Feather name="image" size={42} color="black" />
+        <Button type="clear">
+          <Feather name="image" size={42} color="black" />
+        </Button>
       </View>
     </View >
   );
