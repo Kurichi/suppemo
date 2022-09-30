@@ -5,12 +5,13 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import WorkSpace from '../components/WorkSpace';
 
-export default function  Home() {
+export default function Home(props: any) {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
-      <Header />
+      {/* <Header /> */}
       {/* WorkSpaceName */}
-      <View style={styles.workSpaceName}> 
+      <View style={styles.workSpaceName}>
         <Text style={styles.arrow}>&lt;&lt;&lt;&lt;</Text>
         <Text style={styles.WorkSpaceTitle}>会話１</Text>
         <Text style={styles.arrow}>&gt;&gt;&gt;&gt;</Text>
@@ -26,7 +27,7 @@ export default function  Home() {
         <CardsFolder />
       </View>
 
-      <Footer />
+      <Footer navigation={navigation} />
     </View>
   )
 }

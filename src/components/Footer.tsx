@@ -2,23 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '@rneui/base';
 import { Feather } from '@expo/vector-icons';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import Home from '../screens/Home';
 
 const stack = createStackNavigator();
 
-export default function Footer() {
+export default function Footer(props: any) {
+  const { navigation } = props;
   return (
     <View style={styles.footerContainer}>
       <View style={styles.footerContent}>
-        <Button type="clear">
+        <Button type="clear"
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
           <Feather name="grid" size={42} color="black" />
         </Button>
       </View>
       <View style={styles.footerContent}>
-        <Button type="clear">
+        <Button type="clear"
+          onPress={() => navigation.navigate('Chat')}>
           <Feather name="message-square" size={42} color="black" />
         </Button>
       </View>
