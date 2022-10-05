@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CardsFolder from '../components/CardsFolder';
 import Footer from '../components/Footer';
-import Header from '../components/Header';
 import WorkSpace from '../components/WorkSpace';
 
 export default function Home(props: any) {
