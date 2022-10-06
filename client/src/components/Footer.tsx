@@ -28,7 +28,8 @@ export default function Footer(props: any) {
         </Button>
       </View>
       <View style={styles.footerContent}>
-        <Button type="clear">
+        <Button type="clear"
+          onPress={navigation.navigate('Camera')}>
           <Feather name="image" size={42} color="black" />
         </Button>
       </View>
