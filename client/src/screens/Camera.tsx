@@ -9,20 +9,20 @@ import Footer from '../components/Footer';
 export default function Camera() {
   return (
     <View style={styles.container}>
-      <View>
-        <Text>しゃしんをとろう！</Text>
+      <View style={styles.headlineContainer}>
+        <Text style={styles.headline}>自分だけのカードをつくろう！</Text>
       </View>
-      <View>
-        <Image style={{ width: 120, height: 120, }} source={require('./../../assets/corn.jpg')} />
+      <View style={styles.photoContainer}>
+        <Image style={styles.photo} source={require('./../../assets/corn.jpg')} />
       </View>
-      <View>
+      <View style={styles.cameraButtonContainer}>
         <View style={styles.cameraButton}>
-          <Feather name="camera" size={100} color="black" />
+          <Feather name="camera" size={60} color="black" />
         </View>
       </View>
       <View style={styles.titleContainer}>
-        <Text style={{ justifyContent: 'center', alignItems: 'center', }}>タイトル</Text>
-        <TextInput style={styles.titleSpace} />
+        <Text style={styles.titleText}>タイトル</Text>
+        <TextInput style={styles.titleSpace} maxLength={20} />
       </View>
     </View >
 
@@ -35,31 +35,61 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF8B0',
   },
-  image: {
-    width: 120,
-    height: 120,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   cameraButton: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#C83A3A',
+    width: 100,
+    height: 100,
+    borderRadius: 60,
   },
-  cameraButtonImage: {
-    width: 140,
-    height: 150,
+  cameraButtonContainer: {
+    paddingTop: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
   titleSpace: {
     backgroundColor: '#FFFFFF',
+    width: 350,
+    height: 50,
+    fontSize: 20,
+    borderRadius: 5,
+  },
+  titleContainer: {
+    paddingTop: 25,
+    //backgroundColor: 'red',
+    height: 200,
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  photoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  titleContainer: {
-    backgroundColor: 'red',
-    height: 300,
+  photo: {
+    width: 250,
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 5,
+    borderColor: '#82292D',
+  },
+  headlineContainer: {
+
+    height: 120,
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  headline: {
+    fontSize: 20,
+
+  },
+
+
 
 })
