@@ -21,14 +21,13 @@ export default function Camera(props: any) {
           <Feather name="camera" size={100} color="black" />
         </View>
       </View>
-      <View >
+      <View style={styles.titleContainer}>
         <Text style={{ justifyContent: 'center', alignItems: 'center', }}>タイトル</Text>
         <TextInput style={styles.titleSpace} />
       </View>
 
       <Footer navigation={navigation} />
     </View >
-
 
 
   );
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  titleBox: {
+  titleContainer: {
     backgroundColor: 'red',
     height: 300,
     alignItems: 'center',
