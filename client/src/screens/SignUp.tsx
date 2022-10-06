@@ -2,16 +2,17 @@ import { Button } from '@rneui/base';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function Login(props: any) {
+export default function SignUp(props: any) {
   const { navigation } = props;
   return (
     <View style={styles.container} >
       <View>
-        <TextInput value="ID" style={styles.loginForm} />
-        <TextInput value="Password" style={styles.loginForm} />
+        <TextInput value='なまえ' style={styles.signupForm} />
+        <TextInput value="ID" style={styles.signupForm} />
+        <TextInput value="パスワード" style={styles.signupForm} />
       </View>
-      <View style={styles.loginContainer}>
-        <View style={styles.loginButton}>
+      <View style={styles.signupContainer}>
+        <View style={styles.signupButton}>
           <Button type="clear"
             onPress={() => {
               navigation.reset({
@@ -19,17 +20,17 @@ export default function Login(props: any) {
                 routes: [{ name: 'Home' }],
               });
             }}>
-            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.signupButtonText}>SignUp</Text>
           </Button>
         </View>
         <Button type="clear"
           onPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'SignUp' }]
+              routes: [{ name: 'Login' }]
             });
           }}>
-          <Text style={styles.signupMessage}>サインアップはこちら</Text>
+          <Text style={styles.signupMessage}>ログインはこちら</Text>
         </Button>
       </View>
     </View>
@@ -43,14 +44,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loginForm: {
+  signupForm: {
     fontSize: 32,
     color: '#C1C1C1',
     width: 316,
     paddingTop: 60,
     borderBottomWidth: 1,
   },
-  loginButton: {
+  signupButton: {
     width: 212,
     height: 67,
     backgroundColor: '#FCD12C',
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loginButtonText: {
+  signupButtonText: {
     fontSize: 32,
     color: 'rgba(0,0,0,0.4)',
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     color: '#787777',
     paddingTop: 16,
   },
-  loginContainer: {
+  signupContainer: {
     alignItems: 'center',
     paddingTop: 60,
   },

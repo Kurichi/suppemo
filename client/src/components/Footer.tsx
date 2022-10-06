@@ -4,8 +4,6 @@ import { Button } from '@rneui/base';
 import { Feather } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const stack = createStackNavigator();
-
 export default function Footer(props: any) {
   const { navigation } = props;
   return (
