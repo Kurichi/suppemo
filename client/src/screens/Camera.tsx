@@ -6,8 +6,7 @@ import Footer from '../components/Footer';
 
 
 
-export default function Camera(props: any) {
-  const { navigation } = props;
+export default function Camera() {
   return (
     <View style={styles.container}>
       <View>
@@ -25,8 +24,6 @@ export default function Camera(props: any) {
         <Text style={{ justifyContent: 'center', alignItems: 'center', }}>タイトル</Text>
         <TextInput style={styles.titleSpace} />
       </View>
-
-      <Footer navigation={navigation} />
     </View >
 
 

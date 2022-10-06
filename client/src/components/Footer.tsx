@@ -2,17 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '@rneui/base';
 import { Feather } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
 
 export default function Footer(props: any) {
   const { navigation } = props;
+
+  function navigate(route: string) {
+    console.log(navigation.getState());
+    // if (route == navigation.getState().slice(-1)[0]) {
+    //   return;
+    // }
+    // console.log('test');
+    navigation.navigate(route);
+    // navigation.replace(route)
+  }
   return (
     <View style={styles.footerContainer}>
       <View style={styles.footerContent}>
         <Button type="clear"
-          onPress={() => {
-            navigation.navigate('Home');
-          }}>
+          onPress={() => navigate('Home')}>
           <Feather name="grid" size={42} color="black" />
         </Button>
       </View>
@@ -28,7 +35,8 @@ export default function Footer(props: any) {
         </Button>
       </View>
       <View style={styles.footerContent}>
-        <Button type="clear">
+        <Button type="clear"
+          onPress={() => navigate('Camera')}>
           <Feather name="image" size={42} color="black" />
         </Button>
       </View>

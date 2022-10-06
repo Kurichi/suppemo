@@ -17,7 +17,7 @@ export default function SignUp(props: any) {
             onPress={() => {
               navigation.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Tab' }],
               });
             }}>
             <Text style={styles.signupButtonText}>SignUp</Text>

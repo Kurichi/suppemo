@@ -1,14 +1,35 @@
 import { Button } from '@rneui/base';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
 
 export default function Login(props: any) {
   const { navigation } = props;
+  const [ID, setID] = useState<string>();
+  const [password, setPassword] = useState<string>();
+
   return (
     <View style={styles.container} >
       <View>
-        <TextInput value="ID" style={styles.loginForm} />
-        <TextInput value="パスワード" style={styles.loginForm} />
+        <TextInput
+          placeholder='ID'
+          value={ID}
+          style={styles.loginForm}
+          autoComplete="username"
+          onChangeText={(value) => {
+            setID(value);
+          }}
+        />
+        <TextInput
+          placeholder='パスワード'
+          value={password}
+          style={styles.loginForm}
+          autoComplete="password"
+          textContentType='password'
+          onChangeText={(value) => {
+            setPassword(value);
+          }}
+        />
       </View>
       <View style={styles.loginContainer}>
         <View style={styles.loginButton}>
@@ -16,7 +37,7 @@ export default function Login(props: any) {
             onPress={() => {
               navigation.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Tab' }],
               });
             }}>
             <Text style={styles.loginButtonText}>ログイン</Text>
