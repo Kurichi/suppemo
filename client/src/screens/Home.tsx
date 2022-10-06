@@ -4,8 +4,7 @@ import CardsFolder from '../components/CardsFolder';
 import Footer from '../components/Footer';
 import WorkSpace from '../components/WorkSpace';
 
-export default function Home(props: any) {
-  const { navigation } = props;
+export default function Home() {
   return (
     <View style={styles.container}>
       {/* <Header /> */}
@@ -25,8 +24,6 @@ export default function Home(props: any) {
       <View style={styles.cardsFolder}>
         <CardsFolder />
       </View>
-
-      <Footer navigation={navigation} />
     </View>
   )
 }

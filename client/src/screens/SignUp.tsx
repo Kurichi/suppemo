@@ -9,7 +9,7 @@ export default function SignUp(props: any) {
       <View>
         <TextInput value='なまえ' style={styles.signupForm} />
         <TextInput value="ID" style={styles.signupForm} />
-        <TextInput value="ぱすわーど" style={styles.signupForm} />
+        <TextInput value="パスワード" style={styles.signupForm} />
       </View>
       <View style={styles.signupContainer}>
         <View style={styles.signupButton}>
@@ -17,7 +17,7 @@ export default function SignUp(props: any) {
             onPress={() => {
               navigation.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Tab' }],
               });
             }}>
             <Text style={styles.signupButtonText}>SignUp</Text>
