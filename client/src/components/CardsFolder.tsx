@@ -1,44 +1,79 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { Button } from '@rneui/base';
+import { FlatList } from 'react-native-gesture-handler';
+import { NumericAnimation } from 'react-native-reanimated/lib/types/lib/reanimated2/commonTypes';
 
 interface folder_type {
   id: number,
   feather_name: string,
   background_color: string,
+  cards_id: number[],
 }
 
 export default function CardsFolder() {
   const folders: folder_type[] = [
-    { id: 0, feather_name: "star-o", background_color: '#8BD8A5' },
-    { id: 1, feather_name: "smile-o", background_color: '#8BD805' }
+    { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_id: [1, 1, 2, 1, 2, 1] },
+    { id: 1, feather_name: "star-o", background_color: '#1BD2A5', cards_id: [0, 1, 2] },
+    { id: 2, feather_name: "star-o", background_color: '#2BD3A5', cards_id: [0, 1, 2] },
+    { id: 3, feather_name: "star-o", background_color: '#3BD4A5', cards_id: [0, 1, 2] },
+    { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_id: [0, 1, 2] },
+    { id: 5, feather_name: "star-o", background_color: '#4BD6A5', cards_id: [0, 1, 2] },
+    { id: 6, feather_name: "star-o", background_color: '#5BD7A5', cards_id: [0, 1, 2] },
+    { id: 7, feather_name: "star-o", background_color: '#7BD8A5', cards_id: [0, 1, 2] }
   ];
+
+  const [selectedfolder, setSelectCard] = useState<number>(0);
 
   return (
     <View style={styles.cardsFolder}>
-      <ScrollView
-        horizontal={true}
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={styles.scrollBar}>
-        {folders.map(data => {
-          return (
-            <View style={[styles.tag, { backgroundColor: data.background_color }]}>
-              <Icon name={data.feather_name} size={48} color='white' />
-            </View>
-          );
-        })}
-      </ScrollView>
-
-      <View style={styles.folderFlame}>
+      <View>
+        <ScrollView
+          horizontal={true}
+          style={styles.scrollBar}
+        >
+          {folders.map(data => {
+            return (
+              <View style={[styles.tag, { backgroundColor: data.background_color }]}>
+                <Button
+                  type='clear'
+                  icon={{
+                    name: data.feather_name,
+                    type: 'font-awesome',
+                    size: 36,
+                    color: 'white',
+                  }}
+                  onPress={() => {
+                    setSelectCard(data.id);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+      <View style={[styles.folderFlame, { backgroundColor: folders[selectedfolder].background_color }]}>
         <View style={styles.folder}>
-          <Text>Helllllllllllllllllllllo!</Text>
-          <Text>Wooooooooooooooooooold</Text>
+          <FlatList
+            data={folders[selectedfolder].cards_id}
+            renderItem={({ item }) =>
+              <View>
+                <Image
+                  source={{
+                    //uri: '../../assets/cards/' + item.toString() + '.jpg'
+                    uri: '../../assets/cards/1.jpg'
+                  }}
+                />
+                <Text>{'../../assets/cards/' + item.toString() + '.jpg'}</Text>
+                <Text>{item.toString()}</Text>
+              </View>
+            }
+            numColumns={4}
+          />
         </View>
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -60,7 +95,6 @@ const styles = StyleSheet.create({
   folderFlame: {
     backgroundColor: '#8BD8A5',
     flex: 1,
-    borderTopRightRadius: 15,
     paddingVertical: 10,
     alignItems: 'center',
   },
@@ -72,7 +106,6 @@ const styles = StyleSheet.create({
     width: '94%',
   },
   scrollBar: {
-    backgroundColor: 'blue',
-
+    backgroundColor: '#FFF8B0',
   }
 });
