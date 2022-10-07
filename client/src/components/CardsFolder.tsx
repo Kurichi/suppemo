@@ -14,7 +14,7 @@ interface folder_type {
 
 export default function CardsFolder() {
   const folders: folder_type[] = [
-    { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_id: [1, 1, 2, 1, 2, 1] },
+    { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_id: [1, 2, 3, 4, 5] },
     { id: 1, feather_name: "star-o", background_color: '#1BD2A5', cards_id: [0, 1, 2] },
     { id: 2, feather_name: "star-o", background_color: '#2BD3A5', cards_id: [0, 1, 2] },
     { id: 3, feather_name: "star-o", background_color: '#3BD4A5', cards_id: [0, 1, 2] },
@@ -23,6 +23,7 @@ export default function CardsFolder() {
     { id: 6, feather_name: "star-o", background_color: '#5BD7A5', cards_id: [0, 1, 2] },
     { id: 7, feather_name: "star-o", background_color: '#7BD8A5', cards_id: [0, 1, 2] }
   ];
+  var card_pah: string = '';
 
   const [selectedfolder, setSelectCard] = useState<number>(0);
 
@@ -59,17 +60,14 @@ export default function CardsFolder() {
             data={folders[selectedfolder].cards_id}
             renderItem={({ item }) =>
               <View>
+                { }
                 <Image
-                  source={{
-                    //uri: '../../assets/cards/' + item.toString() + '.jpg'
-                    uri: '../../assets/cards/1.jpg'
-                  }}
+                  source={require('../../assets/cards/1.png')}
+                  style={styles.card}
                 />
-                <Text>{'../../assets/cards/' + item.toString() + '.jpg'}</Text>
-                <Text>{item.toString()}</Text>
               </View>
             }
-            numColumns={4}
+            numColumns={3}
           />
         </View>
       </View>
@@ -104,8 +102,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 8,
     width: '94%',
+    alignItems: 'center',
   },
   scrollBar: {
     backgroundColor: '#FFF8B0',
+  },
+  card: {
+    height: 100,
+    width: 100,
+    marginHorizontal: 8,
+    marginVertical: 8,
   }
 });
