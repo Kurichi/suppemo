@@ -6,17 +6,15 @@ import { Feather } from '@expo/vector-icons';
 
 import Home from './../screens/Home';
 import Login from './../screens/Login';
-import Camera from './../screens/Camera';
 import SignUp from './../screens/SignUp';
-import CreateCard from '../screens/CreateCard';
 import ChatSelector from '../screens/ChatSelector';
 import Chat from '../screens/Chat';
+import CameraStack from './CameraStack';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function TabNavigator(props: any) {
-  const { navigation } = props;
   const iconSize = 42;
   return (
     <Tab.Navigator
@@ -56,13 +54,13 @@ function TabNavigator(props: any) {
         component={CreateCard}
         options={{
           tabBarIcon: (({color}) => (
-            <Icon 
+            <Icon
           ))
         }} */}
       {/* Camera */}
       <Tab.Screen
         name="Camera"
-        component={CreateCard}
+        component={CameraStack}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="image" size={iconSize} color={color} />
