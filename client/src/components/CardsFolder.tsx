@@ -15,13 +15,10 @@ interface folder_type {
 export default function CardsFolder() {
   const folders: folder_type[] = [
     { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_id: [1, 2, 3, 4, 5] },
-    { id: 1, feather_name: "star-o", background_color: '#1BD2A5', cards_id: [0, 1, 2] },
-    { id: 2, feather_name: "star-o", background_color: '#2BD3A5', cards_id: [0, 1, 2] },
-    { id: 3, feather_name: "star-o", background_color: '#3BD4A5', cards_id: [0, 1, 2] },
+    { id: 1, feather_name: "music", background_color: '#abad25', cards_id: [0, 1, 2] },
+    { id: 2, feather_name: "github", background_color: '#2b4ad3', cards_id: [0, 1, 2] },
+    { id: 3, feather_name: "rocket", background_color: '#d43ba3', cards_id: [0, 1, 2] },
     { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_id: [0, 1, 2] },
-    { id: 5, feather_name: "star-o", background_color: '#4BD6A5', cards_id: [0, 1, 2] },
-    { id: 6, feather_name: "star-o", background_color: '#5BD7A5', cards_id: [0, 1, 2] },
-    { id: 7, feather_name: "star-o", background_color: '#7BD8A5', cards_id: [0, 1, 2] }
   ];
   var card_pah: string = '';
 
@@ -60,9 +57,8 @@ export default function CardsFolder() {
             data={folders[selectedfolder].cards_id}
             renderItem={({ item }) =>
               <View>
-                { }
                 <Image
-                  source={require('../../assets/cards/1.png')}
+                  source={require('../../assets/cards/1.jpg')}
                   style={styles.card}
                 />
               </View>

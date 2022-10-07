@@ -1,4 +1,4 @@
-import { Icon } from "@rneui/base";
+import { Button, Icon } from "@rneui/base";
 import React from "react";
 import { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -9,18 +9,9 @@ interface User {
   userName: string,
 }
 
-function ChatCard(props: { user: User }) {
-  const { user } = props;
-  return (
-    <View style={styles.chatCard}>
-      {/* <Image source={require('./../../assets/corn.jpg')} /> */}
-      <Icon name="home" size={42} />
-      <Text>{user.userName}</Text>
-    </View>
-  )
-}
-
-export default function ChatSelector() {
+export default function ChatSelector(props: any) {
+  const { navigation, route } = props;
+  const { stack } = route.params;
   // const [users, setUsers] = useState<User[]>();
   const users: User[] = [
     { id: 0, icon: 'tmp', userName: 'なまえ0' },
@@ -34,14 +25,31 @@ export default function ChatSelector() {
   return (
     <View>
       <ScrollView>
-        {
-          users?.map(user => {
-            return (
-              <ChatCard user={user} />
-              // <Text>{user.userName}</Text>
-            )
-          })
-        }
+        {users?.map(user => {
+          return (
+            <View style={styles.chatCard}>
+              <Button
+                title={user.userName}
+                titleStyle={{
+                  color: 'black',
+                  textAlign: 'left',
+                  flex: 10,
+                }}
+                type='clear'
+                icon={{
+                  name: 'home',
+                  type: 'font-awesome',
+                  color: 'black',
+                  iconStyle: { marginHorizontal: 10, flex: 1 }
+                }}
+                onPress={() => {
+                  console.log(user.userName)
+                  stack.navigate('Chat');
+                }}
+              />
+            </View>
+          )
+        })}
       </ScrollView>
     </View>
   );
@@ -49,9 +57,10 @@ export default function ChatSelector() {
 
 const styles = StyleSheet.create({
   chatCard: {
-    height: 50,
-    flexDirection: 'row',
-    // alignContent: 'center',
+    flex: 1,
+    // paddingHorizontal: 5,
+    borderColor: 'black',
+    borderWidth: 0.5,
   }
 
 });

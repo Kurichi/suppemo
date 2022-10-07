@@ -44,7 +44,7 @@ export default function Login(props: any) {
           </Button>
         </View>
         <Button type="clear"
-          onPress={() => {
+          onLongPress={() => {
             navigation.reset({
               index: 0,
               routes: [{ name: 'SignUp' }]

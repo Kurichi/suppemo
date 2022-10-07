@@ -5,19 +5,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
 import Home from './../screens/Home';
-import Chat from './../screens/Chat';
 import Login from './../screens/Login';
 import Camera from './../screens/Camera';
 import SignUp from './../screens/SignUp';
 import CreateCard from '../screens/CreateCard';
 import ChatSelector from '../screens/ChatSelector';
+import Chat from '../screens/Chat';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function TabNavigator() {
+function TabNavigator(props: any) {
+  const { navigation } = props;
   const iconSize = 42;
-
   return (
     <Tab.Navigator
       initialRouteName='Home'
@@ -41,8 +41,9 @@ function TabNavigator() {
       />
       {/* Chat */}
       <Tab.Screen
-        name="Chat"
+        name="ChatSelector"
         component={ChatSelector}
+        initialParams={{ stack: 1 }}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="message-square" size={iconSize} color={color} />
@@ -99,6 +100,10 @@ export default function Navigator() {
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
           }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
         />
         <Stack.Screen name="Tab" component={TabNavigator} />
       </Stack.Navigator>
