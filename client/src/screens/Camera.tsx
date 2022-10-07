@@ -10,7 +10,7 @@ export default function Camera() {
   return (
     <View style={styles.container}>
       <View style={styles.headlineContainer}>
-        <Text style={styles.headline}>自分だけのカードをつくろう！</Text>
+        <Text style={styles.headline}>カードの写真をとろう！</Text>
       </View>
       <View style={styles.photoContainer}>
         <Image style={styles.photo} source={require('./../../assets/corn.jpg')} />

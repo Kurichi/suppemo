@@ -8,6 +8,7 @@ import Home from './../screens/Home';
 import Login from './../screens/Login';
 import Camera from './../screens/Camera';
 import SignUp from './../screens/SignUp';
+import CreateCard from '../screens/CreateCard';
 import ChatSelector from '../screens/ChatSelector';
 import Chat from '../screens/Chat';
 
@@ -49,10 +50,19 @@ function TabNavigator(props: any) {
           ))
         }}
       />
+      {/* CreateDeck
+      <Tab.Screen
+        name="Deck"
+        component={CreateCard}
+        options={{
+          tabBarIcon: (({color}) => (
+            <Icon 
+          ))
+        }} */}
       {/* Camera */}
       <Tab.Screen
         name="Camera"
-        component={Camera}
+        component={CreateCard}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="image" size={iconSize} color={color} />
