@@ -5,7 +5,6 @@ import { Feather } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
 interface folder_type {
   id: number,
   feather_name: string,
@@ -17,7 +16,6 @@ export default function CardsFolder() {
     { id: 0, feather_name: "star-o", background_color: '#8BD8A5' },
     { id: 1, feather_name: "smile-o", background_color: '#8BD805' }
   ];
-
 
   return (
     <View style={styles.cardsFolder}>
@@ -33,6 +31,7 @@ export default function CardsFolder() {
           );
         })}
       </ScrollView>
+
       <View style={styles.folderFlame}>
         <View style={styles.folder}>
           <Text>Helllllllllllllllllllllo!</Text>
