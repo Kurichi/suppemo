@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+// import { Feather } from '@expo/vector-icons';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button } from '@rneui/base';
 
 
 interface folder_type {
@@ -14,32 +14,55 @@ interface folder_type {
 
 export default function CardsFolder() {
   const folders: folder_type[] = [
-    { id: 0, feather_name: "star-o", background_color: '#8BD8A5' },
-    { id: 1, feather_name: "smile-o", background_color: '#8BD805' }
+    { id: 0, feather_name: "star-o", background_color: '#8BD1A5' },
+    { id: 1, feather_name: "star-o", background_color: '#1BD2A5' },
+    { id: 2, feather_name: "star-o", background_color: '#2BD3A5' },
+    { id: 3, feather_name: "star-o", background_color: '#3BD4A5' },
+    { id: 4, feather_name: "smile-o", background_color: '#8B5805' },
+    { id: 5, feather_name: "star-o", background_color: '#4BD6A5' },
+    { id: 6, feather_name: "star-o", background_color: '#5BD7A5' },
+    { id: 7, feather_name: "star-o", background_color: '#7BD8A5' }
   ];
 
+  const [selectCard, setSelectCard] = useState<number>(0);
 
   return (
     <View style={styles.cardsFolder}>
-      <ScrollView
-        horizontal={true}
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={styles.scrollBar}>
-        {folders.map(data => {
-          return (
-            <View style={[styles.tag, { backgroundColor: data.background_color }]}>
-              <Icon name={data.feather_name} size={48} color='white' />
-            </View>
-          );
-        })}
-      </ScrollView>
-      <View style={styles.folderFlame}>
+      <View>
+        <ScrollView
+          horizontal={true}
+          contentContainerStyle={{ flexGrow: 1 }}
+          style={styles.scrollBar}
+        >
+          {folders.map(data => {
+            return (
+              <View style={[styles.tag, { backgroundColor: data.background_color }]}>
+                <Button
+                  type='clear'
+                  icon={{
+                    name: data.feather_name,
+                    type: 'font-awesome',
+                    size: 36,
+                    color: 'white',
+                  }}
+                  onPress={() => {
+                    setSelectCard(data.id);
+                  }}
+                />
+                {/* <Icon name={data.feather_name} size={48} color='white' style={{ backgroundColor: 'red' }} /> */}
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+      <View style={[styles.folderFlame, { backgroundColor: folders[selectCard].background_color }]}>
         <View style={styles.folder}>
           <Text>Helllllllllllllllllllllo!</Text>
           <Text>Wooooooooooooooooooold</Text>
+          <Text>{selectCard}</Text>
         </View>
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -73,7 +96,6 @@ const styles = StyleSheet.create({
     width: '94%',
   },
   scrollBar: {
-    backgroundColor: 'blue',
-
+    backgroundColor: '#FFF8B0',
   }
 });

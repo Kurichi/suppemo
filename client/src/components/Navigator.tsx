@@ -9,6 +9,7 @@ import Chat from './../screens/Chat';
 import Login from './../screens/Login';
 import Camera from './../screens/Camera';
 import SignUp from './../screens/SignUp';
+import ChatSelector from '../screens/ChatSelector';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +41,7 @@ function TabNavigator() {
       {/* Chat */}
       <Tab.Screen
         name="Chat"
-        component={Chat}
+        component={ChatSelector}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="message-square" size={iconSize} color={color} />
