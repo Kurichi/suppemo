@@ -28,22 +28,22 @@ services:
       - 8080:8080
     volumes:
       - ./golang/app:/go/src/app:cached
-    command: /bin/ash -c "while sleep 1000; do :; done"
+    # command: /bin/ash -c "while sleep 1000; do :; done"
     restart: always
 
-  php:
-    container_name: php-app
-    build:
-      context: ./php
-      dockerfile: ./Dockerfile
-    volumes:
-      - ./htdocs:/var/www/html
-    networks:
-      - suppemo
-    restart: always
+  # php:
+  #   container_name: php-app
+  #   build:
+  #     context: ./php
+  #     dockerfile: ./Dockerfile
+  #   volumes:
+  #     - ./htdocs:/var/www/html
+  #   networks:
+  #     - suppemo
+  #   restart: always
 
   db:
-    container_name: mysql-db
+    container_name: mysql
     build:
       context: ./mysql
       dockerfile: ./Dockerfile.dev
@@ -59,6 +59,7 @@ services:
     restart: always
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     environment:
       PMA_HOST: db

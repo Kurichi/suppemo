@@ -1,9 +1,0 @@
-CREATE TABLE students(
-    id INT PRIMARY KEY NOT NULL, 
-    first_name VARCHAR(16) NOT NULL, 
-    family_name VARCHAR(16) NOT NULL, 
-    num INT NOT NULL, 
-    class CHAR(1) NOT NULL, 
-    grade INT NOT NULL, 
-    sex varchar(8) NOT NULL
-);

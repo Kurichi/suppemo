@@ -1,31 +1,34 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"routes/login"
+
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 )
 
 func main() {
+	fmt.Println(login.HelloWorld())
+
 	db := sqlConnect()
-	db.AutoMigrate()
 	defer db.Close()
 
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "HelloWorld")
+		return c.String(http.StatusOK, "HelloWorld!!!!")
 	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-func sqlConnect() (database *gorm.DB) {
+func sqlConnect() (database *sql.DB) {
 	err := godotenv.Load(fmt.Sprintf("%s.env", os.Getenv("GO_ENV")))
 	if err != nil {
 		log.Fatal(err)
@@ -40,7 +43,7 @@ func sqlConnect() (database *gorm.DB) {
 	CONNECT := USER + ":" + PASS + "@tcp(" + HOST + ":" + PORT + ")/" + DBNAME + "?charset=utf8mb4&parseTime=true&loc=Asia%2FTokyo"
 
 	count := 0
-	db, err := gorm.Open(DBMS, CONNECT)
+	db, err := sql.Open(DBMS, CONNECT)
 	if err != nil {
 		for {
 			if err == nil {
@@ -50,12 +53,12 @@ func sqlConnect() (database *gorm.DB) {
 			fmt.Print(".")
 			time.Sleep(time.Second)
 			count++
-			if count > 180 {
+			if count > 60 {
 				fmt.Println("")
 				fmt.Println("DB接続失敗")
 				panic(err)
 			}
-			db, err = gorm.Open(DBMS, CONNECT)
+			db, err = sql.Open(DBMS, CONNECT)
 		}
 	}
 
