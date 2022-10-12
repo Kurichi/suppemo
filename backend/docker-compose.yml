@@ -14,8 +14,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/logs:/var/log/nginx
-      - ./nginx/letsencrypt:/etc/letsencrypt
-    # restart: always
+    restart: always
 
   app:
     container_name: go-app
@@ -28,19 +27,7 @@ services:
       - 8080:8080
     volumes:
       - ./golang/app:/go/src/app:cached
-    # command: /bin/ash -c "while sleep 1000; do :; done"
     restart: always
-
-  # php:
-  #   container_name: php-app
-  #   build:
-  #     context: ./php
-  #     dockerfile: ./Dockerfile
-  #   volumes:
-  #     - ./htdocs:/var/www/html
-  #   networks:
-  #     - suppemo
-  #   restart: always
 
   db:
     container_name: mysql
@@ -68,12 +55,6 @@ services:
     ports:
       - 8000:80
     restart: always
-  # certbot:
-  #     container_name: Lets_Encrypt
-  #     image: certbot/certbot:v1.7.0
-  #     volumes:
-  #         - ./nginx/letsencrypt:/etc/letsencrypt
-  #         - /var/www/html:/var/www/html
 
 networks:
   suppemo:
