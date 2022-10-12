@@ -9,7 +9,10 @@ const Stack = createStackNavigator();
 export default function CameraStack() {
   return (
     <Stack.Navigator
-      initialRouteName="CameraTop">
+      initialRouteName="CameraTop"
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name='CameraTop' component={CreateCard} />
       <Stack.Screen name='TakePhoto' component={Camera} />
     </Stack.Navigator>

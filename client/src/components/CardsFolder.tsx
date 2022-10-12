@@ -31,9 +31,9 @@ export default function CardsFolder() {
           horizontal={true}
           style={styles.scrollBar}
         >
-          {folders.map(data => {
+          {folders.map((data, index) => {
             return (
-              <View style={[styles.tag, { backgroundColor: data.background_color }]}>
+              <View style={[styles.tag, { backgroundColor: data.background_color }]} key={index}>
                 <Button
                   type='clear'
                   icon={{
