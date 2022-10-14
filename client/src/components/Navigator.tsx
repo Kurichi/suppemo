@@ -15,6 +15,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function TabNavigator(props: any) {
+  const { navigation } = props;
   const iconSize = 42;
   return (
     <Tab.Navigator
@@ -41,7 +42,7 @@ function TabNavigator(props: any) {
       <Tab.Screen
         name="ChatSelector"
         component={ChatSelector}
-        initialParams={{ stack: 1 }}
+        initialParams={{ stack: navigation }}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="message-square" size={iconSize} color={color} />

@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 20,
     borderRadius: 5,
+    textAlign: 'center',
   },
   titleContainer: {
     paddingTop: 25,

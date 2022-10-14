@@ -25,9 +25,9 @@ export default function ChatSelector(props: any) {
   return (
     <View>
       <ScrollView>
-        {users?.map(user => {
+        {users?.map((user, index) => {
           return (
-            <View style={styles.chatCard}>
+            <View style={styles.chatCard} key={index}>
               <Button
                 title={user.userName}
                 titleStyle={{
