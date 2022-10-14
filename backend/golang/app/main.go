@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+	"suppemo-api/mydb"
 	"suppemo-api/routes"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -9,7 +11,10 @@ import (
 )
 
 func main() {
-	// Echo instance
+	if err := mydb.SqlConnect(); err != nil {
+		log.Fatal(err)
+		return
+	}
 	e := echo.New()
 
 	// Middleware

@@ -1,0 +1,80 @@
+{
+    "time": "2022-10-14T04:14:53.58296334Z",
+    "level": "-",
+    "prefix": "echo",
+    "file": "recover.go",
+    "line": "73",
+    "message": "[PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 19 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1()
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/middleware/recover.go:71 +0x109
+panic({0x6ee9c0, 0x9887c0})
+    /usr/local/go/src/runtime/panic.go:884 +0x212
+database/sql.(*Stmt).ExecContext(0x0, {0x7c6810, 0xc0000a0000}, {0xc0000c56a8, 0x4, 0x4})
+    /usr/local/go/src/database/sql/sql.go:2619 +0x82
+database/sql.(*Stmt).Exec(...)
+    /usr/local/go/src/database/sql/sql.go:2651
+suppemo-api/model.CreateUser(0xc0000e2b40)
+    /go/src/app/model/user.go:35 +0x35b
+suppemo-api/routes.SignUp({0x7c9790, 0xc000126fc0})
+    /go/src/app/routes/signup.go:33 +0x2c5
+github.com/labstack/echo.(*Echo).Add.func1({0x7c9790, 0xc000126fc0})
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/echo.go:490 +0x6d
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1({0x7c9790, 0xc000126fc0})
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/middleware/logger.go:118 +0xe2
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1({0x7c9790, 0xc000126fc0})
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/middleware/recover.go:78 +0x124
+github.com/labstack/echo.(*Echo).ServeHTTP(0xc000130000, {0x7c6418?, 0xc000150000}, 0xc000114100)
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/echo.go:593 +0x309
+net/http.serverHandler.ServeHTTP({0x7c5650?}, {0x7c6418, 0xc000150000}, 0xc000114100)
+    /usr/local/go/src/net/http/server.go:2947 +0x30c
+net/http.(*conn).serve(0xc0000abae0, {0x7c6880, 0xc00009de00})
+    /usr/local/go/src/net/http/server.go:1991 +0x607
+created by net/http.(*Server).Serve
+    /usr/local/go/src/net/http/server.go:3102 +0x4db
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0x7f24ebb7afb8, 0x72)
+    /usr/local/go/src/runtime/netpoll.go:305 +0x89
+internal/poll.(*pollDesc).wait(0xc0000fe700?, 0x0?, 0x0)
+    /usr/local/go/src/internal/poll/fd_poll_runtime.go:84 +0x32
+internal/poll.(*pollDesc).waitRead(...)
+    /usr/local/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Accept(0xc0000fe700)
+    /usr/local/go/src/internal/poll/fd_unix.go:614 +0x234
+net.(*netFD).accept(0xc0000fe700)
+    /usr/local/go/src/net/fd_unix.go:172 +0x35
+net.(*TCPListener).accept(0xc0000a8600)
+    /usr/local/go/src/net/tcpsock_posix.go:142 +0x28
+net.(*TCPListener).AcceptTCP(0xc0000a8600)
+    /usr/local/go/src/net/tcpsock.go:275 +0x3d
+github.com/labstack/echo.tcpKeepAliveListener.Accept({0x4417e0?})
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/echo.go:767 +0x19
+net/http.(*Server).Serve(0xc00011e1e0, {0x7c61d8, 0xc0000b4088})
+    /usr/local/go/src/net/http/server.go:3070 +0x385
+github.com/labstack/echo.(*Echo).StartServer(0xc000130000, 0xc00011e1e0)
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/echo.go:663 +0x532
+github.com/labstack/echo.(*Echo).Start(...)
+    /go/pkg/mod/github.com/labstack/echo@v3.3.10+incompatible/echo.go:604
+main.main()
+    /go/src/app/main.go:24 +0x2fa
+
+goroutine 20 [IO wait]:
+internal/poll.runtime_pollWait(0x7f24ebb7aec8, 0x72)
+    /usr/local/go/src/runtime/netpoll.go:305 +0x89
+internal/poll.(*pollDesc).wait(0xc0000fe780?, 0xc00009df01?, 0x0)
+    /usr/local/go/src/internal/poll/fd_poll_runtime.go:84 +0x32
+internal/poll.(*pollDesc).waitRead(...)
+    /usr/local/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0xc0000fe780, {0xc00009df01, 0x1, 0x1})
+    /usr/local/go/src/internal/poll/fd_unix.go:167 +0x25a
+net.(*netFD).Read(0xc0000fe780, {0xc00009df01?, 0x0?, 0x0?})
+    /usr/local/go/src/net/fd_posix.go:55 +0x29
+net.(*conn).Read(0xc0000b4098, {0xc00009df01?, 0x0?, 0x0?})
+    /usr/local/go/src/net/net.go:183 +0x45
+net/http.(*connReader).backgroundRead(0xc00009def0)
+    /usr/local/go/src/net/http/server.go:678 +0x3f
+created by net/http.(*connReader).startBackgroundRead
+    /usr/local/go/src/net/http/server.go:674 +0xca
+
+"
+}

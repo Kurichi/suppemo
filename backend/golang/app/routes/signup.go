@@ -13,12 +13,22 @@ func SignUp(c echo.Context) error {
 		return err
 	}
 
-	if user.ID == "" || user.Name == "" || user.Email || user.Password == "" {
+	if user.Name == "" || user.Email == "" || user.Password == "" {
 		return &echo.HTTPError{
-			Code:	http.StatusBadRequest,
+			Code:    http.StatusBadRequest,
 			Message: "invalid form",
 		}
 	}
 
-	if u := model.FindUser
+	if u := model.FindUser(user); u.Email == user.Email {
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: "invalid ID or Email",
+		}
+	}
+
+	model.CreateUser(user)
+	user.Password = ""
+
+	return c.JSON(http.StatusCreated, user)
 }
