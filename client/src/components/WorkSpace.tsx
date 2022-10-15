@@ -19,7 +19,7 @@ export default function WorkSpace() {
           renderItem={({ item }) =>
             <View>
               <Image
-                source={require('../../assets/cards/' + item + '.jpg')}
+                source={require('../../assets/cards/3.jpg')}
                 style={styles.cardStyle}
               />
             </View>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import Footer from '../components/Footer';
-import { Camera, CameraCapturedPicture, CameraPictureOptions, CameraProps, CameraType } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
+import { Button } from '@rneui/base';
 
 
 
@@ -40,20 +40,30 @@ export default function TakePicture() {
     <View style={styles.container}>
       {!picture ? (
         <Camera
-          style={{ flex: 1 }}
+          style={{ flex: 1, alignItems: 'center' }}
           type={type}
           ref={(ref: Camera) => {
             setCamera(ref);
           }}>
           <View style={styles.cameraButton}>
-            <Feather name="camera" size={60} color="black" />
+            <Button
+              type='clear'
+              onPress={() => takePicture()}
+              icon={{
+                name: 'camera',
+                type: 'font-awesome',
+                size: 60,
+                color: 'black',
+              }}
+            />
           </View>
         </Camera>
       ) : (
         <View style={{ flex: 1 }}>
 
-          <View style={styles.headlineContainer}>
-            <Text style={styles.headline}>カードの写真をとろう！</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>カードのなまえ</Text>
+            <TextInput style={styles.titleSpace} maxLength={20} />
           </View>
 
           <View style={styles.photoContainer}>
@@ -63,22 +73,23 @@ export default function TakePicture() {
             />
           </View>
 
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>タイトル</Text>
-            <TextInput style={styles.titleSpace} maxLength={20} />
-          </View>
-
           <View style={styles.buttonContainer}>
-            <Button
-              onPress={() => setPicture('')}
-              title='とりなおす'
-              color='black'
-            />
-            <Button
-              onPress={() => apply()}
-              title='つくる'
-              color='black'
-            />
+            <View style={[styles.button, { backgroundColor: '#D4D4D4' }]}>
+              <Button
+                type='clear'
+                onPress={() => setPicture('')}
+                title='とりなおす'
+                titleStyle={styles.buttonTitle}
+              />
+            </View>
+            <View style={[styles.button, { backgroundColor: '#FC6A2C' }]}>
+              <Button
+                type='clear'
+                onPress={() => apply()}
+                title='つくる'
+                titleStyle={styles.buttonTitle}
+              />
+            </View>
           </View>
         </View>
       )}
@@ -92,12 +103,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF8B0',
   },
   cameraButton: {
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#C83A3A',
+    justifyContent: 'center',
     width: 100,
     height: 100,
     borderRadius: 60,
+    bottom: 10,
+    backgroundColor: 'red',
+    position: 'absolute',
   },
   titleSpace: {
     backgroundColor: '#FFFFFF',
@@ -108,9 +121,8 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     paddingTop: 25,
-    //backgroundColor: 'red',
-    height: 200,
     alignItems: 'center',
+    marginBottom: 16,
   },
   titleText: {
     fontSize: 20,
@@ -131,8 +143,7 @@ const styles = StyleSheet.create({
     borderColor: '#82292D',
   },
   headlineContainer: {
-
-    height: 120,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -141,9 +152,24 @@ const styles = StyleSheet.create({
 
   },
   buttonContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 16,
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#333",
+    shadowOffset: { width: 4, height: 4 },
     marginHorizontal: 8,
+    width: 160,
+    height: 48,
+    borderRadius: 12,
+  },
+  buttonTitle: {
+    color: 'black',
+    fontSize: 24,
   }
 
 
