@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
+import { FileSystem } from '../components/FileSystem';
 
 
 
@@ -10,7 +11,8 @@ export default function TakePicture() {
   const type = CameraType.back;
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState<Camera>();
-  const [picture, setPicture] = useState<string>();
+  const [picture, setPicture] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
 
   if (!permission) {
     return <View />;
@@ -32,8 +34,11 @@ export default function TakePicture() {
     }
   }
 
-  const apply = () => {
+  const apply = async () => {
     //カード作成の処理
+    const fs = new FileSystem();
+    const new_picture_path = await fs.savePicture(picture, title);
+    setPicture(new_picture_path);
   }
 
   return (
@@ -63,7 +68,12 @@ export default function TakePicture() {
 
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>カードのなまえ</Text>
-            <TextInput style={styles.titleSpace} maxLength={20} />
+            <TextInput
+              onChangeText={setTitle}
+              value={title}
+              style={styles.titleSpace}
+              maxLength={20}
+            />
           </View>
 
           <View style={styles.photoContainer}>
