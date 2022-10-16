@@ -1,10 +1,10 @@
-package routes
+package handler
 
 import (
 	"net/http"
 	"suppemo-api/model"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func SignUp(c echo.Context) error {

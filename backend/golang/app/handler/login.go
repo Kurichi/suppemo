@@ -1,10 +1,13 @@
-package routes
+package handler
 
 import (
+	"fmt"
+	"log"
 	"net/http"
+	"suppemo-api/middleware"
 	"suppemo-api/model"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -13,6 +16,8 @@ func Login(c echo.Context) error {
 	if err := c.Bind(user); err != nil {
 		return err
 	}
+
+	fmt.Println(user)
 
 	if user.Email == "" || user.Password == "" {
 		return &echo.HTTPError{
@@ -29,7 +34,13 @@ func Login(c echo.Context) error {
 		}
 	}
 
-	u.Password = ""
+	authTokenString, err := middleware.CreateNewToken(user.ID)
+	if err != nil {
+		log.Fatal(err)
+		return echo.ErrUnauthorized
+	}
 
-	return c.JSON(http.StatusCreated, u)
+	return c.JSON(http.StatusOK, map[string]string{
+		"token": authTokenString,
+	})
 }

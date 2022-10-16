@@ -12,10 +12,10 @@ import (
 )
 
 type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID       string `json:"id" form:"id" query:"id"`
+	Name     string `json:"name" form:"name" query:"name"`
+	Email    string `json:"email" form:"email" query:"email"`
+	Password string `json:"password" form:"password" query:"password"`
 }
 
 var ulidGenerator io.Reader = ulid.Monotonic(rand.New(rand.NewSource(time.Now().UnixNano())), 0)
