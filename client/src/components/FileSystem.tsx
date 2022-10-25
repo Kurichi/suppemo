@@ -1,7 +1,14 @@
 import * as FS from 'expo-file-system';
 
-export class FileSystem {
+type card_detail = {
+  id: number,
+  name: string,
+  uri: string,
+  createdDate: string,
+  exsists: boolean,
+}
 
+export class FileSystem {
   readonly savePath: string = `${FS.documentDirectory}cards`;
   readonly dataPath: string = `${FS.documentDirectory}card_data.json`;
 
@@ -37,35 +44,44 @@ export class FileSystem {
     */
 
 
-    if (!(await FS.getInfoAsync(this.dataPath)).exists) {
-      FS.writeAsStringAsync(this.dataPath, '[]');
-      console.log('create data file');
-    }
-
-    const card_data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
+    const card_data = await this.getCardData();
     card_data.push({
       id: card_data.length,
       name: title,
       uri: imagePath,
       createdDate: new Date().toISOString(),
-      exsits: true,
+      exsists: true,
     });
     FS.writeAsStringAsync(this.dataPath, JSON.stringify(card_data));
 
+    console.log(`save image from ${picture} to ${imagePath}`)
     return imagePath;
   }
 
+  async getCardData(id: number): Promise<Array<card_detail>>;
+  async getCardData(): Promise<Array<card_detail>>;
 
-  async getCardData(id: any): Promise<Array<any>> {
+  async getCardData(id?: number): Promise<Array<card_detail>> {
+    if (!(await FS.getInfoAsync(this.dataPath)).exists) {
+      FS.writeAsStringAsync(this.dataPath, '[]');
+      console.log('create data file');
+    }
+
     const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
 
-    if (typeof id == undefined) return data;
-    else if (typeof id == 'number') return data.id[id];
+    if (typeof id == 'number') return data.id[id];
+    else return data;
 
     return [];
   }
 
-  async modifyCardData(reject_data: object): Promise<boolean> {
+  async modifyCardData(id: number, reject_data: Array<object>): Promise<boolean> {
+    const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
+
+    reject_data.forEach((value, key) => {
+      console.log(`value: ${value}`)
+      console.log(`key: ${key}`)
+    });
     return true;
   }
 
