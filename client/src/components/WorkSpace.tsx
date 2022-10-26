@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 // ];
 
 export const IMAGES = [
-  1:
+  ,
 ]
 
 export default function WorkSpace() {
@@ -19,9 +19,11 @@ export default function WorkSpace() {
         <FlatList
           data={items}
           renderItem={({ item }) =>
-            <View>
+            <View style={styles.cardStyle}>
               <Image
+
                 source={require('../../assets/cards/' + item + '.jpg')}
+
                 style={styles.cardStyle}
               />
             </View>
@@ -29,7 +31,7 @@ export default function WorkSpace() {
           numColumns={4}
         />
       </View>
-      <Image source={require('./../../assets/corn.jpg')} />
+      {/* <Image source={require('./../../assets/corn.jpg')} /> */}
       <Text>aaaaaaaaaaaa</Text>
     </View>
   );

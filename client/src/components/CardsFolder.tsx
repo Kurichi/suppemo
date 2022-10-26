@@ -20,7 +20,7 @@ export default function CardsFolder() {
     { id: 3, feather_name: "rocket", background_color: '#d43ba3', cards_id: [0, 1, 2] },
     { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_id: [0, 1, 2] },
   ];
-  var card_pah: string = '';
+
 
   const [selectedfolder, setSelectCard] = useState<number>(0);
 
@@ -31,9 +31,9 @@ export default function CardsFolder() {
           horizontal={true}
           style={styles.scrollBar}
         >
-          {folders.map(data => {
+          {folders.map((data, index) => {
             return (
-              <View style={[styles.tag, { backgroundColor: data.background_color }]}>
+              <View style={[styles.tag, { backgroundColor: data.background_color }]} key={index}>
                 <Button
                   type='clear'
                   icon={{

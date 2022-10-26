@@ -4,7 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Button } from '@rneui/base';
 
-export default function CreateCard() {
+export default function CreateCard(props: any) {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
       <View style={styles.headlineContainer}>
@@ -29,6 +30,9 @@ export default function CreateCard() {
               iconStyle: styles.iconSpace,
             }}
             radius={20}
+            onPress={() => {
+              navigation.navigate('TakePhoto');
+            }}
           />
         </View>
         <View style={styles.button}>
@@ -49,6 +53,29 @@ export default function CreateCard() {
               iconStyle: styles.iconSpace,
             }}
             radius={20}
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title='つくったしゃしんをみる'
+            buttonStyle={{
+              height: 100,
+              borderColor: 'black',
+            }}
+            titleStyle={styles.buttonText}
+            raised
+            type='outline'
+            icon={{
+              name: 'camera',
+              size: 40,
+              color: 'black',
+              type: 'feather',
+              iconStyle: styles.iconSpace,
+            }}
+            radius={20}
+            onPress={() => {
+              navigation.navigate('EditCard');
+            }}
           />
         </View>
 
