@@ -181,7 +181,4 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
   }
-
-
-
 })

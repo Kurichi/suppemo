@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/base';
 
 import { Feather } from '@expo/vector-icons';
@@ -12,7 +12,7 @@ export default function CreatedCardList() {
     name: string,
     uri: string,
     createdDate: string,
-    exsists: boolean,
+    exists: boolean,
   }
 
   const [data, setData] = useState<Array<card_detail>>();
@@ -49,13 +49,16 @@ export default function CreatedCardList() {
       <FlatList
         data={data}
         renderItem={({ item }) =>
-          <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+
+          >
             <Image
               source={{ uri: item.uri }}
               style={styles.photo}
             />
             <Text>{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         }
         numColumns={4}
       />
