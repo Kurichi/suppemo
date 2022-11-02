@@ -7,7 +7,9 @@ import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 //   },
 // ];
 
-
+export const IMAGES = [
+  ,
+]
 
 export default function WorkSpace() {
   const items: string[] = ["1", "2", "3"];
@@ -19,7 +21,9 @@ export default function WorkSpace() {
           renderItem={({ item }) =>
             <View style={styles.cardStyle}>
               <Image
-                source={{ uri: `../../assets/cards/${item}.jpg` }}
+
+                source={require('../../assets/cards/' + item + '.jpg')}
+
                 style={styles.cardStyle}
               />
             </View>
