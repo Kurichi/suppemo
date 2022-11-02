@@ -1,4 +1,5 @@
 import * as FS from 'expo-file-system';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 
 /*
@@ -45,8 +46,18 @@ export class FileSystem {
       await FS.makeDirectoryAsync(this.savePath);
       console.log('create data directory');
     }
+
+    const resized_image = await manipulateAsync(
+      picture,
+      [],
+      { compress: 0.4, format: SaveFormat.JPEG }
+    )
+
+    // console.log('image info')
+    // this._showImageInfo(picture)
+    // this._showImageInfo(resized_image.uri)
     await FS.copyAsync({
-      from: picture,
+      from: resized_image.uri,
       to: imagePath,
     });
 
@@ -61,8 +72,7 @@ export class FileSystem {
     });
     FS.writeAsStringAsync(this.dataPath, JSON.stringify(card_data));
 
-    console.log(`save image from ${picture} to ${imagePath}`)
-    this.deleteCard(0);
+    console.log(`save image from ${resized_image.uri} to ${imagePath}`)
     //this._deleteAll();
     return imagePath;
   }

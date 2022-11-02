@@ -60,7 +60,7 @@ export default function CreatedCardList() {
             <Text>{item.name}</Text>
           </TouchableOpacity>
         }
-        numColumns={4}
+        numColumns={3}
       />
 
 
