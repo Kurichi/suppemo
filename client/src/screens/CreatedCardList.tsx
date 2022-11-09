@@ -23,6 +23,7 @@ export default function CreatedCardList() {
     const f = async () => {
       setData(await fs.getCardData())
       console.log('get data')
+      fs._showJSON();
     }; f();
   }, []);
 
@@ -32,7 +33,7 @@ export default function CreatedCardList() {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.searchContainer}>
         <View>
           <Feather name="search" size={24} color="white" />
           <TextInput />
@@ -43,6 +44,9 @@ export default function CreatedCardList() {
             type='solid'
             onPress={() => sort(sort_target)}
           />
+        </View>
+        <View>
+
         </View>
       </View>
 
@@ -78,5 +82,8 @@ const styles = StyleSheet.create({
   },
   card: {
     alignItems: 'center'
-  }
+  },
+  searchContainer: {
+    backgroundColor: '#FCD12C',
+  },
 });

@@ -20,12 +20,12 @@ export default function WorkSpace() {
           data={items}
           renderItem={({ item }) =>
             <View style={styles.cardStyle}>
-              <Image
+              {/* <Image
 
-                source={require('../../assets/cards/' + item + '.jpg')}
+                // source={require('../../assets/cards/' + item + '.jpg')}
 
                 style={styles.cardStyle}
-              />
+              /> */}
             </View>
           }
           numColumns={4}
