@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
-import { FileSystem } from '../components/FileSystem';
+import { FSCard } from '../components/FileSystem';
 
 
 
@@ -36,7 +36,7 @@ export default function TakePicture() {
 
   const apply = async () => {
     //カード作成の処理
-    const fs = new FileSystem();
+    const fs = new FSCard();
     const new_picture_path = await fs.savePicture(picture, title);
     setPicture(new_picture_path);
   }
@@ -181,7 +181,4 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
   }
-
-
-
 })

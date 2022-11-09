@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/base';
 
 import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
-import { FileSystem } from '../components/FileSystem';
+import { FSCard } from '../components/FileSystem';
 
 export default function CreatedCardList() {
   type card_detail = {
@@ -12,13 +12,13 @@ export default function CreatedCardList() {
     name: string,
     uri: string,
     createdDate: string,
-    exsists: boolean,
+    exists: boolean,
   }
 
   const [data, setData] = useState<Array<card_detail>>();
   const [sort_target, setTarget] = useState<string>('ascending');
 
-  const fs = new FileSystem();
+  const fs = new FSCard();
   useEffect(() => {
     const f = async () => {
       setData(await fs.getCardData())
@@ -53,15 +53,18 @@ export default function CreatedCardList() {
       <FlatList
         data={data}
         renderItem={({ item }) =>
-          <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+
+          >
             <Image
               source={{ uri: item.uri }}
               style={styles.photo}
             />
             <Text>{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         }
-        numColumns={4}
+        numColumns={3}
       />
 
 
