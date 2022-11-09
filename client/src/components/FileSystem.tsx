@@ -8,7 +8,7 @@ import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
     name        : string  || タイトルでつけた名前
     uri         : string  || 画像のパス
     createdDate : date    || 作成日
-    exists     : boolean || 利用可能かどうか
+    exists      : boolean || 利用可能かどうか
   } 
 */
 
@@ -20,8 +20,17 @@ type card_detail = {
   exists: boolean,
 }
 
+type setting_contents = {
+  vol: number,
+}
 
-export class FileSystem {
+type address = {
+  name: string,
+
+}
+
+
+export class FSCard {
   readonly savePath: string = `${FS.documentDirectory}cards`;
   readonly dataPath: string = `${FS.documentDirectory}card_data.json`;
 
@@ -126,9 +135,6 @@ export class FileSystem {
     return true;
   }
 
-
-
-
   //debug============================================================
 
   async _deleteAll(): Promise<void> {
@@ -148,5 +154,52 @@ export class FileSystem {
 
   async _showImageInfo(path: string): Promise<void> {
     console.log(await FS.getInfoAsync(path));
+  }
+}
+
+
+
+export class FSSetting {
+  readonly setting_file_path = `${FS.documentDirectory}settings.json`;
+  init_data: setting_contents = {
+    vol: 10,
+  }
+
+
+  async getSettings(): Promise<setting_contents> {
+    if (!(await FS.getInfoAsync(this.setting_file_path)).exists) {
+      FS.writeAsStringAsync(this.setting_file_path, JSON.stringify(this.init_data));
+      console.log('create data file');
+    }
+    const setting_data = JSON.parse(await FS.readAsStringAsync(this.setting_file_path));
+
+    return setting_data
+  }
+
+
+  async setSettings(setting_data: setting_contents): Promise<boolean> {
+    FS.writeAsStringAsync(this.setting_file_path, JSON.stringify(setting_data));
+    return true
+  }
+
+
+  async resetSettings(): Promise<setting_contents> {
+    FS.writeAsStringAsync(this.setting_file_path, JSON.stringify(this.init_data));
+    return this.init_data
+  }
+}
+
+
+
+export class FSAddress {
+  readonly address_file_path = `${FS.documentDirectory}address.json`
+
+  async getAddress(): Promise<Array<address>> {
+    if (!(await FS.getInfoAsync(this.address_file_path)).exists) {
+      FS.writeAsStringAsync(this.address_file_path, '[]');
+      console.log('create data file');
+    }
+    const address_list = JSON.parse(await FS.readAsStringAsync(this.address_file_path));
+    return address_list
   }
 }

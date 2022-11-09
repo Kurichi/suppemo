@@ -4,7 +4,7 @@ import { Button } from '@rneui/base';
 
 import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
-import { FileSystem } from '../components/FileSystem';
+import { FSCard } from '../components/FileSystem';
 
 export default function CreatedCardList() {
   type card_detail = {
@@ -18,7 +18,7 @@ export default function CreatedCardList() {
   const [data, setData] = useState<Array<card_detail>>();
   const [sort_target, setTarget] = useState<string>('ascending');
 
-  const fs = new FileSystem();
+  const fs = new FSCard();
   useEffect(() => {
     const f = async () => {
       setData(await fs.getCardData())
