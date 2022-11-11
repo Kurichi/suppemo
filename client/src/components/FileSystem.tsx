@@ -1,36 +1,6 @@
 import * as FS from 'expo-file-system';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
-
-/*
-  data = {
-    id          : number  || 固有のID
-    name        : string  || タイトルでつけた名前
-    uri         : string  || 画像のパス
-    createdDate : date    || 作成日
-    exists      : boolean || 利用可能かどうか
-  } 
-*/
-
-type card_detail = {
-  id: number,
-  name: string,
-  uri: string,
-  count: number,
-  createdDate: string,
-  exists: boolean,
-}
-
-type setting_contents = {
-  vol: number,
-}
-
-type address = {
-  name: string,
-
-}
-
-
 export class FSCard {
   readonly savePath: string = `${FS.documentDirectory}cards`;
   readonly dataPath: string = `${FS.documentDirectory}card_data.json`;
