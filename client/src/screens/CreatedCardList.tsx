@@ -5,17 +5,19 @@ import { Button } from '@rneui/base';
 import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
 import { FSCard } from '../components/FileSystem';
+import { Picker } from '@react-native-picker/picker';
 
 export default function CreatedCardList() {
   type card_detail = {
     id: number,
     name: string,
     uri: string,
+    count: number,
     createdDate: string,
     exists: boolean,
   }
 
-  const [data, setData] = useState<Array<card_detail>>();
+  const [data, setData] = useState<Array<card_detail>>([]);
   const [sort_target, setTarget] = useState<string>('ascending');
 
   const fs = new FSCard();
@@ -28,7 +30,12 @@ export default function CreatedCardList() {
   }, []);
 
   const sort = async (target: string) => {
-
+    setTarget(target)
+    if (sort_target == "date_ascending") setData(data.sort((a, b) => a.id - b.id))
+    else if (sort_target == "date_descending") setData(data.sort((a, b) => b.id - a.id))
+    else if (sort_target == "frequency") setData(data.sort((a, b) => b.count - a.count))
+    else if (sort_target == "name_ascending") setData(data.sort((a, b) => a.name > b.name ? -1 : 1))
+    else if (sort_target == "name_descending") setData(data.sort((a, b) => a.name > b.name ? 1 : -1))
   }
 
   return (
@@ -40,10 +47,18 @@ export default function CreatedCardList() {
         </View>
         <View>
           <Text>Sort</Text>
-          <Button
-            type='solid'
-            onPress={() => sort(sort_target)}
-          />
+          <Picker
+            selectedValue={sort_target}
+            onValueChange={(itemValue: string, itemIndex) =>
+              sort(itemValue)
+            }
+          >
+            <Picker.Item label="よく使う" value="frequency" />
+            <Picker.Item label="なまえ　はやい順" value="name_ascending" />
+            <Picker.Item label="なまえ　おそい順" value="name_descending" />
+            <Picker.Item label="つくった順" value="date_ascending" />
+            <Picker.Item label="つくった順　ぎゃく" value="date_descending" />
+          </Picker>
         </View>
         <View>
 

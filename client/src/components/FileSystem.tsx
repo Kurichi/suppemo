@@ -16,6 +16,7 @@ type card_detail = {
   id: number,
   name: string,
   uri: string,
+  count: number,
   createdDate: string,
   exists: boolean,
 }
@@ -76,6 +77,7 @@ export class FSCard {
       id: card_data.length,
       name: title,
       uri: imagePath,
+      count: 0,
       createdDate: new Date().toISOString(),
       exists: true,
     });
