@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
-import { FSCard } from '../components/FileSystem';
+import { uploadCard, useCard } from '../contexts/card';
 
 
 
@@ -13,6 +13,8 @@ export default function TakePicture() {
   const [camera, setCamera] = useState<Camera>();
   const [picture, setPicture] = useState<string>('');
   const [title, setTitle] = useState<string>('');
+
+  const { reloadCards } = useCard()
 
   if (!permission) {
     return <View />;
@@ -36,9 +38,8 @@ export default function TakePicture() {
 
   const apply = async () => {
     //カード作成の処理
-    const fs = new FSCard();
-    const new_picture_path = await fs.savePicture(picture, title);
-    setPicture(new_picture_path);
+    setPicture(await uploadCard(picture, title));
+    await reloadCards();
   }
 
   return (

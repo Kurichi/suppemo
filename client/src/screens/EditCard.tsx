@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { FSCard } from '../components/FileSystem';
+import { FSCard } from '../services/FileSystem';
 import { Button } from '@rneui/base';
 
 type card_detail = {

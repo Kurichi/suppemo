@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/base';
 
 import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
-import { FSCard } from '../components/FileSystem';
+import { FSCard } from '../services/FileSystem';
 import { Picker } from '@react-native-picker/picker';
+import { useCard } from '../contexts/card';
 
 export default function CreatedCardList() {
   type card_detail = {
@@ -17,17 +18,18 @@ export default function CreatedCardList() {
     exists: boolean,
   }
 
-  const [data, setData] = useState<Array<card_detail>>([]);
+  const [data, setData] = useState<Array<card_detail>>(useCard().cards);
   const [sort_target, setTarget] = useState<string>('ascending');
 
-  const fs = new FSCard();
-  useEffect(() => {
-    const f = async () => {
-      setData(await fs.getCardData())
-      console.log('get data')
-      fs._showJSON();
-    }; f();
-  }, []);
+  // const fs = new FSCard();
+  // useEffect(() => {
+  //   const f = async () => {
+  //     setData(await fs.getCardData())
+  //     console.log('get data')
+  //     fs._showJSON();
+  //   }; f();
+  // }, []);
+  console.log(data)
 
   const sort = async (target: string) => {
     setTarget(target)
