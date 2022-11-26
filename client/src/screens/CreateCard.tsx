@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowColor: "#333",
     shadowOffset: { width: 4, height: 4 },
+    marginBottom: 240,
   },
   button: {
     width: 350,

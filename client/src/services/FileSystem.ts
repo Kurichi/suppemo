@@ -1,16 +1,91 @@
 import * as FS from 'expo-file-system';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
-export class FSCard {
-  readonly savePath: string = `${FS.documentDirectory}cards`;
-  readonly dataPath: string = `${FS.documentDirectory}card_data.json`;
+class multipleFS {
+  protected file_path: string = "";
 
-  getIndex(data: Array<card_detail>, id: number): number {
+  constructor(file_path: string) {
+    this.file_path = file_path
+  }
+
+  getIndex(data: Array<multipleType>, id: number): number {
     let res = -1
     data.forEach((value, index) => {
       if (value.id == id) res = index;
     })
     return res;
+  }
+
+  async getData<T>(id: number): Promise<T>;
+  async getData<T>(): Promise<Array<T>>;
+  async getData<T>(id?: number) {
+    if (!(await FS.getInfoAsync(this.file_path)).exists) {
+      FS.writeAsStringAsync(this.file_path, '[]');
+      console.log('create data file');
+    }
+    const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
+
+    if (typeof id == 'number') {
+      const index = this.getIndex(data, id)
+      return index != -1 ? data[index] : null;
+    }
+    else return data;
+  }
+
+  async modifyData(id: number, reject_data: object): Promise<boolean> {
+    const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
+    const index = this.getIndex(data, id);
+
+    for (const [key, value] of Object.entries(reject_data)) {
+      console.log(`value: ${value}`)
+      console.log(`key: ${key}`)
+      data[index][key] = value
+      console.log(data[index][key])
+    }
+    FS.writeAsStringAsync(this.file_path, JSON.stringify(data));
+    return true;
+  }
+
+  async deleteData(id: number): Promise<boolean> {
+    const data = await this.getData<multipleType>();
+    const index = this.getIndex(data, id);
+
+    if (index == -1) {
+      console.log('存在しません')
+      return false;
+    }
+    this._showJSON();
+    data.splice(index, 1);
+    FS.writeAsStringAsync(this.file_path, JSON.stringify(data));
+    this._showJSON();
+    return true;
+  }
+
+  //debug============================================================
+
+  async _deleteAll(): Promise<void> {
+    await FS.deleteAsync(this.file_path)
+    console.log('delete')
+    this._showInfo(this.file_path);
+  }
+
+
+  async _showJSON(): Promise<void> {
+    const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
+    console.log(data);
+  }
+
+
+  async _showInfo(path: string): Promise<void> {
+    console.log(await FS.getInfoAsync(path));
+  }
+
+}
+export class FSCard extends multipleFS {
+  readonly save_file_path: string = `${FS.documentDirectory}cards`;
+
+  constructor() {
+    super(`${FS.documentDirectory}card_data.json`);
   }
 
   async savePicture(picture: string, title: string): Promise<string> {
@@ -19,11 +94,11 @@ export class FSCard {
       return '';
     }
 
-    const imagePath: string = `${this.savePath}/${new Date().toISOString().replace(/:/g, '')}.jpg`;
+    const imagePath: string = `${this.save_file_path}/${new Date().toISOString().replace(/:/g, '')}.jpg`;
 
     //save image
-    if (!(await FS.getInfoAsync(this.savePath)).exists) {
-      await FS.makeDirectoryAsync(this.savePath);
+    if (!(await FS.getInfoAsync(this.save_file_path)).exists) {
+      await FS.makeDirectoryAsync(this.save_file_path);
       console.log('create data directory');
     }
 
@@ -42,7 +117,7 @@ export class FSCard {
     });
 
     //add new image info to json data
-    const card_data = await this.getCardData();
+    const card_data = await this.getData<card_detail>();
     card_data.push({
       id: card_data.length,
       name: title,
@@ -51,7 +126,7 @@ export class FSCard {
       createdDate: new Date().toISOString(),
       exists: true,
     });
-    FS.writeAsStringAsync(this.dataPath, JSON.stringify(card_data));
+    FS.writeAsStringAsync(this.file_path, JSON.stringify(card_data));
 
     console.log(`save image from ${resized_image.uri} to ${imagePath}`)
     //this._deleteAll();
@@ -59,73 +134,14 @@ export class FSCard {
   }
 
 
-  async getCardData(id: number): Promise<card_detail>;
-  async getCardData(): Promise<Array<card_detail>>;
-  async getCardData(id?: number) {
-    if (!(await FS.getInfoAsync(this.dataPath)).exists) {
-      FS.writeAsStringAsync(this.dataPath, '[]');
-      console.log('create data file');
-    }
-    const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
-
-    if (typeof id == 'number') {
-      const index = this.getIndex(data, id)
-      return index != -1 ? data[index] : null;
-    }
-    else return data;
-  }
-
-
-  async modifyCardData(id: number, reject_data: object): Promise<boolean> {
-    const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
-    const index = this.getIndex(data, id);
-
-    for (const [key, value] of Object.entries(reject_data)) {
-      console.log(`value: ${value}`)
-      console.log(`key: ${key}`)
-      data[index][key] = value
-      console.log(data[index][key])
-    }
-    FS.writeAsStringAsync(this.dataPath, JSON.stringify(data));
-    return true;
-  }
-
-
-  async deleteCard(id: number): Promise<boolean> {
-    const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
-    const index = this.getIndex(data, id);
-
-    if (index == -1) {
-      console.log('存在しません')
-      return false;
-    }
-    this._showJSON();
-    FS.deleteAsync(data[index].uri);
-    data.splice(index, 1);
-    FS.writeAsStringAsync(this.dataPath, JSON.stringify(data));
-    this._showJSON();
-    return true;
-  }
-
   //debug============================================================
 
   async _deleteAll(): Promise<void> {
-    await FS.deleteAsync(this.savePath)
-    await FS.deleteAsync(this.dataPath)
+    await FS.deleteAsync(this.save_file_path)
+    await FS.deleteAsync(this.file_path)
     console.log('delete')
-    this._showImageInfo(this.savePath);
-    this._showImageInfo(this.dataPath);
-  }
-
-
-  async _showJSON(): Promise<void> {
-    const data = JSON.parse(await FS.readAsStringAsync(this.dataPath));
-    console.log(data);
-  }
-
-
-  async _showImageInfo(path: string): Promise<void> {
-    console.log(await FS.getInfoAsync(path));
+    this._showInfo(this.save_file_path);
+    this._showInfo(this.file_path);
   }
 }
 
@@ -163,15 +179,30 @@ export class FSSetting {
 
 
 
-export class FSAddress {
-  readonly address_file_path = `${FS.documentDirectory}address.json`
+export class FSAddress extends multipleFS {
+  constructor() {
+    super(`${FS.documentDirectory}address.json`);
+  }
+}
 
-  async getAddress(): Promise<Array<address>> {
-    if (!(await FS.getInfoAsync(this.address_file_path)).exists) {
-      FS.writeAsStringAsync(this.address_file_path, '[]');
+export class FSTemplate extends multipleFS {
+  constructor() {
+    super(`${FS.documentDirectory}temlpate.json`)
+  }
+
+  async initialize(): Promise<void> {
+    if (!(await FS.getInfoAsync(this.file_path)).exists) {
+      const _init: template_cards[] = [
+        {
+          id: 0,
+          name: '会話１',
+          item_ids: [],
+          background_color: 'white',
+        }
+      ];
+
+      FS.writeAsStringAsync(this.file_path, JSON.stringify(_init));
       console.log('create data file');
     }
-    const address_list = JSON.parse(await FS.readAsStringAsync(this.address_file_path));
-    return address_list
   }
 }

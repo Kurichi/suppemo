@@ -16,16 +16,16 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     const f = async () => {
-      const _card = await fs.getCardData();
+      const _card = await fs.getData<card_detail>();
       setCards(_card)
     };
     f();
   }, []);
 
   const reloadCards = async (): Promise<void> => {
-    const reloadCards = await fs.getCardData();
+    const reloadCards = await fs.getData<card_detail>();
     setCards(reloadCards)
-    console.log('reloaded!')
+    console.log('reloaded cards!')
   };
 
   return (
@@ -38,4 +38,15 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
 export const uploadCard = async (picture: string, title: string) => {
   const new_picture_path = await fs.savePicture(picture, title);
   return new_picture_path;
+}
+
+export const getCards = (cards: card_detail[], ids: number[]) => {
+  var res: card_detail[] = [];
+
+  for (let id of ids) {
+    const index = fs.getIndex(cards, id)
+    res.push(cards[index]);
+  }
+
+  return res;
 }

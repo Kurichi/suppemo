@@ -1,37 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { getCards, useCard } from '../contexts/card';
 
-// const Array = [
-//   {
-//     'corn'
-//   },
-// ];
 
-export const IMAGES = [
-  ,
-]
+export default function WorkSpace(props: ws_props) {
+  const { card_ids } = props;
+  const { cards } = useCard();
+  const items = getCards(cards, card_ids);
 
-export default function WorkSpace() {
-  const items: string[] = ["1", "2", "3"];
   return (
     <View style={styles.container}>
-      <View>
-        <FlatList
-          data={items}
-          renderItem={({ item }) =>
-            <View style={styles.cardStyle}>
-              {/* <Image
-
-                // source={require('../../assets/cards/' + item + '.jpg')}
-
-                style={styles.cardStyle}
-              /> */}
-            </View>
-          }
-          numColumns={4}
-        />
-      </View>
-      {/* <Image source={require('./../../assets/corn.jpg')} /> */}
+      <FlatList
+        data={items}
+        renderItem={({ item }) =>
+          <Image
+            source={{ uri: item.uri }}
+            style={styles.cardStyle}
+          />
+        }
+        numColumns={4}
+      />
       <Text>aaaaaaaaaaaa</Text>
     </View>
   );
