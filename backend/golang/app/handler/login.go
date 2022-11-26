@@ -34,13 +34,14 @@ func Login(c echo.Context) error {
 		}
 	}
 
-	authTokenString, err := middleware.CreateNewToken(user.ID)
+	authTokenString, refreshTokenString, err := middleware.CreateNewToken(u.ID)
 	if err != nil {
 		log.Fatal(err)
 		return echo.ErrUnauthorized
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{
-		"token": authTokenString,
+		"token":         authTokenString,
+		"refresh_token": refreshTokenString,
 	})
 }
