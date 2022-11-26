@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS suppemo;
 USE suppemo;
 
-CREATE TABLE IF NOT EXISTS `test` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` varchar(26) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `name` varchar(16) NOT NULL,
   `email` varchar(128) NOT NULL,

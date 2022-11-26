@@ -16,7 +16,7 @@ type MyClaim struct {
 }
 
 func main() {
-	secretBytes, err := ioutil.ReadFile("./../../ssh-keys/id_rsa")
+	secretBytes, err := ioutil.ReadFile("./../../ssh-keys/secret.key")
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -28,7 +28,7 @@ func main() {
 		return
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, MyClaim{
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, MyClaim{
 		UserId: "10o",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 1).Unix(),

@@ -45,7 +45,6 @@ func FindUser(u *User) User {
 	user := &User{}
 	db.QueryRow("SELECT id, name, email, password FROM users WHERE email = ?", u.Email).
 		Scan(&user.ID, &user.Name, &user.Email, &user.Password)
-	fmt.Println(*user)
 
 	return *user
 }

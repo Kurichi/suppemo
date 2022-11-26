@@ -2,6 +2,9 @@ import { Button } from '@rneui/base';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
+import axios from 'axios';
+
+const baseURL = '192.168.24.21';
 
 export default function Login(props: any) {
   const { navigation } = props;
@@ -35,9 +38,18 @@ export default function Login(props: any) {
         <View style={styles.loginButton}>
           <Button type="clear"
             onPress={() => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Tab' }],
+              // axios.get('http://27.133.152.161/login').then((res) => { console.log(res) })
+              axios.post('http://27.133.152.161/login', {
+                id: ID,
+                password: password,
+              }).then((res) => {
+                console.log(res);
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Tab' }],
+                });
+              }).catch((err) => {
+                console.log(err);
               });
             }}>
             <Text style={styles.loginButtonText}>ログイン</Text>
