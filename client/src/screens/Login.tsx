@@ -38,8 +38,8 @@ export default function Login(props: any) {
         <View style={styles.loginButton}>
           <Button type="clear"
             onPress={() => {
-              axios.get('http://192.168.24.21/login').then((res) => { console.log(res) })
-              axios.post('http://172.28.225.194/login', {
+              // axios.get('http://27.133.152.161/login').then((res) => { console.log(res) })
+              axios.post('http://27.133.152.161/login', {
                 id: ID,
                 password: password,
               }).then((res) => {
