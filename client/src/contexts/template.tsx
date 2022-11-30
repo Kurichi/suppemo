@@ -15,7 +15,6 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     const f = async () => {
-      await fs.initialize();
       const _template = await fs.getData<template_cards>();
       setTemplates(_template)
     };

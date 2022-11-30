@@ -64,6 +64,18 @@ export default function Login(props: any) {
           }}>
           <Text style={styles.signupMessage}>登録はこちら</Text>
         </Button>
+
+        {/* debug by yammer */}
+        <Button
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Tab' }],
+            });
+          }}
+        >
+          <Text>debug</Text>
+        </Button>
       </View>
     </View>
   );

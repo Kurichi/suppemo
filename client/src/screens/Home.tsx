@@ -6,22 +6,14 @@ import WorkSpace from '../components/WorkSpace';
 import { useTemplates } from '../contexts/template';
 
 export default function Home() {
-  const [current_ws, setCurrent] = useState<number>(0);
-  const { templates, reloadTemplates } = useTemplates();
 
   return (
     <View style={styles.container}>
       {/* <Header /> */}
-      {/* WorkSpaceName */}
-      <View style={styles.workSpaceName}>
-        <Text style={styles.arrow}>&lt;&lt;&lt;&lt;</Text>
-        <Text style={styles.WorkSpaceTitle}>{templates[current_ws].name}</Text>
-        <Text style={styles.arrow}>&gt;&gt;&gt;&gt;</Text>
-      </View>
 
       {/* WorkSpace */}
       <View style={styles.workSpace}>
-        {/* <WorkSpace /> */}
+        <WorkSpace />
       </View>
 
       {/* CardsFolder */}
@@ -54,9 +46,11 @@ const styles = StyleSheet.create({
   workSpace: {
     flexDirection: 'row',
     justifyContent: 'center',
+    flex: 2,
+    paddingTop: 8,
   },
   cardsFolder: {
-    flex: 1,
+    flex: 3,
     paddingTop: 8,
   }
 });

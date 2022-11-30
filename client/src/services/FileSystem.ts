@@ -1,28 +1,34 @@
 import * as FS from 'expo-file-system';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
+const ws_max_card: number = 8
 class multipleFS {
   protected file_path: string = "";
+  protected _init: multipleType[] = [];
 
   constructor(file_path: string) {
     this.file_path = file_path
   }
 
   getIndex(data: Array<multipleType>, id: number): number {
-    let res = -1
+    let res = 0
     data.forEach((value, index) => {
       if (value.id == id) res = index;
     })
     return res;
   }
 
+  async initialize(): Promise<void> {
+    if (!(await FS.getInfoAsync(this.file_path)).exists) {
+      FS.writeAsStringAsync(this.file_path, JSON.stringify(this._init));
+      console.log('create data file');
+    }
+  }
+
   async getData<T>(id: number): Promise<T>;
   async getData<T>(): Promise<Array<T>>;
   async getData<T>(id?: number) {
-    if (!(await FS.getInfoAsync(this.file_path)).exists) {
-      FS.writeAsStringAsync(this.file_path, '[]');
-      console.log('create data file');
-    }
+    await this.initialize();
     const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
 
     if (typeof id == 'number') {
@@ -46,6 +52,10 @@ class multipleFS {
     return true;
   }
 
+  async updateData(new_data: multipleType[]): Promise<void> {
+    FS.writeAsStringAsync(this.file_path, JSON.stringify(new_data));
+  }
+
   async deleteData(id: number): Promise<boolean> {
     const data = await this.getData<multipleType>();
     const index = this.getIndex(data, id);
@@ -55,7 +65,8 @@ class multipleFS {
       return false;
     }
     this._showJSON();
-    data.splice(index, 1);
+    //data.splice(index, 1);
+    data[index].exists = false;
     FS.writeAsStringAsync(this.file_path, JSON.stringify(data));
     this._showJSON();
     return true;
@@ -64,9 +75,12 @@ class multipleFS {
   //debug============================================================
 
   async _deleteAll(): Promise<void> {
-    await FS.deleteAsync(this.file_path)
-    console.log('delete')
-    this._showInfo(this.file_path);
+    const all_file_name = await FS.readDirectoryAsync(`${FS.documentDirectory}`)
+
+    for (const file_name of all_file_name) {
+      await FS.deleteAsync(`${FS.documentDirectory}${file_name}`)
+      console.log(`delete ${file_name}`)
+    }
   }
 
 
@@ -83,9 +97,18 @@ class multipleFS {
 }
 export class FSCard extends multipleFS {
   readonly save_file_path: string = `${FS.documentDirectory}cards`;
+  readonly failed_card: card_detail = {
+    id: -1,
+    name: 'empty',
+    uri: '',
+    count: 0,
+    createdDate: '',
+    exists: false,
+  }
 
   constructor() {
     super(`${FS.documentDirectory}card_data.json`);
+    this._init = [this.failed_card]
   }
 
   async savePicture(picture: string, title: string): Promise<string> {
@@ -136,13 +159,13 @@ export class FSCard extends multipleFS {
 
   //debug============================================================
 
-  async _deleteAll(): Promise<void> {
-    await FS.deleteAsync(this.save_file_path)
-    await FS.deleteAsync(this.file_path)
-    console.log('delete')
-    this._showInfo(this.save_file_path);
-    this._showInfo(this.file_path);
-  }
+  // async _deleteAll(): Promise<void> {
+  //   await FS.deleteAsync(this.save_file_path)
+  //   await FS.deleteAsync(this.file_path)
+  //   console.log('delete')
+  //   this._showInfo(this.save_file_path);
+  //   this._showInfo(this.file_path);
+  // }
 }
 
 
@@ -188,21 +211,20 @@ export class FSAddress extends multipleFS {
 export class FSTemplate extends multipleFS {
   constructor() {
     super(`${FS.documentDirectory}temlpate.json`)
+    this._init = [
+      {
+        id: 0,
+        name: '会話１',
+        item_ids: Array(ws_max_card).fill(-1),
+        background_color: 'white',
+        exists: true,
+      }
+    ];
   }
+}
 
-  async initialize(): Promise<void> {
-    if (!(await FS.getInfoAsync(this.file_path)).exists) {
-      const _init: template_cards[] = [
-        {
-          id: 0,
-          name: '会話１',
-          item_ids: [],
-          background_color: 'white',
-        }
-      ];
-
-      FS.writeAsStringAsync(this.file_path, JSON.stringify(_init));
-      console.log('create data file');
-    }
+export class TestFS extends multipleFS {
+  constructor() {
+    super('');
   }
 }

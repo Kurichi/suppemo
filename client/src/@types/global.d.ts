@@ -23,11 +23,13 @@ type template_cards = {
   name: string,
   item_ids: Array<number>,
   background_color: string,
+  exists: boolean,
 }
 
 type address = {
   id: number,
   name: string,
+  exists: boolean,
 
 }
 
@@ -40,4 +42,8 @@ type setting_contents = {
 type ws_props = {
   name: string,
   card_ids: number[],
+  exists: boolean,
 }
+
+
+// declare const ws_max_card: number = 8
