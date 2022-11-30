@@ -1,6 +1,6 @@
 import { Button } from '@rneui/base';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebase';
@@ -13,14 +13,6 @@ export default function SignUp(props: any) {
   return (
     <View style={styles.container} >
       <View>
-        {/* <TextInput
-          placeholder='なまえ'
-          value={username}
-          autoComplete='username-new'
-          style={styles.signupForm}
-          onChangeText={(value) => {
-            setUsername(value);
-          }} /> */}
         <TextInput
           placeholder='メールアドレス'
           value={email}
@@ -32,7 +24,7 @@ export default function SignUp(props: any) {
         <TextInput
           placeholder='パスワード'
           value={password}
-          autoComplete='password-new'
+          autoComplete='password'
           style={styles.signupForm}
           onChangeText={(value) => {
             setPassword(value);
@@ -52,17 +44,21 @@ export default function SignUp(props: any) {
                 console.log(error.message);
               });
             }}>
-            <Text style={styles.signupButtonText}>SignUp</Text>
+            <Text style={styles.signupButtonText}>とうろく</Text>
           </Button>
         </View>
-        <Button type="clear"
+        <Button
+          type="clear"
+          onPress={() => {
+            Alert.alert('長押ししてね');
+          }}
           onLongPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'Login' }]
+              routes: [{ name: 'SignUp' }]
             });
           }}>
-          <Text style={styles.signupMessage}>ログインはこちら</Text>
+          <Text style={styles.signupMessage}>登録はこちら</Text>
         </Button>
       </View>
     </View>
