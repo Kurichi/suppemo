@@ -3,35 +3,35 @@ import { auth } from '../services/firebase';
 import { User } from 'firebase/auth';
 
 interface ContextInterface {
-    user: User | null,
+  user: User | null,
 }
 
 const AuthContext = createContext({} as ContextInterface);
 
 export const useAuthContext = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
 
 export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    const value = {
-        user,
-        loading,
-    };
+  const value = {
+    user,
+    loading,
+  };
 
-    useEffect(() => {
-        const unsubscribed = auth.onAuthStateChanged((user) => {
-            setUser(user);
-            setLoading(false);
-        });
-        return () => unsubscribed();
-    }, []);
+  useEffect(() => {
+    const unsubscribed = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribed();
+  }, []);
 
-    return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }
