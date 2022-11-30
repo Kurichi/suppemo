@@ -1,26 +1,26 @@
 import { Button } from '@rneui/base';
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-
-const baseURL = '192.168.24.21';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 export default function Login(props: any) {
   const { navigation } = props;
-  const [ID, setID] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <View>
         <TextInput
-          placeholder='ID'
-          value={ID}
+          placeholder='メールアドレス'
+          value={email}
           style={styles.loginForm}
-          autoComplete="username"
+          autoComplete="email"
           onChangeText={(value) => {
-            setID(value);
+            setEmail(value);
           }}
         />
         <TextInput
@@ -29,6 +29,7 @@ export default function Login(props: any) {
           style={styles.loginForm}
           autoComplete="password"
           textContentType='password'
+          secureTextEntry={true}
           onChangeText={(value) => {
             setPassword(value);
           }}
@@ -38,24 +39,24 @@ export default function Login(props: any) {
         <View style={styles.loginButton}>
           <Button type="clear"
             onPress={() => {
-              // axios.get('http://27.133.152.161/login').then((res) => { console.log(res) })
-              axios.post('http://27.133.152.161/login', {
-                id: ID,
-                password: password,
-              }).then((res) => {
-                console.log(res);
+              signInWithEmailAndPassword(auth, email, password).then((result) => {
+                console.log(result);
                 navigation.reset({
                   index: 0,
-                  routes: [{ name: 'Tab' }],
-                });
-              }).catch((err) => {
-                console.log(err);
-              });
+                  routes: [{ name: 'Tab' }]
+                })
+              }).catch((error) => {
+                console.log(error.message);
+              })
             }}>
             <Text style={styles.loginButtonText}>ログイン</Text>
           </Button>
         </View>
-        <Button type="clear"
+        <Button
+          type="clear"
+          onPress={() => {
+            Alert.alert('長押ししてね');
+          }}
           onLongPress={() => {
             navigation.reset({
               index: 0,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: '#C1C1C1',
     width: 316,
-    paddingTop: 60,
+    paddingTop: 40,
     borderBottomWidth: 1,
   },
   loginButton: {
@@ -106,8 +107,6 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontSize: 32,
     color: 'rgba(0,0,0,0.4)',
-
-
   },
   signupMessage: {
     fontSize: 13,

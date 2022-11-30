@@ -1,30 +1,62 @@
 import { Button } from '@rneui/base';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 export default function SignUp(props: any) {
   const { navigation } = props;
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View style={styles.container} >
       <View>
-        <TextInput value='なまえ' style={styles.signupForm} />
-        <TextInput value="ID" style={styles.signupForm} />
-        <TextInput value="パスワード" style={styles.signupForm} />
+        {/* <TextInput
+          placeholder='なまえ'
+          value={username}
+          autoComplete='username-new'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setUsername(value);
+          }} /> */}
+        <TextInput
+          placeholder='メールアドレス'
+          value={email}
+          autoComplete='email'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setEmail(value);
+          }} />
+        <TextInput
+          placeholder='パスワード'
+          value={password}
+          autoComplete='password-new'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setPassword(value);
+          }} />
       </View>
       <View style={styles.signupContainer}>
         <View style={styles.signupButton}>
           <Button type="clear"
             onPress={() => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Tab' }],
+              createUserWithEmailAndPassword(auth, email, password).then((result) => {
+                console.log(result);
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Tab' }],
+                });
+              }).catch((error) => {
+                console.log(error.message);
               });
             }}>
             <Text style={styles.signupButtonText}>SignUp</Text>
           </Button>
         </View>
         <Button type="clear"
-          onPress={() => {
+          onLongPress={() => {
             navigation.reset({
               index: 0,
               routes: [{ name: 'Login' }]

@@ -7,7 +7,8 @@ import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
 import { useCard } from '../contexts/card';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-export default function CreatedCardList() {
+export default function CreatedCardList(props: any) {
+  const { navigation } = props;
 
   const [data, setData] = useState<Array<card_detail>>(useCard().cards);
   const [sort_target, setTarget] = useState<string>('ascending');
@@ -62,6 +63,12 @@ export default function CreatedCardList() {
           renderItem={({ item }) =>
             <TouchableOpacity
               style={styles.card}
+              onPress={() => {
+                navigation.navigate({
+                  name: 'EditCard',
+                  params: { card_data: item }
+                });
+              }}
             >
               <Image
                 source={{ uri: item.uri }}
@@ -73,9 +80,7 @@ export default function CreatedCardList() {
           numColumns={3}
         />
       </View>
-
-
-    </View>
+    </View >
   );
 }
 

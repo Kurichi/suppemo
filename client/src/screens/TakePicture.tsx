@@ -7,7 +7,8 @@ import { uploadCard, useCard } from '../contexts/card';
 
 
 
-export default function TakePicture() {
+export default function TakePicture(props: any) {
+  const { navigation } = props;
   const type = CameraType.back;
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState<Camera>();
@@ -88,7 +89,9 @@ export default function TakePicture() {
             <View style={[styles.button, { backgroundColor: '#D4D4D4' }]}>
               <Button
                 type='clear'
-                onPress={() => setPicture('')}
+                onPress={() => {
+                  setPicture('')
+                }}
                 title='とりなおす'
                 titleStyle={styles.buttonTitle}
               />
@@ -96,7 +99,10 @@ export default function TakePicture() {
             <View style={[styles.button, { backgroundColor: '#FC6A2C' }]}>
               <Button
                 type='clear'
-                onPress={() => apply()}
+                onPress={() => {
+                  apply();
+                  navigation.navigate('CameraTop');
+                }}
                 title='つくる'
                 titleStyle={styles.buttonTitle}
               />
