@@ -109,7 +109,8 @@ export class FSCard extends multipleFS {
   async savePicture(picture: string, title: string): Promise<string> {
     if (!title) {
       console.log('no title');
-      return '';
+      title = 'なまえがないよ';
+      // return '';
     }
 
     const imagePath: string = `${this.save_file_path}/${new Date().toISOString().replace(/:/g, '')}.jpg`;
