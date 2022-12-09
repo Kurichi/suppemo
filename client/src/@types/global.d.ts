@@ -10,26 +10,26 @@
 */
 
 type card_detail = {
-  id: number,
-  name: string,
-  uri: string,
-  count: number,
-  createdDate: string,
-  exists: boolean,
+  id: number = -1,
+  name: string = '',
+  uri: string = '',
+  count: number = 0,
+  createdDate: string = '',
+  exists: boolean = false,
 }
 
 type template_cards = {
-  id: number,
-  name: string,
-  item_ids: Array<number>,
-  background_color: string,
-  exists: boolean,
+  id: number = -1,
+  name: string = '',
+  item_ids: Array<number> = [],
+  background_color: string = '',
+  exists: boolean = false,
 }
 
 type address = {
-  id: number,
-  name: string,
-  exists: boolean,
+  id: number = -1,
+  name: string = '',
+  exists: boolean = false,
 
 }
 

@@ -1,3 +1,4 @@
+import { Button } from '@rneui/base';
 import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
@@ -17,7 +18,7 @@ import { useTemplates } from '../contexts/template';
 export default function WorkSpace() {
   const { cards } = useCard();
   const [current_ws, setCurrent] = useState<number>(0);
-  const { templates, reloadTemplates } = useTemplates();
+  const { templates, modifyTemplate } = useTemplates();
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
@@ -76,6 +77,10 @@ export default function WorkSpace() {
             );
           })}
         </ScrollView>
+        <Button
+          color='error'
+          onPress={() => { }}
+        >新規作成</Button>
       </View>
     </SafeAreaView>
   );

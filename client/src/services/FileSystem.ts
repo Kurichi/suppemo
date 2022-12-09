@@ -42,6 +42,11 @@ class multipleFS {
     const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
     const index = this.getIndex(data, id);
 
+    if (index == -1) {
+      console.log('存在しません')
+      return false;
+    }
+
     for (const [key, value] of Object.entries(reject_data)) {
       console.log(`value: ${value}`)
       console.log(`key: ${key}`)
@@ -57,17 +62,7 @@ class multipleFS {
   }
 
   async deleteData(id: number): Promise<boolean> {
-    const data = await this.getData<multipleType>();
-    const index = this.getIndex(data, id);
-
-    if (index == -1) {
-      console.log('存在しません')
-      return false;
-    }
-    this._showJSON();
-    //data.splice(index, 1);
-    data[index].exists = false;
-    FS.writeAsStringAsync(this.file_path, JSON.stringify(data));
+    await this.modifyData(id, { exists: false });
     this._showJSON();
     return true;
   }
@@ -220,6 +215,20 @@ export class FSTemplate extends multipleFS {
         exists: true,
       }
     ];
+  }
+
+  async addEmpty(): Promise<void> {
+    const data = await this.getData<template_cards>();
+    const len = data.length;
+    const empty_data: template_cards = {
+      id: len,
+      name: '会話' + String(len),
+      item_ids: Array(ws_max_card).fill(-1),
+      background_color: 'white',
+      exists: true,
+    }
+    data.push(empty_data);
+    await this.updateData(data);
   }
 }
 
