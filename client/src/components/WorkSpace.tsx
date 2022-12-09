@@ -71,7 +71,7 @@ export default function WorkSpace() {
                       }
                     </View>
                   }
-                  numColumns={4}
+                  numColumns={items.length}
                 />
               </View>
             );

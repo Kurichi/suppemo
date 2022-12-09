@@ -46,8 +46,11 @@ export default function Login(props: any) {
                   routes: [{ name: 'Tab' }]
                 })
               }).catch((error) => {
-                Alert.alert('メールアドレスか\nパスワードがちがうよ');
-                console.log(error.message);
+                switch (error.code) {
+                  case 'auth/wrong-password':
+                    Alert.alert('メールアドレスか\nパスワードがちがうよ');
+                    break;
+                }
               })
             }}>
             <Text style={styles.loginButtonText}>ログイン</Text>

@@ -1,48 +1,59 @@
+import { Button } from '@rneui/base';
 import React, { useState, useCallback, useEffect } from 'react';
+import { View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 interface User {
-    _id: number,
-    name: string,
-    avatar: string
+  _id: number,
+  name: string,
+  avatar: string
 }
 interface Message {
-    _id: number,
-    text: string,
-    createdAt: Date,
-    user: User,
+  _id: number,
+  text: string,
+  createdAt: Date,
+  user: User,
 }
 
-export default function Chat() {
-    const [messages, setMessages] = useState<Message[]>([]);
+export default function Chat(props: any) {
+  const { navigation, route } = props;
+  const { user } = route.params;
 
-    useEffect(() => {
-        setMessages([
-            {
-                _id: 1,
-                text: 'Hello developer',
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: 'React Native',
-                    avatar: 'https://placeimg.com/140/140/any',
-                },
-            },
-        ])
-    }, [])
+  const [messages, setMessages] = useState<Message[]>([]);
 
-    const onSend = useCallback((messages: Message[] = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    }, [])
+  useEffect(() => {
+    navigation.setOptions({
+      title: user.userName,
+    });
+    console.log(user.userName);
+  }, [navigation, user]);
 
-    return (
-        <GiftedChat
-            messages={messages}
-            onSend={messages => onSend(messages)}
-            user={{
-                _id: 1,
-            }}
-        />
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ]);
+  }, [])
 
-    );
+  const onSend = useCallback((messages: Message[] = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
+  return (
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+    />
+  );
 }

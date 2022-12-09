@@ -43,8 +43,7 @@ export default function ChatSelector(props: any) {
                   iconStyle: { marginHorizontal: 10, flex: 1 }
                 }}
                 onPress={() => {
-                  console.log(user.userName)
-                  stack.navigate('Chat');
+                  stack.navigate('Chat', { 'user': user });
                 }}
               />
             </View>
