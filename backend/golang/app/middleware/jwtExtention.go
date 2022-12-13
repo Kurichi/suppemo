@@ -1,12 +1,10 @@
 package middleware
 
 import (
-	"fmt"
-	"io/ioutil"
 	"suppemo-api/libs"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )
 
@@ -17,12 +15,7 @@ type MyClaim struct {
 }
 
 func createRefreshTokenString(userID string) (refreshTokenString string, err error) {
-	secretBytes, err := ioutil.ReadFile("./../ssh-keys/refresh_token.rsa.pkcs8")
-	if err != nil {
-		return "", err
-	}
-
-	secretKey, err := jwt.ParseRSAPrivateKeyFromPEM(secretBytes)
+	secretKey, err := libs.LoadRSAPrivateKey("./ssh-keys/refresh_token_secret.key")
 	if err != nil {
 		return "", err
 	}
@@ -33,7 +26,7 @@ func createRefreshTokenString(userID string) (refreshTokenString string, err err
 			return "", err
 		}
 
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, MyClaim{
+		token := jwt.NewWithClaims(jwt.SigningMethodRS256, MyClaim{
 			UserId:     userID,
 			RefreshJti: refreshJti,
 			StandardClaims: jwt.StandardClaims{
@@ -52,19 +45,9 @@ func createRefreshTokenString(userID string) (refreshTokenString string, err err
 }
 
 func createAuthTokenString(userID string) (tokenString string, err error) {
-	secretBytes, err := ioutil.ReadFile("./ssh-keys/access_token.rsa")
-	if err != nil {
-		return "", err
-	}
+	secretKey, err := libs.LoadRSAPrivateKey("./ssh-keys/access_token_secret.key")
 
-	secretKey, err := jwt.ParseRSAPrivateKeyFromPEM(secretBytes)
-	if err != nil {
-
-		fmt.Println(111)
-		return "", err
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, MyClaim{
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, MyClaim{
 		UserId: "10o",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 1).Unix(),
@@ -78,17 +61,17 @@ func createAuthTokenString(userID string) (tokenString string, err error) {
 	return
 }
 
-// func CreateNewToken(userID string) (authTokenString string, refreshTokenString string, err error) {
-func CreateNewToken(userID string) (authTokenString string, err error) {
-	// refreshTokenString, err = createRefreshTokenString(userID)
-	// if err != nil {
-	// 	return "", "", err
-	// }
+func CreateNewToken(userID string) (authTokenString string, refreshTokenString string, err error) {
+	// func CreateNewToken(userID string) (authTokenString string, err error) {
+	refreshTokenString, err = createRefreshTokenString(userID)
+	if err != nil {
+		return "", "", err
+	}
 
 	authTokenString, err = createAuthTokenString(userID)
 	if err != nil {
-		// return "", "", err
-		return "", err
+		return "", "", err
+		// return "", err
 	}
 
 	return

@@ -74,7 +74,7 @@ export default function CreateCard(props: any) {
             }}
             radius={20}
             onPress={() => {
-              navigation.navigate('EditCardList');
+              navigation.navigate('CreatedCardList');
             }}
           />
         </View>
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowColor: "#333",
     shadowOffset: { width: 4, height: 4 },
+    marginBottom: 240,
   },
   button: {
     width: 350,

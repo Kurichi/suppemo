@@ -18,7 +18,6 @@ func GenerateRandomBytes(n int) ([]byte, error) {
 
 func GetUserIdByRefreshToken(jti string) (userID string) {
 	db := mydb.GetDB()
-	defer db.Close()
 
 	if err := db.QueryRow("SELECT id FROM refreshtokens WHERE refresh_token = ?", jti).Scan(&userID); err != nil {
 		return ""
@@ -46,7 +45,6 @@ func StoreRefreshToken(userID string) (jti string, err error) {
 	}
 
 	db := mydb.GetDB()
-	defer db.Close()
 
 	ins, err := db.Prepare("INSERT INTO refresh_tokens(id, refresh_token) VALUES(?,?)")
 	if err != nil {
@@ -59,7 +57,6 @@ func StoreRefreshToken(userID string) (jti string, err error) {
 
 func DeleteRefreshToken(jti string) error {
 	db := mydb.GetDB()
-	defer db.Close()
 
 	del, err := db.Prepare("DELETE FROM refresh_tokens WHERE refresh_token=?")
 	if err != nil {

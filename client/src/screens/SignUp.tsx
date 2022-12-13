@@ -1,36 +1,64 @@
 import { Button } from '@rneui/base';
-import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 export default function SignUp(props: any) {
   const { navigation } = props;
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View style={styles.container} >
       <View>
-        <TextInput value='なまえ' style={styles.signupForm} />
-        <TextInput value="ID" style={styles.signupForm} />
-        <TextInput value="パスワード" style={styles.signupForm} />
+        <TextInput
+          placeholder='メールアドレス'
+          value={email}
+          autoComplete='email'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setEmail(value);
+          }} />
+        <TextInput
+          placeholder='パスワード'
+          value={password}
+          autoComplete='password'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setPassword(value);
+          }} />
       </View>
       <View style={styles.signupContainer}>
         <View style={styles.signupButton}>
           <Button type="clear"
             onPress={() => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Tab' }],
+              createUserWithEmailAndPassword(auth, email, password).then((result) => {
+                console.log(result);
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Tab' }],
+                });
+              }).catch((error) => {
+                console.log(error.message);
               });
             }}>
-            <Text style={styles.signupButtonText}>SignUp</Text>
+            <Text style={styles.signupButtonText}>とうろく</Text>
           </Button>
         </View>
-        <Button type="clear"
+        <Button
+          type="clear"
           onPress={() => {
+            Alert.alert('長押ししてね');
+          }}
+          onLongPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'Login' }]
+              routes: [{ name: 'SignUp' }]
             });
           }}>
-          <Text style={styles.signupMessage}>ログインはこちら</Text>
+          <Text style={styles.signupMessage}>登録はこちら</Text>
         </Button>
       </View>
     </View>

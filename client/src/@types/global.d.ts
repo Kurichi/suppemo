@@ -10,19 +10,40 @@
 */
 
 type card_detail = {
-  id: number,
-  name: string,
-  uri: string,
-  count: number,
-  createdDate: string,
-  exists: boolean,
+  id: number = -1,
+  name: string = '',
+  uri: string = '',
+  count: number = 0,
+  createdDate: string = '',
+  exists: boolean = false,
 }
+
+type template_cards = {
+  id: number = -1,
+  name: string = '',
+  item_ids: Array<number> = [],
+  background_color: string = '',
+  exists: boolean = false,
+}
+
+type address = {
+  id: number = -1,
+  name: string = '',
+  exists: boolean = false,
+
+}
+
+type multipleType = card_detail | template_cards | address;
 
 type setting_contents = {
   vol: number,
 }
 
-type address = {
+type ws_props = {
   name: string,
-
+  card_ids: number[],
+  exists: boolean,
 }
+
+
+// declare const ws_max_card: number = 8

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { CardStyleInterpolators, createStackNavigator, HeaderTitle } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator, HeaderBackButton, HeaderTitle } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
@@ -82,7 +82,7 @@ export default function Navigator() {
           headerStyle: { backgroundColor: '#82292D' },
           headerTitleStyle: { color: '#ffffff', fontSize: 30 },
           headerTintColor: '#ffffff',
-          headerTitle: 'さぽえも',
+          title: 'さぽえも',
           headerTitleAlign: 'center'
         }}
       >
@@ -103,6 +103,9 @@ export default function Navigator() {
         <Stack.Screen
           name="Chat"
           component={Chat}
+          options={{
+            headerBackTitleVisible: false,
+          }}
         />
         <Stack.Screen name="Tab" component={TabNavigator} />
       </Stack.Navigator>

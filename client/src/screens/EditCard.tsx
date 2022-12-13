@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { FSCard } from '../components/FileSystem';
 import { Button } from '@rneui/base';
+import { getCards, useCard } from '../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
 import { StylePropType } from 'react-native-gifted-chat';
 
@@ -14,24 +15,15 @@ type card_detail = {
 }
 
 export default function EditCard(props: any) {
-  const { route } = props;
+  const { naviagtion, route } = props;
   const { card_id } = route.params;
   const [new_name, setName] = useState<string>('');
-  const [card_data, setData] = useState<card_detail>({
-    id: -1,
-    name: '',
-    uri: '',
-    createdDate: '',
-    exists: false,
-  });
 
   const fs = new FSCard();
   useEffect(() => {
     const f = async () => {
-      const my_card_detail = await fs.getCardData(card_id);
-      setData(my_card_detail);
-      console.log('aaa' + my_card_detail.id + card_data.id)
-      console.log(card_data.id);
+      setData(await fs.getCardData(card_id))
+      console.log('get data')
     }; f();
   }, []);
 
