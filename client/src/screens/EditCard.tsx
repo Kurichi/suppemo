@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { FSCard } from '../components/FileSystem';
 import { Button } from '@rneui/base';
 import { getCards, useCard } from '../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
@@ -18,23 +17,20 @@ export default function EditCard(props: any) {
   const { naviagtion, route } = props;
   const { card_id } = route.params;
   const [new_name, setName] = useState<string>('');
-
-  const fs = new FSCard();
-  useEffect(() => {
-    const f = async () => {
-      setData(await fs.getCardData(card_id))
-      console.log('get data')
-    }; f();
-  }, []);
+  const { cards, modifyCard } = useCard();
+  const card = getCards(cards, card_id);
 
   const deleteCard = async () => {
-    //画面遷移
-    console.log(card_data.id)
-    fs.deleteCard(card_data.id)
+    await modifyCard('delete', {
+      id: card_id,
+    });
   }
 
   const setCard = async () => {
-    await fs.modifyCardData(card_data.id, { 'name': new_name });
+    await modifyCard('edit', {
+      id: card_id,
+      title: new_name,
+    });
   }
 
   return (
@@ -50,7 +46,7 @@ export default function EditCard(props: any) {
           カードのさくじょ
         </Button>
         <Image
-          source={{ uri: card_data.uri }}
+          source={{ uri: card ? card.uri : '' }}
         />
       </View>
       <View style={styles.nameChangeContainer}>
