@@ -17,7 +17,7 @@ export default function CameraStack() {
       }}>
       <Stack.Screen name='CameraTop' component={CreateCard} />
       <Stack.Screen name='TakePhoto' component={TakePicture} />
-      <Stack.Screen name='EditCardList' component={CreatedCardList} />
+      <Stack.Screen name='CreatedCardList' component={CreatedCardList} />
       <Stack.Screen name='EditCard' component={EditCard} />
     </Stack.Navigator>
   )

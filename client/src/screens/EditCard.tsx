@@ -5,30 +5,21 @@ import { getCards, useCard } from '../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
 import { StylePropType } from 'react-native-gifted-chat';
 
-type card_detail = {
-  id: number,
-  name: string,
-  uri: string,
-  createdDate: string,
-  exists: boolean,
-}
-
 export default function EditCard(props: any) {
   const { naviagtion, route } = props;
-  const { card_id } = route.params;
+  const { card } = route.params;
   const [new_name, setName] = useState<string>('');
-  const { cards, modifyCard } = useCard();
-  const card = getCards(cards, card_id);
+  const { modifyCard } = useCard();
 
   const deleteCard = async () => {
     await modifyCard('delete', {
-      id: card_id,
+      id: card.id,
     });
   }
 
   const setCard = async () => {
     await modifyCard('edit', {
-      id: card_id,
+      id: card.id,
       title: new_name,
     });
   }
@@ -45,16 +36,24 @@ export default function EditCard(props: any) {
           onPress={deleteCard}>
           カードのさくじょ
         </Button>
-        <Image
-          source={{ uri: card ? card.uri : '' }}
-        />
       </View>
+      <Image
+        style={styles.image}
+        source={{ uri: card.uri != null ? card.uri : '' }}
+      />
       <View style={styles.nameChangeContainer}>
         <Text style={styles.nameChangeText}>なまえをかえる</Text>
-        <TextInput></TextInput>
+        <TextInput
+          defaultValue={card.name}
+          onChangeText={(value) => { setName(value); }}
+        />
       </View>
       <View style={styles.changeButtonContainer}>
-        <Button color='error' style={styles.changeButton}>へんこうする</Button>
+        <Button
+          color='error'
+          style={styles.changeButton}
+          onPress={setCard}
+        >へんこうする</Button>
       </View>
 
     </View>
@@ -101,5 +100,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
   },
-
+  image: {
+    height: 200,
+    width: 200,
+    alignSelf: 'center'
+  }
 });

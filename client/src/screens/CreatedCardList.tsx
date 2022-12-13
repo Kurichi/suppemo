@@ -59,7 +59,7 @@ export default function CreatedCardList(props: any) {
                 <TouchableOpacity
                   style={styles.card}
                   onPress={() => {
-                    navigation.navigate('EditCard', { card_data: item });
+                    navigation.navigate('EditCard', { card: item });
                   }}
                 >
                   <Image
