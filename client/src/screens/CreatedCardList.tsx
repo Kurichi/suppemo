@@ -25,60 +25,57 @@ export default function CreatedCardList(props: any) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <View style={{ flexDirection: 'row' }}>
-          <Feather name="search" size={24} color="white" />
-          <TextInput style={{ backgroundColor: 'white', width: '70%' }} />
-        </View>
-        <View>
-          <DropDownPicker
-            items={[
-              { label: "よく使う", value: "frequency" },
-              { label: "なまえ　はやい順", value: "name_ascending" },
-              { label: "なまえ　おそい順", value: "name_descending" },
-              { label: "つくった順", value: "date_ascending" },
-              { label: "古い順", value: "date_descending" },
-            ]}
-            value={sort_target}
-            setValue={setTarget}
-            multiple={false}
-            open={open}
-            setOpen={setOpen}
-            onChangeValue={(item) => sort(item as string)}
-            style={styles.selectBox}
-            labelStyle={styles.dropBoxLabel}
-            containerStyle={styles.dropBoxContainer}
-
-            placeholder="ならべかえ"
-          />
-        </View>
-        <View>
-
-        </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Feather name="search" size={24} color="white" />
+        <TextInput style={{ backgroundColor: 'white', width: '70%' }} />
       </View>
-
+      <DropDownPicker
+        items={[
+          { label: "よく使う", value: "frequency" },
+          { label: "なまえ　はやい順", value: "name_ascending" },
+          { label: "なまえ　おそい順", value: "name_descending" },
+          { label: "つくった順", value: "date_ascending" },
+          { label: "古い順", value: "date_descending" },
+        ]}
+        value={sort_target}
+        setValue={setTarget}
+        multiple={false}
+        open={open}
+        setOpen={setOpen}
+        onChangeValue={(item) => sort(item as string)}
+        style={styles.selectBox}
+        labelStyle={styles.dropBoxLabel}
+        containerStyle={styles.dropBoxContainer}
+        placeholder="ならべかえ"
+      />
       <View style={styles.listContainer}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) =>
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => {
-                navigation.navigate({
-                  name: 'EditCard',
-                  params: { card_data: item }
-                });
-              }}
-            >
-              <Image
-                source={{ uri: item.uri }}
-                style={styles.photo}
-              />
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          }
-          numColumns={3}
-        />
+        {
+          data.length > 0 ? (
+            <FlatList
+              data={data.filter((d) => {
+                return d.exists;
+              })}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => {
+                    navigation.navigate('EditCard', { card: item });
+                  }}
+                >
+                  <Image
+                    source={{ uri: item.uri }}
+                    style={styles.photo}
+                  />
+                  <Text>{item.name}</Text>
+                </TouchableOpacity>
+              )}
+              numColumns={3}
+            />
+          ) : (
+            <Text>
+              カードがないよ
+            </Text>
+          )}
       </View>
     </View >
   );
@@ -115,5 +112,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginBottom: 80,
+    alignItems: 'center',
   },
 });

@@ -3,7 +3,7 @@ import CardsFolder from '../components/CardsFolder';
 import { FSCard } from '../services/FileSystem';
 
 const ini_cards: card_detail[] = [];
-const ini_func = async (modifyType: string, id?: number, title?: string, picture?: string): Promise<string> => { return '' };
+const ini_func = async (modifyType: card_modify_type, modifyData: card_modify_props): Promise<string> => { return '' };
 const fs = new FSCard();
 const CardContext = createContext({ cards: ini_cards, modifyCard: ini_func });
 
@@ -34,13 +34,13 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
-  const modifyCard = async (modifyType: string, id?: number, title?: string, picture?: string): Promise<string> => {
+  const modifyCard = async (modifyType: card_modify_type, { id, title, picture }: card_modify_props): Promise<string> => {
     var ans = '';
     if (modifyType == 'upload' && typeof title != 'undefined' && typeof picture != 'undefined') {
       const new_picture_path = await fs.savePicture(picture, title);
       ans = new_picture_path;
     }
-    else if (modifyType == 'delete' && typeof id != 'undefined') {
+    else if (modifyType == 'delete' && typeof id != 'undefined' && id >= 0) {
       await fs.deleteData(id);
     }
     else if (modifyType == 'edit' && typeof id != 'undefined' && typeof title != 'undefined') {
@@ -66,8 +66,9 @@ export function getCards(cards: card_detail[], ids: number): card_detail | null;
 export function getCards(cards: card_detail[], ids: number[]): card_detail[];
 export function getCards(cards: card_detail[], ids: number | number[]) {
   if (typeof ids == 'number') {
-    const index = fs.getIndex(cards, ids);
-    return index != -1 ? cards[index] : null;
+    // const index = fs.getIndex(cards, ids);
+    return null;
+    // return index != -1 ? cards[index] : null;
   }
   else {
     var res: card_detail[] = [];

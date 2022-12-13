@@ -46,7 +46,11 @@ export default function Login(props: any) {
                   routes: [{ name: 'Tab' }]
                 })
               }).catch((error) => {
-                console.log(error.message);
+                switch (error.code) {
+                  case 'auth/wrong-password':
+                    Alert.alert('メールアドレスか\nパスワードがちがうよ');
+                    break;
+                }
               })
             }}>
             <Text style={styles.loginButtonText}>ログイン</Text>
@@ -64,18 +68,6 @@ export default function Login(props: any) {
             });
           }}>
           <Text style={styles.signupMessage}>登録はこちら</Text>
-        </Button>
-
-        {/* debug by yammer */}
-        <Button
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Tab' }],
-            });
-          }}
-        >
-          <Text>debug</Text>
         </Button>
       </View>
     </View>

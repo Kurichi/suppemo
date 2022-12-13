@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
-import { uploadCard, useCard } from '../contexts/card';
+import { useCard } from '../contexts/card';
 
 
 
@@ -15,7 +15,7 @@ export default function TakePicture(props: any) {
   const [picture, setPicture] = useState<string>('');
   const [title, setTitle] = useState<string>('');
 
-  const { reloadCards } = useCard()
+  const { modifyCard } = useCard()
 
   if (!permission) {
     return <View />;
@@ -39,8 +39,10 @@ export default function TakePicture(props: any) {
 
   const apply = async () => {
     //カード作成の処理
-    setPicture(await uploadCard(picture, title));
-    await reloadCards();
+    setPicture(await modifyCard('upload', {
+      picture: picture,
+      title: title,
+    }));
   }
 
   return (

@@ -1,5 +1,5 @@
 import { Button } from '@rneui/base';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -68,21 +68,15 @@ export default function WorkSpace() {
                 style={[{ width: windowWidth * 0.94, height: 250 }, styles.frameContainer]}
                 key={index}
               >
-
                 <Text style={styles.title}>{template.name}</Text>
                 <FlatList
                   data={items}
                   renderItem={({ item }) =>
                     <View>
-                      {item.exists ? (
-                        <Image source={{ uri: item.uri }} style={styles.cardStyle} />
-                      ) : (
-                        <View style={[styles.cardStyle, styles.emptyBox]} />
-                      )
-                      }
+                      {item.exists && <Image source={{ uri: item.uri }} style={styles.cardStyle} />}
                     </View>
                   }
-                  numColumns={4}
+                  numColumns={items.length}
                 />
               </View>
             );

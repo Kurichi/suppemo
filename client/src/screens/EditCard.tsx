@@ -1,41 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { FSCard } from '../services/FileSystem';
 import { Button } from '@rneui/base';
 import { getCards, useCard } from '../contexts/card';
+import { TextInput } from 'react-native-gesture-handler';
+import { StylePropType } from 'react-native-gifted-chat';
 
 export default function EditCard(props: any) {
   const { naviagtion, route } = props;
-  const { card_id } = route.params;
+  const { card } = route.params;
   const [new_name, setName] = useState<string>('');
-  const { cards, modifyCard } = useCard();
-  const card = getCards(cards, card_id);
+  const { modifyCard } = useCard();
 
   const deleteCard = async () => {
-    await modifyCard('delete', card_id);
+    await modifyCard('delete', {
+      id: card.id,
+    });
   }
 
   const setCard = async () => {
-    await modifyCard('edit', card_id, new_name);
+    await modifyCard('edit', {
+      id: card.id,
+      title: new_name,
+    });
   }
 
   return (
-    <View>
-      <View>
-        <Text>カードのへんしゅう</Text>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>カードのへんしゅう</Text>
       </View>
-      <View>
+      <View style={styles.removeButtonContainer}>
         <Button
           color='error'
-          onPress={() => {
-            deleteCard();
-            naviagtion.navigate('CreatedCardList');
-          }}
-        >カードのさくじょ</Button>
-        <Image
-          style={styles.photo}
-          source={{ uri: card != null ? card.uri : '' }}
+          style={styles.removeButton}
+          onPress={deleteCard}>
+          カードのさくじょ
+        </Button>
+      </View>
+      <Image
+        style={styles.image}
+        source={{ uri: card.uri != null ? card.uri : '' }}
+      />
+      <View style={styles.nameChangeContainer}>
+        <Text style={styles.nameChangeText}>なまえをかえる</Text>
+        <TextInput
+          defaultValue={card.name}
+          onChangeText={(value) => { setName(value); }}
         />
+      </View>
+      <View style={styles.changeButtonContainer}>
+        <Button
+          color='error'
+          style={styles.changeButton}
+          onPress={setCard}
+        >へんこうする</Button>
       </View>
 
     </View>
@@ -43,11 +61,48 @@ export default function EditCard(props: any) {
 }
 
 const styles = StyleSheet.create({
-  photo: {
-    width: '90%',
-    paddingTop: '90%',
+  container: {
+    backgroundColor: '#FFF8B0',
+  },
+  titleContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 8,
   },
+  titleText: {
+    fontSize: 35,
+  },
+  nameChangeContainer: {
+    justifyContent: "center",
+  },
+  nameChangeText: {
+    fontSize: 35,
+  },
+  nameChangeTextBox: {
+    width: 30,
+    height: 30,
+  },
+  changeButtonContainer: {
+    justifyContent: "center",
+  },
+  changeButton: {
+    width: 200,
+    height: 150,
+    backgroundColor: "#FC6A2C",
+    borderRadius: 15,
+
+  },
+  removeButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  removeButton: {
+    justifyContent: 'center',
+
+  },
+  image: {
+    height: 200,
+    width: 200,
+    alignSelf: 'center'
+  }
 });
