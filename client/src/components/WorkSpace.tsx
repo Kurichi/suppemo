@@ -1,5 +1,5 @@
 import { Button } from '@rneui/base';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,6 +22,10 @@ export default function WorkSpace() {
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
+
+  useEffect(() => {
+    modifyTemplate('add_card', 0, 0);
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,19 +60,13 @@ export default function WorkSpace() {
                 style={[{ width: windowWidth, height: 250 }, styles.frameContainer]}
                 key={index}
               >
-
                 <Text style={styles.title}>{template.name}</Text>
                 <>{console.log(items)}</>
                 <FlatList
                   data={items}
                   renderItem={({ item }) =>
                     <View>
-                      {item.exists ? (
-                        <Image source={{ uri: item.uri }} style={styles.cardStyle} />
-                      ) : (
-                        <View style={[styles.cardStyle, styles.emptyBox]} />
-                      )
-                      }
+                      {item.exists && <Image source={{ uri: item.uri }} style={styles.cardStyle} />}
                     </View>
                   }
                   numColumns={items.length}
