@@ -7,7 +7,8 @@ import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
 import { FSCard } from '../components/FileSystem';
 import { Picker } from '@react-native-picker/picker';
 
-export default function CreatedCardList() {
+export default function CreatedCardList(props: any) {
+  const { navigation } = props;
   type card_detail = {
     id: number,
     name: string,
@@ -24,7 +25,8 @@ export default function CreatedCardList() {
   useEffect(() => {
     const f = async () => {
       setData(await fs.getCardData())
-      console.log('get data')
+      console.log('get datas')
+      console.log(data);
       fs._showJSON();
     }; f();
   }, []);
@@ -70,7 +72,11 @@ export default function CreatedCardList() {
         renderItem={({ item }) =>
           <TouchableOpacity
             style={styles.card}
-
+            onPress={() => {
+              navigation.navigate('EditCard', {
+                card_id: item.id,
+              });
+            }}
           >
             <Image
               source={{ uri: item.uri }}

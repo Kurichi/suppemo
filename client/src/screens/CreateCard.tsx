@@ -74,7 +74,7 @@ export default function CreateCard(props: any) {
             }}
             radius={20}
             onPress={() => {
-              navigation.navigate('EditCard');
+              navigation.navigate('EditCardList');
             }}
           />
         </View>
