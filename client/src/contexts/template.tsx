@@ -2,7 +2,7 @@ import React, { useState, PropsWithChildren, createContext, useContext, useEffec
 import { FSTemplate } from '../services/FileSystem';
 
 const init_template: template_cards[] = [];
-const init_func = (modifyType: string, id?: number, data?: number | string) => { };
+const init_func = (modifyType: string, template_id?: number, card_id_or_idx?: number) => { };
 const fs = new FSTemplate();
 const TemplateContext = createContext({ templates: init_template, modifyTemplate: init_func })
 
