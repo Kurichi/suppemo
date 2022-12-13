@@ -27,32 +27,39 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     console.log('reloaded templates!');
   };
 
-  const modifyTemplate = async (modifyType: string, id?: number, card_id_or_i?: number): Promise<void> => {
+  const modifyTemplate = async (modifyType: string, template_id?: number, card_id_or_idx?: number): Promise<void> => {
     if (modifyType == 'add_empty') {
       await fs.addEmpty();
     }
-    else if (modifyType == 'add_card' && typeof id != 'undefined' && typeof card_id_or_i != 'undefined') {
-      const card_id = card_id_or_i;
-      const card_ids = (await fs.getData<template_cards>(id)).item_ids;
-      const index = -1;
+    // カードの追加
+    else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
+      const card_id = card_id_or_idx;
+      const card_ids = (await fs.getData<template_cards>(template_id)).item_ids;
+      var flag: boolean = true;
       for (var i = 0; i < card_ids.length; i++) {
         if (card_ids[i] == -1) {
           card_ids[i] = card_id;
+          flag = false;
           break;
         }
       }
 
-      await fs.modifyData(id, { 'item_ids': card_ids });
+      if (flag) {
+        console.log('カード枚数上限')
+      }
+
+      await fs.modifyData(template_id, { 'item_ids': card_ids });
     }
-    else if (modifyType == 'exit_card' && typeof id != 'undefined' && typeof card_id_or_i != 'undefined') {
-      const i = card_id_or_i;
-      const card_ids = (await fs.getData<template_cards>(id)).item_ids;
+    // カードの削除
+    else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
+      const i = card_id_or_idx;
+      const card_ids = (await fs.getData<template_cards>(template_id)).item_ids;
       const len = card_ids.length - 1;
 
       for (var j = i; j < len; j++) card_ids[j] = card_ids[j + 1];
       card_ids[len] = -1;
 
-      await fs.modifyData(id, { 'item_ids': card_ids });
+      await fs.modifyData(template_id, { 'item_ids': card_ids });
     }
   }
 

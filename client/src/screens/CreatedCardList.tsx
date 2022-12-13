@@ -46,7 +46,6 @@ export default function CreatedCardList(props: any) {
         style={styles.selectBox}
         labelStyle={styles.dropBoxLabel}
         containerStyle={styles.dropBoxContainer}
-
         placeholder="ならべかえ"
       />
       <View style={styles.listContainer}>

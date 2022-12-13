@@ -6,7 +6,7 @@
     uri         : string  || 画像のパス
     createdDate : date    || 作成日
     exists      : boolean || 利用可能かどうか
-  } 
+  }
 */
 
 type card_detail = {
@@ -45,5 +45,12 @@ type ws_props = {
   exists: boolean,
 }
 
+
+type card_modify_type = 'upload' | 'delete' | 'edit';
+type card_modify_props = {
+  id?: number,
+  title?: string,
+  picture?: string,
+}
 
 // declare const ws_max_card: number = 8
