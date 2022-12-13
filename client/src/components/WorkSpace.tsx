@@ -3,17 +3,19 @@ import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   Image,
   FlatList,
   SafeAreaView,
   ScrollView,
   Animated,
-  useWindowDimensions
+  useWindowDimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { getCards, useCard } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
-
 
 export default function WorkSpace() {
   const { cards } = useCard();
@@ -23,12 +25,21 @@ export default function WorkSpace() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
 
+  const setCurrentID = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.targetContentOffset) {
+      const x = e.nativeEvent.targetContentOffset.x;
+      const index = Math.round(x / 0.94 / windowWidth);
+      console.log(`ws index: ${index}`);
+      setCurrent(index);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.scrollContainer}>
         <ScrollView
           horizontal={true}
-          pagingEnabled
+          pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event([
             {
@@ -39,6 +50,7 @@ export default function WorkSpace() {
               }
             }
           ], { useNativeDriver: false })}
+          onScrollEndDrag={setCurrentID}
           scrollEventThrottle={1}
         >
           {templates.map((template, index) => {
@@ -53,12 +65,11 @@ export default function WorkSpace() {
             });
             return (
               <View
-                style={[{ width: windowWidth, height: 250 }, styles.frameContainer]}
+                style={[{ width: windowWidth * 0.94, height: 250 }, styles.frameContainer]}
                 key={index}
               >
 
                 <Text style={styles.title}>{template.name}</Text>
-                <>{console.log(items)}</>
                 <FlatList
                   data={items}
                   renderItem={({ item }) =>
@@ -79,7 +90,7 @@ export default function WorkSpace() {
         </ScrollView>
         <Button
           color='error'
-          onPress={() => { }}
+          onPress={() => { modifyTemplate('') }}
         >新規作成</Button>
       </View>
     </SafeAreaView>
@@ -102,7 +113,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   scrollContainer: {
-
+    //backgroundColor: 'red',
   },
   title: {
     fontSize: 24,
