@@ -25,9 +25,9 @@ class multipleFS {
     }
   }
 
-  async getData<T>(id: number): Promise<T>;
-  async getData<T>(): Promise<Array<T>>;
-  async getData<T>(id?: number) {
+  async readData<T>(id: number): Promise<T>;
+  async readData<T>(): Promise<Array<T>>;
+  async readData<T>(id?: number) {
     await this.initialize();
     const data = JSON.parse(await FS.readAsStringAsync(this.file_path));
 
@@ -90,6 +90,7 @@ class multipleFS {
   }
 
 }
+
 export class FSCard extends multipleFS {
   readonly save_file_path: string = `${FS.documentDirectory}cards`;
   readonly failed_card: card_detail = {
@@ -136,7 +137,7 @@ export class FSCard extends multipleFS {
     });
 
     //add new image info to json data
-    const card_data = await this.getData<card_detail>();
+    const card_data = await this.readData<card_detail>();
     card_data.push({
       id: card_data.length,
       name: title,
@@ -164,7 +165,17 @@ export class FSCard extends multipleFS {
   // }
 }
 
+export class FSChat extends multipleFS{
+  constructor() {
+    super(`${FS.documentDirectory}chat_cache.json`);
+  }
 
+  writeTalkCache(talks: talk[]){
+    FS.writeAsStringAsync(this.file_path, JSON.stringify(talks));
+  }
+
+
+}
 
 export class FSSetting {
   readonly setting_file_path = `${FS.documentDirectory}settings.json`;
@@ -196,8 +207,6 @@ export class FSSetting {
   }
 }
 
-
-
 export class FSAddress extends multipleFS {
   constructor() {
     super(`${FS.documentDirectory}address.json`);
@@ -220,7 +229,7 @@ export class FSTemplate extends multipleFS {
   }
 
   async addEmpty(): Promise<void> {
-    const data = await this.getData<template_cards>();
+    const data = await this.readData<template_cards>();
     const len = data.length;
     const empty_data: template_cards = {
       id: len,

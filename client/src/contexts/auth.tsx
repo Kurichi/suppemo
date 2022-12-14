@@ -8,7 +8,7 @@ interface ContextInterface {
 
 const AuthContext = createContext({} as ContextInterface);
 
-export const useAuthContext = () => {
+export const useAuth = () => {
   return useContext(AuthContext);
 }
 
@@ -18,19 +18,19 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const value = {
     user,
-    loading,
   };
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       setUser(user);
+      console.log(user);
       setLoading(false);
     });
     return () => unsubscribed();
   }, []);
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user }}>
       {!loading && children}
     </AuthContext.Provider>
   );

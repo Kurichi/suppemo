@@ -1,49 +1,25 @@
-import { Button } from '@rneui/base';
 import React, { useState, useCallback, useEffect } from 'react';
-import { View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { useChat } from '../contexts/chat';
 
-interface User {
-  _id: number,
-  name: string,
-  avatar: string
-}
-interface Message {
-  _id: number,
-  text: string,
-  createdAt: Date,
-  user: User,
-}
 
 export default function Chat(props: any) {
   const { navigation, route } = props;
-  const { user } = route.params;
+  const { talk } = route.params;
+  const { sendMessage } = useChat();
 
   const [messages, setMessages] = useState<Message[]>([]);
 
+  // change navigation title to friend name
   useEffect(() => {
     navigation.setOptions({
-      title: user.userName,
+      title: talk.talk_with.userName,
     });
-    console.log(user.userName);
-  }, [navigation, user]);
-
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
-  }, [])
+  }, [talk]);
 
   const onSend = useCallback((messages: Message[] = []) => {
+    sendMessage(messages[0]);
+    console.log(messages);
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])
 
