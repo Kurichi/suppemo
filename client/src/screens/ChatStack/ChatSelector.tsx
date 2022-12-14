@@ -2,7 +2,8 @@ import { Button, Icon } from "@rneui/base";
 import React from "react";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-native";
-import { useAuthContext } from "../../contexts/auth";
+import { useAuth } from "../../contexts/auth";
+import { useChat } from "../../contexts/chat";
 
 interface User {
   id: number,
@@ -13,7 +14,8 @@ interface User {
 export default function ChatSelector(props: any) {
   const { navigation, route } = props;
   const { stack } = route.params;
-  const { user } = useAuthContext();
+  const { user } = useAuth();
+  const { talks } = useChat();
   // const [users, setUsers] = useState<User[]>();
   const users: User[] = [
     { id: 0, icon: 'tmp', userName: 'なまえ0' },
@@ -45,11 +47,11 @@ export default function ChatSelector(props: any) {
         </View>
       ) : (
         <ScrollView>
-          {users?.map((user, index) => {
+          {talks?.map((talk, index) => {
             return (
               <View style={styles.chatCard} key={index}>
                 <Button
-                  title={user.userName}
+                  title={talk.talk_with.name}
                   titleStyle={{
                     color: 'black',
                     textAlign: 'left',
@@ -63,7 +65,7 @@ export default function ChatSelector(props: any) {
                     iconStyle: { marginHorizontal: 10, flex: 1 }
                   }}
                   onPress={() => {
-                    stack.navigate('Chat', { 'user': user });
+                    stack.navigate('Chat', { 'talk': talk });
                   }}
                 />
               </View>
