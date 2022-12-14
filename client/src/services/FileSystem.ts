@@ -48,10 +48,10 @@ class multipleFS {
     }
 
     for (const [key, value] of Object.entries(reject_data)) {
-      console.log(`value: ${value}`)
-      console.log(`key: ${key}`)
+      // console.log(`value: ${value}`)
+      // console.log(`key: ${key}`)
       data[index][key] = value
-      console.log(data[index][key])
+      // console.log(data[index][key])
     }
     FS.writeAsStringAsync(this.file_path, JSON.stringify(data));
     return true;
@@ -211,6 +211,7 @@ export class FSTemplate extends multipleFS {
       {
         id: 0,
         name: '会話１',
+        item_num: 0,
         item_ids: Array(ws_max_card).fill(-1),
         background_color: 'white',
         exists: true,
@@ -224,6 +225,7 @@ export class FSTemplate extends multipleFS {
     const empty_data: template_cards = {
       id: len,
       name: '会話' + String(len),
+      item_num: 0,
       item_ids: Array(ws_max_card).fill(-1),
       background_color: 'white',
       exists: true,

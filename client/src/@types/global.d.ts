@@ -21,6 +21,7 @@ type card_detail = {
 type template_cards = {
   id: number = -1,
   name: string = '',
+  item_num: number = 0,
   item_ids: Array<number> = [],
   background_color: string = '',
   exists: boolean = false,
@@ -43,6 +44,13 @@ type ws_props = {
   name: string,
   card_ids: number[],
   exists: boolean,
+}
+
+type folder_type = {
+  id: number,
+  feather_name: string,
+  background_color: string,
+  cards_ids: number[],
 }
 
 

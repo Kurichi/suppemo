@@ -33,18 +33,20 @@ export default function Home() {
     }
   }, [isFocused]);
 
+  const [current_ws, setCurrent] = useState<number>(0);
+
   return (
     <View style={styles.container}>
       {/* WorkSpace */}
       <View style={styles.workSpace}>
-        <WorkSpace />
+        <WorkSpace current_ws={current_ws} setCurrent={setCurrent} isVertical={isVertical} />
       </View>
 
       {/* CardsFolder */}
       {
         isVertical ? (
           <View style={styles.cardsFolder}>
-            <CardsFolder />
+            <CardsFolder current_ws={current_ws} />
           </View>
         ) : (
           <></>
