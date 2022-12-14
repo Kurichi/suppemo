@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Button } from '@rneui/base';
-import { getCards, useCard } from '../contexts/card';
+import { getCards, useCard } from '../../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
 import { StylePropType } from 'react-native-gifted-chat';
 

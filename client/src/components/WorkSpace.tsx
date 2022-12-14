@@ -80,7 +80,7 @@ export default function WorkSpace(props: props_type) {
                   data={items}
                   renderItem={({ item }) =>
                     <TouchableOpacity
-                      onPress={() => modifyTemplate('exit_card', current_ws, item.id)}
+                      onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
                     >
                       {item.exists &&
                         <Image

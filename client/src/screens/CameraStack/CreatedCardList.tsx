@@ -4,7 +4,7 @@ import { Button } from '@rneui/base';
 
 import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
-import { useCard } from '../contexts/card';
+import { useCard } from '../../contexts/card';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function CreatedCardList(props: any) {

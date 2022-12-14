@@ -67,7 +67,7 @@ export default function CardsFolder(props: { current_ws: number }) {
             data={getCards(cards, folders[current_index].cards_ids)}
             renderItem={({ item }) =>
               <TouchableOpacity
-                onPress={() => modifyTemplate('add_card', current_ws, item.id)}>
+                onLongPress={() => modifyTemplate('add_card', current_ws, item.id)}>
                 {item.exists && <Image source={{ uri: item.uri }} style={styles.card} />}
               </TouchableOpacity>
             }

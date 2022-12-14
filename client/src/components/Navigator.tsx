@@ -7,9 +7,10 @@ import { Feather } from '@expo/vector-icons';
 import Home from './../screens/Home';
 import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
-import ChatSelector from '../screens/ChatSelector';
+import ChatSelector from '../screens/ChatStack/ChatSelector';
 import Chat from '../screens/Chat';
 import CameraStack from './CameraStack';
+import ChatStack from './ChatStack';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,7 +42,7 @@ function TabNavigator(props: any) {
       {/* Chat */}
       <Tab.Screen
         name="ChatSelector"
-        component={ChatSelector}
+        component={ChatStack}
         initialParams={{ stack: navigation }}
         options={{
           tabBarIcon: (({ size, color }) => (

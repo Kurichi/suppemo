@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
-import { useCard } from '../contexts/card';
+import { useCard } from '../../contexts/card';
 
 
 
