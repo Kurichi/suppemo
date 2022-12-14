@@ -15,14 +15,14 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     const f = async () => {
-      const _template = await fs.getData<template_cards>();
+      const _template = await fs.readData<template_cards>();
       setTemplates(_template)
     };
     f();
   }, []);
 
   const reloadTemplates = async (): Promise<void> => {
-    const reloadTemplates = await fs.getData<template_cards>();
+    const reloadTemplates = await fs.readData<template_cards>();
     setTemplates(reloadTemplates)
     console.log('reloaded templates!');
   };
@@ -46,6 +46,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
           break;
         }
       }
+
 
       if (flag) {
         console.log('カード枚数上限')

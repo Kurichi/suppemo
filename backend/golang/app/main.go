@@ -11,18 +11,21 @@ import (
 )
 
 func main() {
-	if err := mydb.SqlConnect(); err != nil {
+	err := mydb.SqlConnect()
+	if err != nil {
 		log.Fatal(err)
 		return
 	}
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	e := echo.New()
-	// Middleware
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 
-	handler.Init(e)
-	e.Static("/", "public")
-
-	// Start server
+	e.POST("/init", handler.InitHandler)
 	e.Logger.Fatal(e.Start(":8080"))
 }

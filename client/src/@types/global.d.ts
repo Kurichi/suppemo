@@ -31,10 +31,28 @@ type address = {
   id: number = -1,
   name: string = '',
   exists: boolean = false,
-
 }
 
-type multipleType = card_detail | template_cards | address;
+interface User {
+  _id: number,
+  name: string,
+  avatar: string
+}
+interface Message {
+  _id: number,
+  text: string,
+  createdAt: Date,
+  user: User,
+}
+
+type talk = {
+  id: number,
+  talk_with: User,
+  messages: Message[]
+}
+
+
+type multipleType = card_detail | template_cards | address | talk;
 
 type setting_contents = {
   vol: number,

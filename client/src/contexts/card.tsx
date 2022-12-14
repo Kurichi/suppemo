@@ -16,7 +16,7 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     const f = async () => {
-      const _card = await fs.getData<card_detail>();
+      const _card = await fs.readData<card_detail>();
       setCards(_card)
     };
     f();
@@ -24,7 +24,7 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const reloadCards = async (cs?: card_detail[]): Promise<void> => {
     if (typeof cs == 'undefined') {
-      const reloadCards = await fs.getData<card_detail>();
+      const reloadCards = await fs.readData<card_detail>();
       setCards(reloadCards)
       console.log('reloaded cards!')
     } else {
@@ -49,7 +49,7 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
       ans = 'false';
     }
 
-    const reloadCards = await fs.getData<card_detail>();
+    const reloadCards = await fs.readData<card_detail>();
     setCards(reloadCards);
 
     return ans;
@@ -66,9 +66,8 @@ export function getCards(cards: card_detail[], ids: number): card_detail | null;
 export function getCards(cards: card_detail[], ids: number[]): card_detail[];
 export function getCards(cards: card_detail[], ids: number | number[]) {
   if (typeof ids == 'number') {
-    // const index = fs.getIndex(cards, ids);
-    return null;
-    // return index != -1 ? cards[index] : null;
+    const index = fs.getIndex(cards, ids);
+    return index != -1 ? cards[index] : null;
   }
   else {
     var res: card_detail[] = [];

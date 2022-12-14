@@ -1,35 +1,30 @@
 import { Button, Icon } from "@rneui/base";
 import React from "react";
-import { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-
-interface User {
-  id: number,
-  icon: string,
-  userName: string,
-}
+import { useChat } from "../contexts/chat";
 
 export default function ChatSelector(props: any) {
   const { navigation, route } = props;
   const { stack } = route.params;
+  const { talks } = useChat();
   // const [users, setUsers] = useState<User[]>();
   const users: User[] = [
-    { id: 0, icon: 'tmp', userName: 'なまえ0' },
-    { id: 1, icon: 'tmp', userName: 'なまえ1' },
-    { id: 2, icon: 'tmp', userName: 'なまえ2' },
-    { id: 3, icon: 'tmp', userName: 'なまえ3' },
-    { id: 4, icon: 'tmp', userName: 'なまえ4' },
-    { id: 5, icon: 'tmp', userName: 'なまえ5' }
+    { _id: 0, avatar: 'tmp', name: 'なまえ0' },
+    { _id: 1, avatar: 'tmp', name: 'なまえ1' },
+    { _id: 2, avatar: 'tmp', name: 'なまえ2' },
+    { _id: 3, avatar: 'tmp', name: 'なまえ3' },
+    { _id: 4, avatar: 'tmp', name: 'なまえ4' },
+    { _id: 5, avatar: 'tmp', name: 'なまえ5' }
   ];
 
   return (
     <View>
       <ScrollView>
-        {users?.map((user, index) => {
+        {talks?.map((talk, index) => {
           return (
             <View style={styles.chatCard} key={index}>
               <Button
-                title={user.userName}
+                title={talk.talk_with.name}
                 titleStyle={{
                   color: 'black',
                   textAlign: 'left',
@@ -43,7 +38,7 @@ export default function ChatSelector(props: any) {
                   iconStyle: { marginHorizontal: 10, flex: 1 }
                 }}
                 onPress={() => {
-                  stack.navigate('Chat', { 'user': user });
+                  stack.navigate('Chat', { 'talk': talk });
                 }}
               />
             </View>
