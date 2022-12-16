@@ -7,7 +7,6 @@ import { Feather } from '@expo/vector-icons';
 import Home from './../screens/Home';
 import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
-import ChatSelector from '../screens/ChatStack/ChatSelector';
 import Chat from '../screens/Chat';
 import CameraStack from './CameraStack';
 import ChatStack from './ChatStack';
@@ -50,6 +49,8 @@ function TabNavigator(props: any) {
           ))
         }}
       />
+
+
       {/* CreateDeck
       <Tab.Screen
         name="Deck"

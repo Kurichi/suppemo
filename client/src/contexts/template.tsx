@@ -1,4 +1,5 @@
 import React, { useState, PropsWithChildren, createContext, useContext, useEffect } from 'react';
+import { Sounder } from '../components/Sounder';
 import { FSTemplate } from '../services/FileSystem';
 
 const init_template: template_cards[] = [];
@@ -35,7 +36,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     // カードの追加
     else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
       const card_id = card_id_or_idx;
-      const data = await fs.getData<template_cards>(template_id);
+      const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num;
       var flag: boolean = true;
@@ -50,15 +51,17 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
 
       if (flag) {
         console.log('カード枚数上限')
+        await Sounder('error', 'play');
       } else {
         card_num += 1;
+        await Sounder('decision', 'play');
         await fs.modifyData(template_id, { 'item_ids': card_ids, 'item_num': card_num });
       }
     }
     // カードの削除
     else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
       const i = card_id_or_idx;
-      const data = await fs.getData<template_cards>(template_id);
+      const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num - 1;
       const len = card_ids.length - 1;
@@ -66,10 +69,12 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       for (var j = i; j < len; j++) card_ids[j] = card_ids[j + 1];
       card_ids[len] = -1;
 
+      await Sounder('cancel', 'play')
+
       await fs.modifyData(template_id, { 'item_ids': card_ids, 'item_num': card_num });
     }
 
-    const reloadTemplates = await fs.getData<template_cards>();
+    const reloadTemplates = await fs.readData<template_cards>();
     setTemplates(reloadTemplates)
     console.log('reloaded templates!');
   }

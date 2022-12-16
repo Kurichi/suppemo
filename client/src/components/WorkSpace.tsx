@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import { getCards, useCard } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
+import { Sounder } from './Sounder';
 
 interface props_type {
   current_ws: number,

@@ -8,6 +8,17 @@ import ShowQRCode from "../screens/ChatStack/ShowQRCode";
 
 const Stack = createStackNavigator();
 
+
+const showORCodeStack = () => (
+  <Stack.Navigator
+    initialRouteName="show"
+  >
+    <Stack.Screen name='show' component={ShowQRCode} />
+    <Stack.Screen name='apply' component={ApplyReader} />
+    <Stack.Screen name='show' component={showORCodeStack} />
+  </Stack.Navigator>
+)
+
 export default function ChatStack(props: any) {
   const { navigation } = props;
   return (
@@ -17,9 +28,9 @@ export default function ChatStack(props: any) {
         headerShown: false,
       }}>
       <Stack.Screen initialParams={{ stack: navigation }} name='ChatSelector' component={ChatSelector} />
-      <Stack.Screen name='reader' component={QRCodeReader} />
-      <Stack.Screen name='apply' component={ApplyReader} />
+      <Stack.Screen initialParams={{ stack: navigation }} name='reader' component={QRCodeReader} />
       <Stack.Screen name='show' component={ShowQRCode} />
+      <Stack.Screen name='apply' component={ApplyReader} />
     </Stack.Navigator>
   )
 }

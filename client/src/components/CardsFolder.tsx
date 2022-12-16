@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Touchable, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/base';
@@ -6,8 +6,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import { NumericAnimation } from 'react-native-reanimated/lib/types/lib/reanimated2/commonTypes';
 import { useCard, getCards } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
+import { Audio } from 'expo-av';
+import { Sounder } from './Sounder';
 
 export default function CardsFolder(props: { current_ws: number }) {
+
 
   const [current_index, setSelectCard] = useState<number>(0);
   const { cards, modifyCard } = useCard();
@@ -67,7 +70,8 @@ export default function CardsFolder(props: { current_ws: number }) {
             data={getCards(cards, folders[current_index].cards_ids)}
             renderItem={({ item }) =>
               <TouchableOpacity
-                onLongPress={() => modifyTemplate('add_card', current_ws, item.id)}>
+                onLongPress={() => modifyTemplate('add_card', current_ws, item.id)}
+              >
                 {item.exists && <Image source={{ uri: item.uri }} style={styles.card} />}
               </TouchableOpacity>
             }
