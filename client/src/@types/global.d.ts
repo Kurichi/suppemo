@@ -46,7 +46,7 @@ type ws_props = {
 }
 
 
-type card_modify_type = 'upload' | 'delete' | 'edit';
+type card_modify_type = 'upload' | 'delete' | 'edit' | 'reload';
 type card_modify_props = {
   id?: number,
   title?: string,

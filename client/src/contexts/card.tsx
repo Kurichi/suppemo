@@ -45,8 +45,6 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
     }
     else if (modifyType == 'edit' && typeof id != 'undefined' && typeof title != 'undefined') {
       await fs.modifyData(id, { 'name': title });
-    } else {
-      ans = 'false';
     }
 
     const reloadCards = await fs.getData<card_detail>();
@@ -66,9 +64,8 @@ export function getCards(cards: card_detail[], ids: number): card_detail | null;
 export function getCards(cards: card_detail[], ids: number[]): card_detail[];
 export function getCards(cards: card_detail[], ids: number | number[]) {
   if (typeof ids == 'number') {
-    // const index = fs.getIndex(cards, ids);
-    return null;
-    // return index != -1 ? cards[index] : null;
+    const index = fs.getIndex(cards, ids);
+    return index != -1 ? cards[index] : null;
   }
   else {
     var res: card_detail[] = [];
