@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   emptyBox: {
     backgroundColor: 'rgba(0,0,0,0.2)'
-  }
+  },
   imageContainer: {
 
   },
