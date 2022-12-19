@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
 import Home from './../screens/Home';
+import TemplateList from '../screens/TemplateList';
 import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
 import Chat from '../screens/Chat';
@@ -34,10 +35,22 @@ function TabNavigator(props: any) {
         component={Home}
         options={{
           tabBarIcon: (({ size, color }) => (
+            <Feather name="home" size={iconSize} color={color} />
+          ))
+        }}
+      />
+
+      {/* Template List */}
+      <Tab.Screen
+        name="TemplateList"
+        component={TemplateList}
+        options={{
+          tabBarIcon: (({ size, color }) => (
             <Feather name="grid" size={iconSize} color={color} />
           ))
         }}
       />
+
       {/* Chat */}
       <Tab.Screen
         name="ChatSelector"

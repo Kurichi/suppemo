@@ -68,9 +68,10 @@ export default function WorkSpace(props: props_type) {
                 card_id: _c.id,
                 exists: _c.exists,
                 uri: _c.uri,
+                name: _c.name,
               })
             });
-            const colmns_length = Math.round(items.length / 2);
+            const colmns_length = Math.round(template.item_ids.length / 2);
             return (
               <View
                 style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
@@ -83,17 +84,18 @@ export default function WorkSpace(props: props_type) {
                     <TouchableOpacity
                       onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
                     >
-                      {item.exists &&
+                      <View style={styles.imageContainer}>
                         <Image
                           source={{ uri: item.uri }}
                           style={[styles.cardStyle,
                           {
-                            width: colmns_length > template.item_num ? 100 : 60,
-                            height: colmns_length > template.item_num ? 100 : 60,
+                            width: colmns_length > template.item_num ? 100 : 70,
+                            height: colmns_length > template.item_num ? 100 : 70,
                           },
                           ]}
                         />
-                      }
+                        <Text style={styles.cardTitle}>{item.name}</Text>
+                      </View>
                     </TouchableOpacity>
                   }
                   numColumns={colmns_length}
@@ -102,10 +104,6 @@ export default function WorkSpace(props: props_type) {
             );
           })}
         </ScrollView>
-        <Button
-          color='error'
-          onPress={() => { modifyTemplate('add_empty') }}
-        >新規作成</Button>
       </View>
     </SafeAreaView>
   );
@@ -118,10 +116,14 @@ const styles = StyleSheet.create({
     paddingLeft: 19,
     paddingRight: 19,
     borderRadius: 30,
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
   },
   cardStyle: {
-    marginHorizontal: 10,
-    marginVertical: 10,
+    marginHorizontal: 8,
+    marginVertical: 8,
   },
   scrollContainer: {
     //backgroundColor: 'red',
@@ -134,5 +136,18 @@ const styles = StyleSheet.create({
   },
   emptyBox: {
     backgroundColor: 'rgba(0,0,0,0.2)'
-  }
+  },
+  imageContainer: {
+
+  },
+  cardTitle: {
+    position: 'absolute',
+    bottom: 0,
+    height: '20%',
+    marginHorizontal: 8,
+    marginVertical: 8,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
 });

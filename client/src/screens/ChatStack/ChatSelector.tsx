@@ -26,6 +26,16 @@ export default function ChatSelector(props: any) {
     { id: 5, icon: 'tmp', userName: 'なまえ5' }
   ];
 
+  const memo: talk = {
+    id: -1,
+    talk_with: {
+      _id: -1,
+      name: 'じぶんよう',
+      avatar: require('../../../assets/default_logo_background.png'),
+    },
+    messages: [],
+  }
+
   if (user == null) {
     Alert.alert(
       'ログインしてないよ',
@@ -71,6 +81,26 @@ export default function ChatSelector(props: any) {
               </View>
             )
           })}
+          <View style={styles.chatCard}>
+            <Button
+              title='メモ'
+              titleStyle={{
+                color: 'black',
+                textAlign: 'left',
+                flex: 10,
+              }}
+              type='clear'
+              icon={{
+                name: 'home',
+                type: 'font-awesome',
+                color: 'black',
+                iconStyle: { marginHorizontal: 10, flex: 1 }
+              }}
+              onPress={() => {
+                stack.navigate('Chat', { 'talk': memo });
+              }}
+            />
+          </View>
         </ScrollView>
       )
       }
@@ -82,6 +112,7 @@ export default function ChatSelector(props: any) {
             name: 'user-plus',
             type: 'font-awesome',
             color: 'black',
+            size: 32,
           }}
           onPress={() => {
             stack.navigate('reader');
@@ -113,6 +144,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 36,
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
   }
 
 });
