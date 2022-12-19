@@ -39,7 +39,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/sql:/docker-entrypoint-initdb.d
       - ./mysql/data:/var/lib/mysql
       - ./mysql/log:/var/log/mysql
     env_file:

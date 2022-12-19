@@ -17,15 +17,15 @@ func main() {
 		return
 	}
 
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-
 	e := echo.New()
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 
-	e.POST("/init", handler.InitHandler)
+	e.POST("/", handler.InitHandler)
+	e.POST("/chat", handler.SendMessage)
+	e.GET("/chat", handler.GetMessages)
+	e.POST("/friend", handler.AddFriend)
+	e.GET("/friend", handler.GetFriends)
+
 	e.Logger.Fatal(e.Start(":8080"))
 }

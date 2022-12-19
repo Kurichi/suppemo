@@ -1,6 +1,8 @@
 import React, { useEffect, createContext, useState, useContext, PropsWithChildren } from 'react';
 import { auth } from '../services/firebase';
 import { User } from 'firebase/auth';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 interface ContextInterface {
   user: User | null,
@@ -16,15 +18,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const value = {
-    user,
-  };
-
   useEffect(() => {
-    const unsubscribed = auth.onAuthStateChanged((user) => {
+    const unsubscribed = auth.onAuthStateChanged(async (user) => {
       setUser(user);
-      console.log(user);
       setLoading(false);
+      useNavigation().navigate('Tab')
     });
     return () => unsubscribed();
   }, []);

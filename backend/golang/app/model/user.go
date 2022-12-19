@@ -1,50 +1,42 @@
 package model
 
 import (
-	"fmt"
-	"io"
-	"math/rand"
 	"suppemo-api/mydb"
 	"time"
-
-	"github.com/oklog/ulid"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID       string `json:"id" form:"id" query:"id"`
-	Name     string `json:"name" form:"name" query:"name"`
-	Email    string `json:"email" form:"email" query:"email"`
-	Password string `json:"password" form:"password" query:"password"`
+	UID     string    `json:"uid" form:"uid" query:"uid"`
+	Name    string    `json:"name" form:"name" query:"name"`
+	Created time.Time `json:"created" form:"created" query:"created"`
+	Updated time.Time `json:"updated" form:"updated" query:"updated"`
 }
 
-var ulidGenerator io.Reader = ulid.Monotonic(rand.New(rand.NewSource(time.Now().UnixNano())), 0)
-
-func CreateUser(u *User) {
-	myulid := ulid.MustNew(ulid.Timestamp(time.Now()), ulidGenerator).String()
-
-	hashed, _ := bcrypt.GenerateFromPassword([]byte(u.Password), 10)
-
+func CreateUser(uid string, name string) error {
 	db := mydb.GetDB()
 
-	ins, err := db.Prepare("INSERT INTO users(id,name,email,password) VALUES(?,?,?,?)")
+	ins, err := db.Prepare("INSERT IGNORE INTO users(id,name) VALUES(?,?)")
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
-	_, err = ins.Exec(myulid, u.Name, u.Email, string(hashed))
+	_, err = ins.Exec(uid, name)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
+	return nil
 }
 
-func FindUser(u *User) User {
+func FindUser(uid string) (User, error) {
 	db := mydb.GetDB()
 
 	user := &User{}
-	db.QueryRow("SELECT id, name, email, password FROM users WHERE email = ?", u.Email).
-		Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+	err := db.QueryRow("SELECT * FROM users WHERE uid = ?", uid).
+		Scan(&user.UID, &user.Name, &user.Created, &user.Updated)
+	if err != nil {
+		return *user, err
+	}
 
-	return *user
+	return *user, nil
 }

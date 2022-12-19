@@ -22,18 +22,6 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
     f();
   }, []);
 
-  const reloadCards = async (cs?: card_detail[]): Promise<void> => {
-    if (typeof cs == 'undefined') {
-      const reloadCards = await fs.readData<card_detail>();
-      setCards(reloadCards)
-      console.log('reloaded cards!')
-    } else {
-      await fs.updateData(cs);
-      setCards(cs);
-      console.log('update data!')
-    }
-  };
-
   const modifyCard = async (modifyType: card_modify_type, { id, title, picture }: card_modify_props): Promise<string> => {
     var ans = '';
     if (modifyType == 'upload' && typeof title != 'undefined' && typeof picture != 'undefined') {
@@ -45,8 +33,6 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
     }
     else if (modifyType == 'edit' && typeof id != 'undefined' && typeof title != 'undefined') {
       await fs.modifyData(id, { 'name': title });
-    } else {
-      ans = 'false';
     }
 
     const reloadCards = await fs.readData<card_detail>();

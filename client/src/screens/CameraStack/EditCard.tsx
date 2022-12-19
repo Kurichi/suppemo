@@ -6,9 +6,9 @@ import { TextInput } from 'react-native-gesture-handler';
 import { StylePropType } from 'react-native-gifted-chat';
 
 export default function EditCard(props: any) {
-  const { naviagtion, route } = props;
+  const { navigation, route } = props;
   const { card } = route.params;
-  const [new_name, setName] = useState<string>('');
+  const [new_name, setName] = useState<string>(card.name);
   const { modifyCard } = useCard();
 
   const deleteCard = async () => {
@@ -17,45 +17,60 @@ export default function EditCard(props: any) {
     });
   }
 
-  const setCard = async () => {
+  const setCard = async (name: string) => {
     await modifyCard('edit', {
       id: card.id,
-      title: new_name,
+      title: name,
     });
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>カードのへんしゅう</Text>
-      </View>
-      <View style={styles.removeButtonContainer}>
-        <Button
-          color='error'
-          style={styles.removeButton}
-          onPress={deleteCard}>
-          カードのさくじょ
-        </Button>
-      </View>
-      <Image
-        style={styles.image}
-        source={{ uri: card.uri != null ? card.uri : '' }}
-      />
-      <View style={styles.nameChangeContainer}>
+      <View style={{ marginHorizontal: 16 }}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>カードのへんしゅう</Text>
+        </View>
+        <View style={styles.removeButtonContainer}>
+          <Button
+            title='カードのさくじょ'
+            color='error'
+            buttonStyle={styles.removeButton}
+            onPress={() => {
+              deleteCard();
+              navigation.goBack();
+              //アラート出した方がいいかもなのでだしてください誰か
+            }}>
+          </Button>
+        </View>
+        <Image
+          style={styles.image}
+          source={{ uri: card.uri != null ? card.uri : '' }}
+        />
         <Text style={styles.nameChangeText}>なまえをかえる</Text>
         <TextInput
-          defaultValue={card.name}
+          value={new_name}
+          style={styles.nameChangeTextBox}
+          maxLength={8}
           onChangeText={(value) => { setName(value); }}
         />
-      </View>
-      <View style={styles.changeButtonContainer}>
+        {/* <View style={styles.changeButtonContainer}> */}
         <Button
-          color='error'
-          style={styles.changeButton}
-          onPress={setCard}
-        >へんこうする</Button>
+          title='へんこうする'
+          buttonStyle={styles.changeButton}
+          titleStyle={{
+            color: 'black',
+          }}
+          onPress={() => {
+            if (new_name === '')
+              setCard('なまえがないよ');
+            else
+              setCard(new_name);
+            navigation.goBack();
+          }}
+          type={"clear"}
+        />
+        {/* </View> */}
       </View>
-
     </View>
   )
 }
@@ -65,6 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF8B0',
   },
   titleContainer: {
+    paddingTop: 15,
+    paddingBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -73,20 +90,28 @@ const styles = StyleSheet.create({
   },
   nameChangeContainer: {
     justifyContent: "center",
+    alignItems: 'center',
+    paddingBottom: 15,
+    paddingTop: 20,
   },
   nameChangeText: {
-    fontSize: 35,
+    fontSize: 20,
   },
   nameChangeTextBox: {
-    width: 30,
-    height: 30,
+
+    height: 100,
+    fontSize: 30,
+    borderRadius: 5,
+    backgroundColor: "#FFFFFF"
   },
   changeButtonContainer: {
     justifyContent: "center",
+    alignItems: 'center',
+    paddingBottom: 20,
+    backgroundColor: 'red',
   },
   changeButton: {
-    width: 200,
-    height: 150,
+    height: 100,
     backgroundColor: "#FC6A2C",
     borderRadius: 15,
 
@@ -94,11 +119,13 @@ const styles = StyleSheet.create({
   removeButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 40,
 
   },
   removeButton: {
     justifyContent: 'center',
-
+    borderRadius: 15,
+    height: 80,
   },
   image: {
     height: 200,

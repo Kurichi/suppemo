@@ -1,42 +1,35 @@
 package handler
 
 import (
-	"context"
-	"fmt"
-	"log"
 	"net/http"
-	"strings"
+	middlware "suppemo-api/middleware"
+	"suppemo-api/model"
 
-	firebase "firebase.google.com/go"
 	"github.com/labstack/echo/v4"
-	"google.golang.org/api/option"
 )
 
 func InitHandler(c echo.Context) error {
-	opt := option.WithCredentialsFile("service-account-file.json")
-	app, err := firebase.NewApp(context.Background(), nil, opt)
-	if err != nil {
-		log.Fatal(err)
-		return err
-	}
-
-	client, err := app.Auth(context.Background())
-	if err != nil {
-		log.Fatal(err)
-		return err
-	}
-
 	authHeader := c.Request().Header.Get("Authorization")
-	idToken := strings.Replace(authHeader, "Bearer ", "", 1)
-
-	token, err := client.VerifyIDToken(context.Background(), idToken)
+	user, err := middlware.Auth(authHeader)
 	if err != nil {
-		u := fmt.Sprintf("error verifying ID token: %v\n", err)
-		return c.JSON(http.StatusBadRequest, u)
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	user, err := client.GetUser(context.Background(), token.UID)
-	fmt.Println(user)
+	// Create user if not exists
+	name := c.Param("name")
+	err = model.CreateUser(user.UID, name)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
 
-	return nil
+	pushToken := c.Param("push_token")
+	if pushToken == "" {
+		return c.String(http.StatusOK, "not push")
+	}
+	model.CreatePushToken(user.UID, pushToken)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	return c.String(http.StatusOK, "push")
 }

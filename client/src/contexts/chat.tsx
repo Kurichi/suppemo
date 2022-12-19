@@ -14,7 +14,6 @@ export const useChat = () => {
 export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
   const host = '27.133.152.161';
   const [talks, setTalks] = useState<talk[]>([]);
-  const webSocketRef = useRef<WebSocket>();
 
   useEffect(() => {
     const f = async () => {
@@ -23,18 +22,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
     };
     f();
 
-    const socket = new WebSocket(`ws://${host}`);
-    webSocketRef.current = socket;
 
-    socket.addEventListener('message', event => {
-      console.log(event.data);
-    });
-
-    socket.addEventListener('error', event => {
-      console.log(event);
-    });
-
-    return () => socket.close();
   }, []);
 
   const sendMessage = async (message?: Message): Promise<void> => {
@@ -43,10 +31,6 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
     }
     else {
       const user = useAuth();
-      webSocketRef.current?.send({
-        author: user,
-        message: message,
-      }.toString())
     }
   }
 
