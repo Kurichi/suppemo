@@ -11,18 +11,21 @@ import (
 )
 
 func main() {
-	if err := mydb.SqlConnect(); err != nil {
+	err := mydb.SqlConnect()
+	if err != nil {
 		log.Fatal(err)
 		return
 	}
+
 	e := echo.New()
-	// Middleware
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 
-	handler.Init(e)
-	e.Static("/", "public")
+	e.POST("/", handler.InitHandler)
+	e.POST("/chat", handler.SendMessage)
+	e.GET("/chat", handler.GetMessages)
+	e.POST("/friend", handler.AddFriend)
+	e.GET("/friend", handler.GetFriends)
 
-	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
 }

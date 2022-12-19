@@ -16,23 +16,11 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     const f = async () => {
-      const _card = await fs.getData<card_detail>();
+      const _card = await fs.readData<card_detail>();
       setCards(_card)
     };
     f();
   }, []);
-
-  const reloadCards = async (cs?: card_detail[]): Promise<void> => {
-    if (typeof cs == 'undefined') {
-      const reloadCards = await fs.getData<card_detail>();
-      setCards(reloadCards)
-      console.log('reloaded cards!')
-    } else {
-      await fs.updateData(cs);
-      setCards(cs);
-      console.log('update data!')
-    }
-  };
 
   const modifyCard = async (modifyType: card_modify_type, { id, title, picture }: card_modify_props): Promise<string> => {
     var ans = '';
@@ -47,7 +35,7 @@ export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
       await fs.modifyData(id, { 'name': title });
     }
 
-    const reloadCards = await fs.getData<card_detail>();
+    const reloadCards = await fs.readData<card_detail>();
     setCards(reloadCards);
 
     return ans;

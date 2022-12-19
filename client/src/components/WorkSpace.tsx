@@ -3,36 +3,50 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   Image,
   FlatList,
   SafeAreaView,
   ScrollView,
   Animated,
-  useWindowDimensions
+  useWindowDimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  TouchableOpacity,
 } from 'react-native';
 import { getCards, useCard } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
+import { Sounder } from './Sounder';
 
+interface props_type {
+  current_ws: number,
+  setCurrent: React.Dispatch<React.SetStateAction<number>>,
+  isVertical: boolean,
+}
 
-export default function WorkSpace() {
+export default function WorkSpace(props: props_type) {
   const { cards } = useCard();
-  const [current_ws, setCurrent] = useState<number>(0);
+  const { current_ws, setCurrent, isVertical } = props
   const { templates, modifyTemplate } = useTemplates();
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
 
-  useEffect(() => {
-    modifyTemplate('add_card', 0, 0);
-  }, [])
+  const setCurrentID = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.targetContentOffset) {
+      const x = e.nativeEvent.targetContentOffset.x;
+      const index = Math.round(x / 0.94 / windowWidth);
+      setCurrent(index);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.scrollContainer}>
+      <View style={[styles.scrollContainer, { height: isVertical ? 200 : '90%' }]}>
         <ScrollView
           horizontal={true}
-          pagingEnabled
+          pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event([
             {
@@ -43,41 +57,57 @@ export default function WorkSpace() {
               }
             }
           ], { useNativeDriver: false })}
+          onScrollEndDrag={setCurrentID}
           scrollEventThrottle={1}
         >
-          {templates.map((template, index) => {
-            const cards_info = getCards(cards, template.item_ids);
-            const items = cards_info.map((_c, index) => {
-              return ({
-                id: `${index}`,
-                card_id: _c.id,
-                exists: _c.exists,
-                uri: _c.uri,
-              })
-            });
-            return (
-              <View
-                style={[{ width: windowWidth, height: 250 }, styles.frameContainer]}
-                key={index}
-              >
-                <Text style={styles.title}>{template.name}</Text>
-                <>{console.log(items)}</>
-                <FlatList
-                  data={items}
-                  renderItem={({ item }) =>
-                    <View>
-                      {item.exists && <Image source={{ uri: item.uri }} style={styles.cardStyle} />}
-                    </View>
-                  }
-                  numColumns={items.length}
-                />
-              </View>
-            );
-          })}
+          {templates.length > 0 &&
+            templates.map((template, index) => {
+              const cards_info = getCards(cards, template.item_ids);
+              const items = cards_info.map((_c, index) => {
+                return typeof _c !== 'undefined' ? {
+                  id: index,
+                  card_id: _c.id,
+                  exists: _c.exists,
+                  uri: _c.uri,
+                } : {
+                  exists: false,
+                }
+              });
+              const colmns_length = Math.round(items.length / 2);
+              return (
+                <View
+                  style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
+                  key={index}
+                >
+                  <Text style={styles.title}>{template.name}</Text>
+                  <FlatList
+                    data={items}
+                    renderItem={({ item }) =>
+                      <TouchableOpacity
+                        onPress={() => modifyTemplate('exit_card', current_ws, item.id)}
+                      >
+                        {item.exists &&
+                          <Image
+                            source={{ uri: item.uri }}
+                            style={[styles.cardStyle,
+                            {
+                              width: colmns_length > template.item_num ? 100 : 60,
+                              height: colmns_length > template.item_num ? 100 : 60,
+                            },
+                            ]}
+                          />
+                        }
+                      </TouchableOpacity>
+                    }
+                    numColumns={colmns_length}
+                  />
+                </View>
+              );
+            })}
         </ScrollView>
         <Button
           color='error'
-          onPress={() => { }}
+          onPress={() => { modifyTemplate('add_empty') }}
         >新規作成</Button>
       </View>
     </SafeAreaView>
@@ -87,20 +117,17 @@ export default function WorkSpace() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(255,255,255,0.7)',
-    height: 200,
     width: '94%',
     paddingLeft: 19,
     paddingRight: 19,
     borderRadius: 30,
   },
   cardStyle: {
-    width: 60,
-    height: 60,
     marginHorizontal: 10,
     marginVertical: 10,
   },
   scrollContainer: {
-
+    //backgroundColor: 'red',
   },
   title: {
     fontSize: 24,

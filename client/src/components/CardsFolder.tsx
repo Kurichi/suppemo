@@ -1,28 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Touchable, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/base';
 import { FlatList } from 'react-native-gesture-handler';
 import { NumericAnimation } from 'react-native-reanimated/lib/types/lib/reanimated2/commonTypes';
+import { useCard, getCards } from '../contexts/card';
+import { useTemplates } from '../contexts/template';
+import { Audio } from 'expo-av';
+import { Sounder } from './Sounder';
 
-interface folder_type {
-  id: number,
-  feather_name: string,
-  background_color: string,
-  cards_id: number[],
-}
+export default function CardsFolder(props: { current_ws: number }) {
 
-export default function CardsFolder() {
+
+  const [current_index, setSelectCard] = useState<number>(0);
+  const { cards, modifyCard } = useCard();
+  const { modifyTemplate } = useTemplates();
+  const { current_ws } = props;
+
   const folders: folder_type[] = [
-    { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_id: [1, 2, 3, 4, 5] },
-    { id: 1, feather_name: "music", background_color: '#abad25', cards_id: [0, 1, 2] },
-    { id: 2, feather_name: "github", background_color: '#2b4ad3', cards_id: [0, 1, 2] },
-    { id: 3, feather_name: "rocket", background_color: '#d43ba3', cards_id: [0, 1, 2] },
-    { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_id: [0, 1, 2] },
+    // { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_ids: [1, 2, 3, 4, 5] },
+    // { id: 1, feather_name: "music", background_color: '#abad25', cards_ids: [0, 1, 2] },
+    // { id: 2, feather_name: "github", background_color: '#2b4ad3', cards_ids: [0, 1, 2] },
+    // { id: 3, feather_name: "rocket", background_color: '#d43ba3', cards_ids: [0, 1, 2] },
+    // { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_ids: [0, 1, 2] },
   ];
 
+  var ccard_ids: number[] = [];
+  for (const _c of cards) if (_c.exists) ccard_ids.push(_c.id);
 
-  const [selectedfolder, setSelectCard] = useState<number>(0);
+  const createdCardFolder: folder_type = {
+    id: -1,
+    feather_name: "star-o",
+    background_color: '#d43ba3',
+    cards_ids: ccard_ids,
+  }
+
+  folders.push(createdCardFolder);
 
   return (
     <View style={styles.cardsFolder}>
@@ -43,7 +56,7 @@ export default function CardsFolder() {
                     color: 'white',
                   }}
                   onPress={() => {
-                    setSelectCard(data.id);
+                    setSelectCard(index);
                   }}
                 />
               </View>
@@ -51,17 +64,16 @@ export default function CardsFolder() {
           })}
         </ScrollView>
       </View>
-      <View style={[styles.folderFlame, { backgroundColor: folders[selectedfolder].background_color }]}>
+      <View style={[styles.folderFlame, { backgroundColor: folders[current_index].background_color }]}>
         <View style={styles.folder}>
           <FlatList
-            data={folders[selectedfolder].cards_id}
+            data={getCards(cards, folders[current_index].cards_ids)}
             renderItem={({ item }) =>
-              <View>
-                <Image
-                  source={require('../../assets/cards/1.jpg')}
-                  style={styles.card}
-                />
-              </View>
+              <TouchableOpacity
+                onLongPress={() => modifyTemplate('add_card', current_ws, item.id)}
+              >
+                {item.exists && <Image source={{ uri: item.uri }} style={styles.card} />}
+              </TouchableOpacity>
             }
             numColumns={3}
           />

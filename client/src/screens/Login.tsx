@@ -1,15 +1,35 @@
 import { Button } from '@rneui/base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebase';
+import { useAuth } from '../contexts/auth';
+
 
 export default function Login(props: any) {
   const { navigation } = props;
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { user } = useAuth();
+
+  const login = async () => {
+    axios.post('http://27.133.132.254/init', {}, {
+      headers: { 'Authorization': await user?.getIdToken() }
+    }).then((result) => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Tab' }]
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  useEffect(() => {
+    login();
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -38,21 +58,7 @@ export default function Login(props: any) {
       <View style={styles.loginContainer}>
         <View style={styles.loginButton}>
           <Button type="clear"
-            onPress={() => {
-              signInWithEmailAndPassword(auth, email, password).then((result) => {
-                console.log(result);
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'Tab' }]
-                })
-              }).catch((error) => {
-                switch (error.code) {
-                  case 'auth/wrong-password':
-                    Alert.alert('メールアドレスか\nパスワードがちがうよ');
-                    break;
-                }
-              })
-            }}>
+            onPress={login}>
             <Text style={styles.loginButtonText}>ログイン</Text>
           </Button>
         </View>
@@ -68,6 +74,18 @@ export default function Login(props: any) {
             });
           }}>
           <Text style={styles.signupMessage}>登録はこちら</Text>
+        </Button>
+
+        {/* debug by yammer */}
+        <Button
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Tab' }],
+            });
+          }}
+        >
+          <Text>debug</Text>
         </Button>
       </View>
     </View>

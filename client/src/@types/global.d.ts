@@ -21,6 +21,7 @@ type card_detail = {
 type template_cards = {
   id: number = -1,
   name: string = '',
+  item_num: number = 0,
   item_ids: Array<number> = [],
   background_color: string = '',
   exists: boolean = false,
@@ -30,10 +31,28 @@ type address = {
   id: number = -1,
   name: string = '',
   exists: boolean = false,
-
 }
 
-type multipleType = card_detail | template_cards | address;
+interface User {
+  _id: number,
+  name: string,
+  avatar: string
+}
+interface Message {
+  _id: number,
+  text: string,
+  createdAt: Date,
+  user: User,
+}
+
+type talk = {
+  id: number,
+  talk_with: User,
+  messages: Message[]
+}
+
+
+type multipleType = card_detail | template_cards | address | talk;
 
 type setting_contents = {
   vol: number,
@@ -43,6 +62,13 @@ type ws_props = {
   name: string,
   card_ids: number[],
   exists: boolean,
+}
+
+type folder_type = {
+  id: number,
+  feather_name: string,
+  background_color: string,
+  cards_ids: number[],
 }
 
 

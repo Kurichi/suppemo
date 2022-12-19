@@ -1,10 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import CreateCard from "../screens/CreateCard";
-import TakePicture from "../screens/TakePicture";
-import CreatedCardList from "../screens/CreatedCardList";
-import EditCard from "../screens/EditCard";
+import CreateCard from "../screens/CameraStack/CreateCard";
+import TakePicture from "../screens/CameraStack/TakePicture";
+import CreatedCardList from "../screens/CameraStack/CreatedCardList";
+import EditCard from "../screens/CameraStack/EditCard";
 
 const Stack = createStackNavigator();
 
