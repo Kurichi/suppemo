@@ -60,47 +60,50 @@ export default function WorkSpace(props: props_type) {
           onScrollEndDrag={setCurrentID}
           scrollEventThrottle={1}
         >
-          {templates.map((template, index) => {
-            const cards_info = getCards(cards, template.item_ids);
-            const items = cards_info.map((_c, index) => {
-              return ({
-                id: index,
-                card_id: _c.id,
-                exists: _c.exists,
-                uri: _c.uri,
-              })
-            });
-            const colmns_length = Math.round(items.length / 2);
-            return (
-              <View
-                style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
-                key={index}
-              >
-                <Text style={styles.title}>{template.name}</Text>
-                <FlatList
-                  data={items}
-                  renderItem={({ item }) =>
-                    <TouchableOpacity
-                      onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
-                    >
-                      {item.exists &&
-                        <Image
-                          source={{ uri: item.uri }}
-                          style={[styles.cardStyle,
-                          {
-                            width: colmns_length > template.item_num ? 100 : 60,
-                            height: colmns_length > template.item_num ? 100 : 60,
-                          },
-                          ]}
-                        />
-                      }
-                    </TouchableOpacity>
-                  }
-                  numColumns={colmns_length}
-                />
-              </View>
-            );
-          })}
+          {templates.length > 0 &&
+            templates.map((template, index) => {
+              const cards_info = getCards(cards, template.item_ids);
+              const items = cards_info.map((_c, index) => {
+                return typeof _c !== 'undefined' ? {
+                  id: index,
+                  card_id: _c.id,
+                  exists: _c.exists,
+                  uri: _c.uri,
+                } : {
+                  exists: false,
+                }
+              });
+              const colmns_length = Math.round(items.length / 2);
+              return (
+                <View
+                  style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
+                  key={index}
+                >
+                  <Text style={styles.title}>{template.name}</Text>
+                  <FlatList
+                    data={items}
+                    renderItem={({ item }) =>
+                      <TouchableOpacity
+                        onPress={() => modifyTemplate('exit_card', current_ws, item.id)}
+                      >
+                        {item.exists &&
+                          <Image
+                            source={{ uri: item.uri }}
+                            style={[styles.cardStyle,
+                            {
+                              width: colmns_length > template.item_num ? 100 : 60,
+                              height: colmns_length > template.item_num ? 100 : 60,
+                            },
+                            ]}
+                          />
+                        }
+                      </TouchableOpacity>
+                    }
+                    numColumns={colmns_length}
+                  />
+                </View>
+              );
+            })}
         </ScrollView>
         <Button
           color='error'
