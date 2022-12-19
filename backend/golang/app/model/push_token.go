@@ -15,12 +15,12 @@ type PushToken struct {
 func CreatePushToken(uid string, token string) error {
 	db := mydb.GetDB()
 
-	ins, err := db.Prepare("INSERT INTO push_tokens(uid,token) VALUES(?,?)")
+	ins, err := db.Prepare("INSERT INTO push_tokens(uid,token) SELECT ? WHERE NOT EXISTS (SELECT 1 FROM push_tokens WHERE uid=? AND token=?")
 	if err != nil {
 		return err
 	}
 
-	_, err = ins.Exec(uid, token)
+	_, err = ins.Exec(token, uid, token)
 	if err != nil {
 		return err
 	}

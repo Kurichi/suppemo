@@ -12,15 +12,15 @@ type User struct {
 	Updated time.Time `json:"updated" form:"updated" query:"updated"`
 }
 
-func CreateUser(u *User) error {
+func CreateUser(uid string, name string) error {
 	db := mydb.GetDB()
 
-	ins, err := db.Prepare("INSERT INTO users(id,name) VALUES(?,?)")
+	ins, err := db.Prepare("INSERT IGNORE INTO users(id,name) VALUES(?,?)")
 	if err != nil {
 		return err
 	}
 
-	_, err = ins.Exec(u.UID, u.Name)
+	_, err = ins.Exec(uid, name)
 	if err != nil {
 		return err
 	}
