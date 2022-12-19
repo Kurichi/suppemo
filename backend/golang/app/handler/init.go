@@ -15,18 +15,26 @@ func InitHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	// Create user if not exists
-	name := c.Param("name")
-	err = model.CreateUser(user.UID, name)
+	type bodyType struct {
+		name       string `json:"name"`
+		push_token string `json:"push_token"`
+	}
+	body := &bodyType{}
+	err = c.Bind(body)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	pushToken := c.Param("push_token")
-	if pushToken == "" {
+	// Create userif not exists
+	err = model.CreateUser(user.UID, body.name)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	if body.push_token == "" {
 		return c.String(http.StatusOK, "not push")
 	}
-	model.CreatePushToken(user.UID, pushToken)
+	model.CreatePushToken(user.UID, body.push_token)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
