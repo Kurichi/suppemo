@@ -20,6 +20,7 @@ export default function Chat(props: any) {
   }, [talk]);
 
   const onSend = useCallback((messages: Message[] = []) => {
+    console.log(messages[0])
     sendMessage(messages[0]);
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])

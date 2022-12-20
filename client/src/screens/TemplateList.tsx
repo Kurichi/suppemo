@@ -11,12 +11,38 @@ import {
 } from 'react-native';
 import { useTemplates } from '../contexts/template';
 import { useCard, getCards } from '../contexts/card';
+import { ListItemSubtitle } from '@rneui/base/dist/ListItem/ListItem.Subtitle';
 
 export default function TemplateList() {
 
   const { templates } = useTemplates();
   const { cards } = useCard();
   const { width: windowWidth } = useWindowDimensions();
+
+  const renderCardSpace = (items: { id: number, uri: string, name: string }[], columns_length: number) => (
+    <View style={styles.frameContainer}>
+      <FlatList
+        data={items}
+        renderItem={
+          ({ item }) => (
+            <View style={styles.imageContainer}>
+              <Image
+                source={{ uri: item.uri }}
+                style={[styles.cardStyle,
+                {
+                  width: columns_length > items.length ? 90 : 64,
+                  height: columns_length > items.length ? 90 : 64,
+                },
+                ]}
+              />
+              <Text style={styles.cardTitle}>{item.name}</Text>
+            </View>
+          )}
+        numColumns={columns_length}
+
+      />
+    </View>
+  )
 
   return (
     <View style={styles.container}>
@@ -26,45 +52,66 @@ export default function TemplateList() {
           const items = cards_info.map((_c, index) => {
             return ({
               id: index,
-              card_id: _c.id,
-              exists: _c.exists,
               uri: _c.uri,
               name: _c.name,
             })
           });
-          const colmns_length = Math.round(items.length / 2);
+          const columns_length = Math.round(template.item_ids.length / 2);
+
+          const upper_cards: { id: number, uri: string, name: string }[] = []
+          const lower_cards: { id: number, uri: string, name: string }[] = []
+          console.log(columns_length);
+          for (var i = 0; i < items.length; i++) {
+            if (typeof items[i] == 'undefined') continue;
+            if (columns_length > i) upper_cards.push(items[i])
+            else lower_cards.push(items[i])
+          }
+
+          // console.log(upper_cards)
+          // console.log(lower_cards)
+          console.log(items)
           return (
             <View style={styles.frame}>
               <TextInput
                 value={template.name}
                 style={styles.title}
               />
-              <View
-                style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
-                key={index}
-              >
-                {!(template.item_num != 0) ? (
-                  <Text>カードがないよ</Text>
-                ) : (
-                  <FlatList
-                    data={items}
-                    renderItem={
-                      ({ item }) => (
-                        <View style={styles.imageContainer}>
-                          <Image
-                            source={{ uri: item.uri }}
-                            style={[styles.cardStyle,
-                            {
-                              width: colmns_length > template.item_num ? 90 : 64,
-                              height: colmns_length > template.item_num ? 90 : 64,
-                            },
-                            ]}
-                          />
-                        </View>
-                      )}
-                    numColumns={colmns_length}
-                  />
-                )}
+              <View style={styles.frameContainer} >
+                <View style={{ width: '100%', flexDirection: 'row', marginTop: 4 }}>
+                  {(upper_cards.length != 0) &&
+                    upper_cards.map((c, index1) => (
+                      <View style={styles.imageContainer} >
+                        <Image
+                          source={{ uri: c.uri }}
+                          style={[styles.cardStyle,
+                          {
+                            width: columns_length > items.length ? 90 : 64,
+                            height: columns_length > items.length ? 90 : 64,
+                          },
+                          ]}
+                        />
+                        <Text style={styles.cardTitle}>{c.name}</Text>
+                      </View>
+                    ))}
+                </View>
+                <View style={{ width: '100%', flexDirection: 'row', marginBottom: 4 }}>
+                  {(lower_cards.length != 0) &&
+                    lower_cards.map((c, index1) => (
+                      <View style={styles.imageContainer} >
+                        <Image
+                          source={{ uri: c.uri }}
+                          style={[styles.cardStyle,
+                          {
+                            width: columns_length > items.length ? 90 : 64,
+                            height: columns_length > items.length ? 90 : 64,
+                          },
+                          ]}
+                        />
+                        <Text style={styles.cardTitle}>{c.name}</Text>
+                      </View>
+                    ))}
+                </View>
+
               </View>
             </View>
           );
@@ -94,7 +141,9 @@ const styles = StyleSheet.create({
   },
   frameContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     height: 168,
+    width: '100%',
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingLeft: 19,
     paddingRight: 19,
@@ -103,9 +152,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
-  },
-  emptyBox: {
-    backgroundColor: 'rgba(0,0,0,0.2)'
   },
   imageContainer: {
 

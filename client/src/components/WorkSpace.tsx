@@ -68,9 +68,10 @@ export default function WorkSpace(props: props_type) {
                 card_id: _c.id,
                 exists: _c.exists,
                 uri: _c.uri,
+                name: _c.name,
               })
             });
-            const colmns_length = Math.round(items.length / 2);
+            const colmns_length = Math.round(8 / 2);
             return (
               <View
                 style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
@@ -83,17 +84,18 @@ export default function WorkSpace(props: props_type) {
                     <TouchableOpacity
                       onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
                     >
-                      {item.exists &&
+                      <View style={styles.imageContainer}>
                         <Image
                           source={{ uri: item.uri }}
                           style={[styles.cardStyle,
                           {
-                            width: colmns_length > template.item_num ? 100 : 60,
-                            height: colmns_length > template.item_num ? 100 : 60,
+                            width: colmns_length > template.item_num ? 100 : 70,
+                            height: colmns_length > template.item_num ? 100 : 70,
                           },
                           ]}
                         />
-                      }
+                        <Text style={styles.cardTitle}>{item.name}</Text>
+                      </View>
                     </TouchableOpacity>
                   }
                   numColumns={colmns_length}
