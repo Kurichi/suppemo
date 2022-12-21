@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { useAuth } from '../contexts/auth';
 import { registerForPushNotificationsAsync } from '../services/notification';
@@ -17,16 +17,26 @@ export default function Login(props: any) {
 
   const login = async () => {
     await signInWithEmailAndPassword(auth, email, password).then(async (result) => {
-      const pushToken = await registerForPushNotificationsAsync()
-      if (pushToken != null) {
-        const result = await axios.post('http://27.133.132.254', {
-          name: 'test',
-          push_token: pushToken,
-        }, {
-          headers: { 'Authorization': await user?.getIdToken() }
+      if (auth.currentUser !== null)
+        await updateProfile(auth.currentUser, {
+          displayName: "くりち",
+          photoURL: "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/81/chestnut_1f330.png",
         });
-        console.log(result);
-      }
+      console.log(user);
+      const pushToken = await registerForPushNotificationsAsync()
+
+      // if (pushToken != null) {
+      const res = await axios.post('http://27.133.132.254', {
+        name: 'test',
+        push_token: pushToken,
+      }, {
+        headers: {
+          'Authorization': await user?.getIdToken(),
+        }
+      });
+      console.log(res);
+      console.log('--------------------------------------------------')
+      // }
 
       // navigate to home
       navigation.reset({
@@ -35,14 +45,6 @@ export default function Login(props: any) {
       });
     }).catch((error) => {
       console.log(error)
-    });
-
-    axios.post('http://27.133.132.254/init', {}, {
-      headers: { 'Authorization': await user?.getIdToken() }
-    }).then((result) => {
-
-    }).catch((error) => {
-      console.log(error);
     });
   }
 
