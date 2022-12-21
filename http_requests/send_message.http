@@ -18,17 +18,19 @@ Content-Type: application/json
 @Kurichi_uid = PGF8whP6JTR7apGjkYFMay1IbbC3
 @test_uid=OxUbEbMAsmPP2A71FfU7DQuMBTB3
 
+@host = http://localhost
+
 ### login
-POST http://localhost/ HTTP/1.1
+POST {{host}} HTTP/1.1
 Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "push_token": "ExponentPushToken[AZt9AXBerl8v8181Y8T1xN]"
+    "push_token": "ExponentPushToken[AZt9AXBerl1v8181Y8T1xN]"
 }
 
 ### send chat
-POST http://localhost/chat HTTP/1.1
+POST {{host}}/chat HTTP/1.1
 Authorization: {{token}}
 Content-Type: application/json
 
@@ -39,5 +41,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost/chat?id=3 HTTP/1.1
+GET {{host}}/chat?id=3 HTTP/1.1
 Authorization: {{token}}
