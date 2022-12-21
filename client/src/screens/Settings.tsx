@@ -1,47 +1,86 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from '@rneui/base';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
+import { Button, Overlay } from '@rneui/base';
+import { useAuth } from '../contexts/auth';
+import { TextInput } from 'react-native-gesture-handler';
 
 export default function Settings() {
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string>();
+  const { user } = useAuth();
+  const s = require('../../assets/default_logo.png');
   return (
     <View style={styles.container}>
       <View style={styles.userItemContainer}>
-        <View style={styles.iconImage}></View>
+        <View style={styles.iconBox}>
+          <Image
+            source={{ uri: user ? user.photoURL : '' }}
+            style={styles.iconImage}
+          />
+        </View>
 
-
-        <Text>名前</Text>
+        <Text
+          style={styles.userName}
+        >{user ? user.displayName : 'ゲスト'}</Text>
 
       </View>
       <View style={styles.userSettingsContainer}>
         <Button
-          title={'アイコン画像の編集'}
+          title='アイコン画像の変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
         />
         <Button
-          title={'名前の設定'}
+          title='名前の変更'
           buttonStyle={styles.setteingItemButton}
+          titleStyle={styles.setteingItemButtonText}
+          onPress={() => { setModalVisible(true); }}
         />
         <Button
-          title={'メールアドレスの設定'}
+          title='メールアドレスの変更'
           buttonStyle={styles.setteingItemButton}
+          titleStyle={styles.setteingItemButtonText}
         />
-        <Button
-          title={'アカウントの削除'}
-          buttonStyle={styles.setteingItemButton}
-        />
-
-
-
-
-
-        {/* <Text style={styles.}>アイコン画像の編集</Text>
-      <Text>名前の設定</Text>
-      <Text>メールアドレスの設定</Text>
-      <Text>アカウントの削除</Text> */}
-
       </View>
-
+      <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
+        <Button
+          title='アカウントの削除'
+          buttonStyle={[styles.setteingItemButton, {
+            backgroundColor: 'red',
+          }]}
+          titleStyle={styles.setteingItemButtonText}
+          delayLongPress={3000}
+          onPress={() => {
+            Alert.alert('長押ししてください')
+          }}
+          onLongPress={() => {
+            Alert.alert(
+              'アカウントの削除',
+              'アカウントを消すと二度と元には戻せません。\n 本当に消しますか？',
+              [
+                { text: 'はい', },
+                { text: 'やっぱりやめます' }
+              ]
+            )
+          }}
+        />
+      </View>
+      <Overlay
+        overlayStyle={{
+          backgroundColor: 'white'
+        }}
+        isVisible={modalVisible}
+        onBackdropPress={() => { setModalVisible(!modalVisible) }}>
+        <View >
+          <Text>なまえを変更する</Text>
+          <TextInput
+            value={user?.displayName}
+            onChangeText={(value) => {
+            }}
+          />
+          <Button></Button>
+        </View>
+      </Overlay>
     </View>
   );
 
@@ -52,21 +91,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF8B0',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  userName: {
+    fontSize: 30,
+
   },
   userItemContainer: {
-
-
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  iconBox: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 1000,
   },
   iconImage: {
-    height: 50,
-    width: 50,
-    backgroundColor: "#623fcc",
-    borderRadius: 50,
+    height: 100,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   userSettingsContainer: {
+    marginTop: 30,
     width: '94%',
     backgroundColor: "#red",
 
@@ -74,14 +120,15 @@ const styles = StyleSheet.create({
   setteingItemButton: {
     fontSize: 10,
     borderColor: "##434343",
+    borderWidth: 1,
     backgroundColor: "#ffffff",
     borderRadius: 5,
-    marginTop: 5,
+    marginVertical: 5,
     width: '100%',
   },
   setteingItemButtonText: {
     fontSize: 30,
-    color: "black"
+    color: "black",
   },
 
 
