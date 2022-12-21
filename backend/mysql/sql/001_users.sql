@@ -2,8 +2,7 @@ CREATE DATABASE IF NOT EXISTS suppemo;
 USE suppemo;
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `uid` varchar(26) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `uid` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`uid`)

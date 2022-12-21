@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -32,6 +33,9 @@ func SqlConnect() error {
 	if db, err = sql.Open(DBMS, CONNECT); err != nil {
 		return err
 	}
+	db.SetMaxIdleConns(10)
+	db.SetMaxOpenConns(10)
+	db.SetConnMaxLifetime(10 * time.Second)
 
 	if err := db.Ping(); err != nil {
 		return err
