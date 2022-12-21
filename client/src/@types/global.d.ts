@@ -36,8 +36,9 @@ type address = {
 interface User {
   _id: number,
   name: string,
-  avatar: string
+  avatar: string,
 }
+
 interface Message {
   _id: number,
   text: string,

@@ -60,55 +60,50 @@ export default function WorkSpace(props: props_type) {
           onScrollEndDrag={setCurrentID}
           scrollEventThrottle={1}
         >
-          {templates.length > 0 &&
-            templates.map((template, index) => {
-              const cards_info = getCards(cards, template.item_ids);
-              const items = cards_info.map((_c, index) => {
-                return typeof _c !== 'undefined' ? {
-                  id: index,
-                  card_id: _c.id,
-                  exists: _c.exists,
-                  uri: _c.uri,
-                } : {
-                  exists: false,
-                }
-              });
-              const colmns_length = Math.round(items.length / 2);
-              return (
-                <View
-                  style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
-                  key={index}
-                >
-                  <Text style={styles.title}>{template.name}</Text>
-                  <FlatList
-                    data={items}
-                    renderItem={({ item }) =>
-                      <TouchableOpacity
-                        onPress={() => modifyTemplate('exit_card', current_ws, item.id)}
-                      >
-                        {item.exists &&
-                          <Image
-                            source={{ uri: item.uri }}
-                            style={[styles.cardStyle,
-                            {
-                              width: colmns_length > template.item_num ? 100 : 60,
-                              height: colmns_length > template.item_num ? 100 : 60,
-                            },
-                            ]}
-                          />
-                        }
-                      </TouchableOpacity>
-                    }
-                    numColumns={colmns_length}
-                  />
-                </View>
-              );
-            })}
+          {templates.map((template, index) => {
+            const cards_info = getCards(cards, template.item_ids);
+            const items = cards_info.map((_c, index) => {
+              return ({
+                id: index,
+                card_id: _c.id,
+                exists: _c.exists,
+                uri: _c.uri,
+                name: _c.name,
+              })
+            });
+            const colmns_length = Math.round(8 / 2);
+            return (
+              <View
+                style={[{ width: windowWidth * 0.94 }, styles.frameContainer]}
+                key={index}
+              >
+                <Text style={styles.title}>{template.name}</Text>
+                <FlatList
+                  data={items}
+                  renderItem={({ item }) =>
+                    <TouchableOpacity
+                      onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
+                    >
+                      <View style={styles.imageContainer}>
+                        <Image
+                          source={{ uri: item.uri }}
+                          style={[styles.cardStyle,
+                          {
+                            width: colmns_length > template.item_num ? 100 : 70,
+                            height: colmns_length > template.item_num ? 100 : 70,
+                          },
+                          ]}
+                        />
+                        <Text style={styles.cardTitle}>{item.name}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  }
+                  numColumns={colmns_length}
+                />
+              </View>
+            );
+          })}
         </ScrollView>
-        <Button
-          color='error'
-          onPress={() => { modifyTemplate('add_empty') }}
-        >新規作成</Button>
       </View>
     </SafeAreaView>
   );
@@ -121,10 +116,14 @@ const styles = StyleSheet.create({
     paddingLeft: 19,
     paddingRight: 19,
     borderRadius: 30,
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
   },
   cardStyle: {
-    marginHorizontal: 10,
-    marginVertical: 10,
+    marginHorizontal: 8,
+    marginVertical: 8,
   },
   scrollContainer: {
     //backgroundColor: 'red',
@@ -137,5 +136,18 @@ const styles = StyleSheet.create({
   },
   emptyBox: {
     backgroundColor: 'rgba(0,0,0,0.2)'
-  }
+  },
+  imageContainer: {
+
+  },
+  cardTitle: {
+    position: 'absolute',
+    bottom: 0,
+    height: '20%',
+    marginHorizontal: 8,
+    marginVertical: 8,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
 });

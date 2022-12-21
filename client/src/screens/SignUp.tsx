@@ -1,15 +1,18 @@
-import { Button } from '@rneui/base';
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button } from '@rneui/base';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebase';
+import axios from 'axios';
+import { registerForPushNotificationsAsync } from '../services/notification';
+import { useAuth } from '../contexts/auth';
 
 export default function SignUp(props: any) {
   const { navigation } = props;
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   return (
     <View style={styles.container} >
       <View>
@@ -33,9 +36,22 @@ export default function SignUp(props: any) {
       <View style={styles.signupContainer}>
         <View style={styles.signupButton}>
           <Button type="clear"
-            onPress={() => {
-              createUserWithEmailAndPassword(auth, email, password).then((result) => {
-                console.log(result);
+            onPress={async () => {
+              createUserWithEmailAndPassword(auth, email, password).then(async (result) => {
+                const { user } = useAuth();
+
+                const pushToken = await registerForPushNotificationsAsync()
+                // if (pushToken != null) {
+                const res = await axios.post('http://27.133.132.254', {
+                  name: 'test',
+                  push_token: pushToken,
+                }, {
+                  headers: { 'Authorization': await user?.getIdToken() }
+                });
+                console.log(res);
+                console.log('--------------------------------------------------')
+                // }
+
                 navigation.reset({
                   index: 0,
                   routes: [{ name: 'Tab' }],
@@ -55,15 +71,17 @@ export default function SignUp(props: any) {
           onLongPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'SignUp' }]
+              routes: [{ name: 'Login' }]
             });
           }}>
           <Text style={styles.signupMessage}>登録はこちら</Text>
         </Button>
       </View>
-    </View>
+    </View >
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

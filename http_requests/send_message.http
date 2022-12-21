@@ -1,0 +1,45 @@
+@kurichi_email=yuuyapp080@gmail.com
+@kurichi_pass=password
+@test_email=test@example.com
+@test_pass=passpass
+
+# @name login
+POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBU2vQq2uylUITbmd8id5jbZWNuCmAswE0 HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"{{kurichi_email}}",
+    "password":"{{kurichi_pass}}",
+    "returnSecureToken":true
+}
+###
+
+@token = {{login.response.body.$.idToken}}
+@Kurichi_uid = PGF8whP6JTR7apGjkYFMay1IbbC3
+@test_uid=OxUbEbMAsmPP2A71FfU7DQuMBTB3
+
+@host = http://localhost
+
+### login
+POST {{host}} HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "push_token": "ExponentPushToken[AZt9AXBerl1v8181Y8T1xN]"
+}
+
+### send chat
+POST {{host}}/chat HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "target_uid": "{{Kurichi_uid}}",
+    "type": "text",
+    "text": "testteteteteteetetteet"
+}
+
+###
+GET {{host}}/chat?id=3 HTTP/1.1
+Authorization: {{token}}

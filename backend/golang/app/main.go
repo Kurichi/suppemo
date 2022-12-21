@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"suppemo-api/handler"
+	auth "suppemo-api/middleware"
 	"suppemo-api/mydb"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -11,8 +12,12 @@ import (
 )
 
 func main() {
-	err := mydb.SqlConnect()
-	if err != nil {
+	if err := mydb.SqlConnect(); err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	if err := auth.Init(); err != nil {
 		log.Fatal(err)
 		return
 	}

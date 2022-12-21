@@ -1,50 +1,53 @@
 package model
 
 import (
+	"fmt"
 	"suppemo-api/mydb"
-	"time"
 )
-
-type PushToken struct {
-	ID      int       `json:"id" form:"id" query:"id"`
-	UID     string    `json:"uid" form:"uid" query:"uid"`
-	Token   string    `json:"push_token" form:"push_token" query:"push_token"`
-	Created time.Time `json:"created_at" form:"created_at" query:"created_at"`
-}
 
 func CreatePushToken(uid string, token string) error {
 	db := mydb.GetDB()
 
-	ins, err := db.Prepare("INSERT INTO push_tokens(uid,token) SELECT ? WHERE NOT EXISTS (SELECT 1 FROM push_tokens WHERE uid=? AND token=?")
+	stmt, err := db.Prepare("INSERT IGNORE INTO push_tokens(uid,token) VALUES(?,?)")
 	if err != nil {
+		fmt.Printf("[ERROR] token prepare error: %v", err)
 		return err
 	}
+	defer stmt.Close()
 
-	_, err = ins.Exec(token, uid, token)
-	if err != nil {
+	if _, err := stmt.Exec(uid, token); err != nil {
+		fmt.Printf("[ERROR] token exec error: %v", err)
 		return err
 	}
 
 	return nil
 }
 
-func FindPushTokens(uid string) ([]PushToken, error) {
+func FindPushTokens(uid string) ([]string, error) {
 	db := mydb.GetDB()
 
-	tokens := []PushToken{}
-	rows, err := db.Query("SELECT * FROM push_tokens WHERE uid = ?", uid)
+	stmt, err := db.Prepare("SELECT token FROM push_tokens WHERE uid = ?")
 	if err != nil {
-		return tokens, err
+		fmt.Printf("[ERROR] token prepare error: %v", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var tokens []string
+	rows, err := stmt.Query(uid)
+	if err != nil {
+		fmt.Printf("[ERROR] token query error: %v", err)
+		return nil, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		token := &PushToken{}
-		err = rows.Scan(&token.ID, &token.UID, &token.Token, &token.Created)
-		if err != nil {
+		var token string
+		if err = rows.Scan(&token); err != nil {
+			fmt.Printf("[ERROR] token scan error: %v", err)
 			return tokens, err
 		}
-		tokens = append(tokens, *token)
+		tokens = append(tokens, token)
 	}
 
 	return tokens, nil

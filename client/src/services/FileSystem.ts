@@ -165,12 +165,12 @@ export class FSCard extends multipleFS {
   // }
 }
 
-export class FSChat extends multipleFS{
+export class FSChat extends multipleFS {
   constructor() {
     super(`${FS.documentDirectory}chat_cache.json`);
   }
 
-  writeTalkCache(talks: talk[]){
+  writeTalkCache(talks: talk[]) {
     FS.writeAsStringAsync(this.file_path, JSON.stringify(talks));
   }
 
@@ -241,11 +241,5 @@ export class FSTemplate extends multipleFS {
     }
     data.push(empty_data);
     await this.updateData(data);
-  }
-}
-
-export class TestFS extends multipleFS {
-  constructor() {
-    super('');
   }
 }

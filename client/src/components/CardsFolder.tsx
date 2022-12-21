@@ -72,7 +72,11 @@ export default function CardsFolder(props: { current_ws: number }) {
               <TouchableOpacity
                 onLongPress={() => modifyTemplate('add_card', current_ws, item.id)}
               >
-                {item.exists && <Image source={{ uri: item.uri }} style={styles.card} />}
+                {item.exists &&
+                  <View style={styles.imageContainer}>
+                    <Image source={{ uri: item.uri }} style={styles.card} />
+                    <Text style={styles.cardTitle}>{item.name}</Text>
+                  </View>}
               </TouchableOpacity>
             }
             numColumns={3}
@@ -120,5 +124,18 @@ const styles = StyleSheet.create({
     width: 100,
     marginHorizontal: 8,
     marginVertical: 8,
+  },
+  imageContainer: {
+
+  },
+  cardTitle: {
+    position: 'absolute',
+    bottom: 0,
+    height: '20%',
+    marginHorizontal: 8,
+    marginVertical: 8,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    fontWeight: 'bold',
+    fontSize: 14,
   }
 });

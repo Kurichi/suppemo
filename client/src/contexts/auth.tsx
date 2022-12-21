@@ -1,8 +1,6 @@
 import React, { useEffect, createContext, useState, useContext, PropsWithChildren } from 'react';
 import { auth } from '../services/firebase';
 import { User } from 'firebase/auth';
-import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
 
 interface ContextInterface {
   user: User | null,
@@ -22,7 +20,6 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
     const unsubscribed = auth.onAuthStateChanged(async (user) => {
       setUser(user);
       setLoading(false);
-      useNavigation().navigate('Tab')
     });
     return () => unsubscribed();
   }, []);

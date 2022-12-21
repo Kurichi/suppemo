@@ -5,10 +5,11 @@ npm-debug.*
 *.jks
 *.p8
 *.p12
-# *.key
+*.key
 *.mobileprovision
 *.orig.*
 web-build/
+.http
 
 # macOS
 .DS_Store

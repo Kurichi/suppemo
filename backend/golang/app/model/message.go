@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"suppemo-api/mydb"
 	"time"
 )
@@ -17,60 +18,65 @@ type Message struct {
 func CreateMessage(uid string, target_uid string, _type string, text string) error {
 	db := mydb.GetDB()
 
-	_, err := FindUser(uid)
+	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
 	if err != nil {
+		fmt.Printf("[ERROR] message prepare error: %v", err)
 		return err
 	}
+	defer stmt.Close()
 
-	_, err = FindUser(target_uid)
+	_, err = stmt.Exec(uid, target_uid, _type, text)
 	if err != nil {
-		return err
-	}
-
-	ins, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
-	if err != nil {
-		return err
-	}
-
-	_, err = ins.Exec(uid, target_uid, _type, text)
-	if err != nil {
+		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
 	}
 
 	return nil
 }
 
-func InsertMessage(message Message) error {
+func InsertMessage(message *Message) error {
 	db := mydb.GetDB()
 
-	ins, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
 	if err != nil {
+		fmt.Printf("[ERROR] message prepare error: %v", err)
 		return err
 	}
+	defer stmt.Close()
 
-	_, err = ins.Exec(message.UID, message.TargetUID, message.Type, message.Text)
+	_, err = stmt.Exec(message.UID, message.TargetUID, message.Type, message.Text)
 	if err != nil {
+		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
 	}
 
 	return nil
 }
 
-func FindMessages(uid string, target_uid string) ([]Message, error) {
+func FindMessages(uid string, id int) ([]Message, error) {
 	db := mydb.GetDB()
 
-	messages := []Message{}
-	rows, err := db.Query("SELECT * FROM messages WHERE uid = ? AND target_uid = ?", uid, target_uid)
+	stmt, err := db.Prepare("SELECT * FROM messages WHERE id > ? AND (uid = ? OR target_uid = ?)")
 	if err != nil {
-		return messages, err
+		fmt.Printf("[ERROR] message prepare error: %v", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(id, uid, uid)
+	if err != nil {
+		fmt.Printf("[ERROR] message query error: %v", err)
+		return nil, err
 	}
 	defer rows.Close()
 
+	messages := []Message{}
 	for rows.Next() {
 		message := &Message{}
-		err = rows.Scan(&message.UID, &message.TargetUID, &message.Type, &message.Text, &message.Created)
+		err = rows.Scan(&message.ID, &message.UID, &message.TargetUID, &message.Type, &message.Text, &message.Created)
 		if err != nil {
-			return messages, nil
+			fmt.Printf("[ERROR] message scan error: %v", err)
+			return nil, err
 		}
 		messages = append(messages, *message)
 	}
