@@ -17,8 +17,10 @@ Content-Type: application/json
 @token = {{login.response.body.$.idToken}}
 @Kurichi_uid = PGF8whP6JTR7apGjkYFMay1IbbC3
 @test_uid=OxUbEbMAsmPP2A71FfU7DQuMBTB3
+@yammer_uid=EieJoM9ChXfyfVMGoJbwQWLWvXj2
 
-@host = http://localhost
+# @host = http://localhost/
+@host = http://27.133.132.254/
 
 ### login
 POST {{host}} HTTP/1.1
@@ -26,20 +28,20 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "push_token": "ExponentPushToken[AZt9AXBerl1v8181Y8T1xN]"
+    "push_token": ""
 }
 
 ### send chat
-POST {{host}}/chat HTTP/1.1
+POST {{host}}chat HTTP/1.1
 Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "target_uid": "{{Kurichi_uid}}",
+    "target_uid": "{{yammer_uid}}",
     "type": "text",
     "text": "testteteteteteetetteet"
 }
 
 ###
-GET {{host}}/chat?id=3 HTTP/1.1
+GET {{host}}chat?id=3 HTTP/1.1
 Authorization: {{token}}

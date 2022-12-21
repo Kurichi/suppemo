@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator, HeaderBackButton, HeaderTitle } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,8 @@ import SignUp from './../screens/SignUp';
 import Chat from '../screens/Chat';
 import CameraStack from './CameraStack';
 import ChatStack from './ChatStack';
+import { ScreenStackHeaderRightView } from 'react-native-screens';
+import { Button } from '@rneui/base';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,6 +108,18 @@ export default function Navigator() {
           component={Login}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+            headerRight: () => (
+              <Button
+                icon={{
+                  name: 'cog',
+                  type: 'font-awesome',
+                  color: 'black',
+                }}
+                onPress={() => {
+                  useNavigation().navigate('Settings');
+                }}
+              />
+            )
           }}
         />
         <Stack.Screen

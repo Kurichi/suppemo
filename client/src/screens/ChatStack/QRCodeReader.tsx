@@ -26,6 +26,7 @@ export default function QRCodeReader(props: any) {
   const applyScanned = () => {
     //友達追加の処理
 
+
     //戻る
     navigation.goBack()
   };
