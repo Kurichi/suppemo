@@ -14,6 +14,7 @@ export default function Login(props: any) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { user } = useAuth();
+  const [isButtonTouchable, setButtonTouchable] = useState<boolean>(true);
 
   const login = async () => {
     await signInWithEmailAndPassword(auth, email, password).then(async (result) => {
@@ -37,6 +38,7 @@ export default function Login(props: any) {
         console.log(error);
       });
     }).catch((error) => {
+      setButtonTouchable(true);
       switch (error.code) {
         case "auth/network-request-failed":
           Alert.alert("通信がエラーになったのか、またはタイムアウトになりました。通信環境がいい所で再度やり直してください。");
@@ -53,7 +55,6 @@ export default function Login(props: any) {
         default:  //想定外
           Alert.alert("アカウントの作成に失敗しました。通信環境がいい所で再度やり直してください。");
       }
-      Alert.alert('ログインに失敗しました');
     });
 
     // navigate to home
@@ -93,7 +94,11 @@ export default function Login(props: any) {
         <Button
           style={styles.loginButton}
           type="clear"
-          onPress={login}>
+          onPress={() => {
+            setButtonTouchable(false);
+            login();
+          }}
+          disabled={isButtonTouchable}>
           <Text style={styles.loginButtonText}>ログイン</Text>
         </Button>
       </View>
@@ -102,7 +107,9 @@ export default function Login(props: any) {
         <Button
           style={styles.loginButton}
           type="clear"
+          disabled={isButtonTouchable}
           onPress={() => {
+            setButtonTouchable(false);
             navigation.reset({
               index: 0,
               routes: [{ name: 'Tab' }],
@@ -113,11 +120,13 @@ export default function Login(props: any) {
       </View>}
 
       <Button
+        disabled={isButtonTouchable}
         type="clear"
         onPress={() => {
           Alert.alert('長押ししてね');
         }}
         onLongPress={() => {
+          setButtonTouchable(false);
           navigation.reset({
             index: 0,
             routes: [{ name: 'SignUp' }]
