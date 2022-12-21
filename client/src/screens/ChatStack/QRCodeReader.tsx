@@ -48,7 +48,8 @@ export default function QRCodeReader(props: any) {
           />
           <Button
             title={'じぶんのQRコード'}
-            type={'clear'}
+            type={'outline'}
+            buttonStyle={styles.myButton}
             onLongPress={() => navigation.navigate('show')}
           />
         </View>
@@ -66,6 +67,7 @@ export default function QRCodeReader(props: any) {
             onPress={() => applyScanned()}
             buttonStyle={styles.button}
             titleStyle={styles.buttonText}
+
           />
         </View>
       )}
@@ -89,11 +91,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   button: {
-    backgroundColor: '#FC6A2C'
+    backgroundColor: '#ff8935',
+    borderRadius: 5,
+    margin: 10,
   },
   buttonText: {
     color: 'white',
-  }
+  },
+  myButton: {
+    borderRadius: 5,
+    margin: 10,
+  },
+  addFriendsContainer: {
+    margin: 10,
+  },
+
 
 
 });
