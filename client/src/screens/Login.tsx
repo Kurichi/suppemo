@@ -98,7 +98,7 @@ export default function Login(props: any) {
             setButtonTouchable(false);
             login();
           }}
-          disabled={isButtonTouchable}>
+          disabled={!isButtonTouchable}>
           <Text style={styles.loginButtonText}>ログイン</Text>
         </Button>
       </View>
@@ -107,7 +107,7 @@ export default function Login(props: any) {
         <Button
           style={styles.loginButton}
           type="clear"
-          disabled={isButtonTouchable}
+          disabled={!isButtonTouchable}
           onPress={() => {
             setButtonTouchable(false);
             navigation.reset({
@@ -120,7 +120,7 @@ export default function Login(props: any) {
       </View>}
 
       <Button
-        disabled={isButtonTouchable}
+        disabled={!isButtonTouchable}
         type="clear"
         onPress={() => {
           Alert.alert('長押ししてね');

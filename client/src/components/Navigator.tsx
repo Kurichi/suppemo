@@ -13,6 +13,7 @@ import CameraStack from './CameraStack';
 import ChatStack from './ChatStack';
 import { ScreenStackHeaderRightView } from 'react-native-screens';
 import { Button } from '@rneui/base';
+import Settings from '../screens/Settings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,21 +107,10 @@ export default function Navigator() {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{
+          options={({ navigation }) => ({
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
-            headerRight: () => (
-              <Button
-                icon={{
-                  name: 'cog',
-                  type: 'font-awesome',
-                  color: 'black',
-                }}
-                onPress={() => {
-                  useNavigation().navigate('Settings');
-                }}
-              />
-            )
-          }}
+
+          })}
         />
         <Stack.Screen
           name="SignUp"
@@ -136,7 +126,34 @@ export default function Navigator() {
             headerBackTitleVisible: false,
           }}
         />
-        <Stack.Screen name="Tab" component={TabNavigator} />
+        <Stack.Screen
+          name='Settings'
+          component={Settings}
+          options={{
+            title: '設定画面',
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="Tab"
+          component={TabNavigator}
+          options={({ navigation }) => ({
+            headerRight: () => (
+              <Button
+                type='clear'
+                icon={{
+                  name: 'cog',
+                  type: 'font-awesome',
+                  color: 'black',
+                  size: 30,
+                }}
+                onLongPress={() => {
+                  navigation.navigate('Settings');
+                }}
+              />
+            )
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer >
   );
