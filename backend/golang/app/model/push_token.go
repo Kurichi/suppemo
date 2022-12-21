@@ -8,15 +8,14 @@ import (
 func CreatePushToken(uid string, token string) error {
 	db := mydb.GetDB()
 
-	fmt.Println(uid, token)
-	stmt, err := db.Prepare("INSERT INTO push_tokens(uid,token) VALUES(?,?)")
+	stmt, err := db.Prepare("INSERT IGNORE INTO push_tokens(uid,token) VALUES(?,?)")
 	if err != nil {
 		fmt.Printf("[ERROR] token prepare error: %v", err)
 		return err
 	}
 	defer stmt.Close()
 
-	if _, err = stmt.Exec(uid, token); err != nil {
+	if _, err := stmt.Exec(uid, token); err != nil {
 		fmt.Printf("[ERROR] token exec error: %v", err)
 		return err
 	}
