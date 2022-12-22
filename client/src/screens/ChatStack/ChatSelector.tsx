@@ -20,15 +20,6 @@ export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
 
-  const users: User[] = [
-    { id: 0, icon: 'tmp', userName: 'なまえ0' },
-    { id: 1, icon: 'tmp', userName: 'なまえ1' },
-    { id: 2, icon: 'tmp', userName: 'なまえ2' },
-    { id: 3, icon: 'tmp', userName: 'なまえ3' },
-    { id: 4, icon: 'tmp', userName: 'なまえ4' },
-    { id: 5, icon: 'tmp', userName: 'なまえ5' }
-  ];
-
   const memo: talk = {
     id: -1,
     talk_with: {
