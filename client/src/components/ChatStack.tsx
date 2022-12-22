@@ -5,6 +5,7 @@ import ChatSelector from "../screens/ChatStack/ChatSelector";
 import QRCodeReader from "../screens/ChatStack/QRCodeReader";
 import ApplyReader from "../screens/ChatStack/ApplyReader";
 import ShowQRCode from "../screens/ChatStack/ShowQRCode";
+import TemplateList from "../screens/TemplateList";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ export default function ChatStack(props: any) {
       <Stack.Screen initialParams={{ stack: navigation }} name='reader' component={QRCodeReader} />
       <Stack.Screen name='show' component={ShowQRCode} />
       <Stack.Screen name='apply' component={ApplyReader} />
+      <Stack.Screen name='list' component={TemplateList} />
     </Stack.Navigator>
   )
 }

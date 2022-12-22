@@ -9,6 +9,8 @@
   }
 */
 
+//==FILE SYSTEM TYPE =====================
+
 type card_detail = {
   id: number = -1,
   name: string = '',
@@ -33,6 +35,15 @@ type address = {
   exists: boolean = false,
 }
 
+type setting_contents = {
+  vol: number,
+}
+
+type multipleType = card_detail | template_cards | address | talk;
+
+
+//==CHAT NAVIGATION TYPE=====================
+
 interface User {
   _id: number,
   name: string,
@@ -53,11 +64,7 @@ type talk = {
 }
 
 
-type multipleType = card_detail | template_cards | address | talk;
-
-type setting_contents = {
-  vol: number,
-}
+//== SCREEN PROPS=========================
 
 type ws_props = {
   name: string,
@@ -72,12 +79,45 @@ type folder_type = {
   cards_ids: number[],
 }
 
+type captureImage = {
+  uri: string = '',
+  height: number = 168,
+  width: number = 240,
+}
+
+
+//==FILE SYSTEM MODIFY PROPS ===============================
 
 type card_modify_type = 'upload' | 'delete' | 'edit' | 'reload';
+
 type card_modify_props = {
   id?: number,
   title?: string,
   picture?: string,
 }
 
-// declare const ws_max_card: number = 8
+type template_modify_props = {
+  template_id?: number,
+  card_id?: number,
+  index?: number,
+  title?: string,
+}
+
+
+//==NAVIGATION PROPS ================
+
+type NavigationProps = {
+  Home: {},
+  TemplateList: {},
+  ChatSelector: {},
+  Camera: {},
+
+  Login: {},
+  SignUp: {},
+  Chat: { talk: talk },
+
+  reader: {},
+  show: {},
+  apply: {},
+  list: {},
+}

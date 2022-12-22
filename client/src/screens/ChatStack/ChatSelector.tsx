@@ -2,21 +2,22 @@ import { Button, Icon } from "@rneui/base";
 import React from "react";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-native";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
-
+import { NavigationProp } from "@react-navigation/native";
 interface User {
   id: number,
   icon: string,
   userName: string,
 }
 
-export default function ChatSelector(props: any) {
-  const { navigation, route } = props;
-  const { stack } = route.params;
+type props = StackScreenProps<NavigationProps, 'ChatSelector'>
+
+export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
-  // const [users, setUsers] = useState<User[]>();
+
   const users: User[] = [
     { id: 0, icon: 'tmp', userName: 'なまえ0' },
     { id: 1, icon: 'tmp', userName: 'なまえ1' },
@@ -41,8 +42,8 @@ export default function ChatSelector(props: any) {
       'ログインしてないよ',
       '',
       [
-        { text: 'ログイン', onPress: () => { stack.navigate('Login') } },
-        { text: 'もどる', onPress: () => { stack.navigate('Home') } }
+        { text: 'ログイン', onPress: () => { navigation.navigate('Login', {}) } },
+        { text: 'もどる', onPress: () => { navigation.navigate('Home', {}) } }
       ]
     )
   }
@@ -75,7 +76,7 @@ export default function ChatSelector(props: any) {
                     iconStyle: { marginHorizontal: 10, flex: 1 }
                   }}
                   onPress={() => {
-                    stack.navigate('Chat', { 'talk': talk });
+                    navigation.navigate('Chat', { 'talk': talk });
                   }}
                 />
               </View>
@@ -97,13 +98,18 @@ export default function ChatSelector(props: any) {
                 iconStyle: { marginHorizontal: 10, flex: 1 }
               }}
               onPress={() => {
-                stack.navigate('Chat', { 'talk': memo });
+                navigation.navigate('Chat', { 'talk': memo });
               }}
             />
           </View>
         </ScrollView>
       )
       }
+
+      <Button
+        title='aaa'
+        onPress={() => { navigation.navigate('list', { name: 'selector' }) }}
+      />
 
       <View style={styles.userPlus}>
         <Button
@@ -115,7 +121,7 @@ export default function ChatSelector(props: any) {
             size: 32,
           }}
           onPress={() => {
-            stack.navigate('reader');
+            navigation.navigate('reader', {});
           }}
         />
       </View>

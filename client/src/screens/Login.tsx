@@ -37,7 +37,7 @@ export default function Login(props: any) {
       console.log(error)
     });
 
-    axios.post('http://27.133.132.254/init', {}, {
+    axios.post('http://27.133.132.254/', {}, {
       headers: { 'Authorization': await user?.getIdToken() }
     }).then((result) => {
 

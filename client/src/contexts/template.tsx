@@ -3,7 +3,7 @@ import { Sounder } from '../components/Sounder';
 import { FSTemplate } from '../services/FileSystem';
 
 const init_template: template_cards[] = [];
-const init_func = (modifyType: string, template_id?: number, card_id_or_idx?: number) => { };
+const init_func = (modifyType: string, data: template_modify_props) => { };
 const fs = new FSTemplate();
 const TemplateContext = createContext({ templates: init_template, modifyTemplate: init_func })
 
@@ -28,14 +28,14 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     console.log('reloaded templates!');
   };
 
-  const modifyTemplate = async (modifyType: string, template_id?: number, card_id_or_idx?: number): Promise<void> => {
+  //const modifyTemplate = async (modifyType: string, template_id?: number, card_id_or_idx?: number): Promise<void> => {
+  const modifyTemplate = async (modifyType: string, { template_id, card_id, index, title }: template_modify_props): Promise<void> => {
     // 新規テンプレート
     if (modifyType == 'add_empty') {
       await fs.addEmpty();
     }
     // カードの追加
-    else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
-      const card_id = card_id_or_idx;
+    else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id != 'undefined') {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num;
@@ -59,19 +59,22 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     }
     // カードの削除
-    else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof card_id_or_idx != 'undefined') {
-      const i = card_id_or_idx;
+    else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof index != 'undefined') {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num - 1;
       const len = card_ids.length - 1;
 
-      for (var j = i; j < len; j++) card_ids[j] = card_ids[j + 1];
+      for (var j = index; j < len; j++) card_ids[j] = card_ids[j + 1];
       card_ids[len] = -1;
 
       await Sounder('cancel', 'play')
 
       await fs.modifyData(template_id, { 'item_ids': card_ids, 'item_num': card_num });
+    }
+    //タイトル変更
+    else if (modifyType == 'edit_title' && typeof template_id != 'undefined' && typeof title != 'undefined') {
+      await fs.modifyData(template_id, { 'name': title });
     }
 
     const reloadTemplates = await fs.readData<template_cards>();

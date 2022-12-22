@@ -55,7 +55,7 @@ function TabNavigator(props: any) {
       <Tab.Screen
         name="ChatSelector"
         component={ChatStack}
-        initialParams={{ stack: navigation }}
+        // initialParams={{ stack: navigation }}
         options={{
           tabBarIcon: (({ size, color }) => (
             <Feather name="message-square" size={iconSize} color={color} />

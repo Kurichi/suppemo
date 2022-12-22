@@ -82,7 +82,7 @@ export default function WorkSpace(props: props_type) {
                   data={items}
                   renderItem={({ item }) =>
                     <TouchableOpacity
-                      onLongPress={() => modifyTemplate('exit_card', current_ws, item.id)}
+                      onLongPress={() => modifyTemplate('exit_card', { template_id: current_ws, index: item.id })}
                     >
                       <View style={styles.imageContainer}>
                         <Image

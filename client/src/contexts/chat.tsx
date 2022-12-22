@@ -1,9 +1,10 @@
 import React, { useState, PropsWithChildren, createContext, useContext, useEffect, useRef } from 'react';
 import { FSChat } from '../services/FileSystem';
 import { useAuth } from './auth';
+import { IMessage } from 'react-native-gifted-chat';
 
 const ini_talks: talk[] = [];
-const ini_func = async (message: Message): Promise<void> => { };
+const ini_func = async (message: IMessage): Promise<void> => { };
 const fs = new FSChat();
 const ChatContext = createContext({ talks: ini_talks, sendMessage: ini_func });
 
@@ -25,7 +26,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
 
   }, []);
 
-  const sendMessage = async (message?: Message): Promise<void> => {
+  const sendMessage = async (message?: IMessage): Promise<void> => {
     if (typeof message === 'undefined') {
 
     }
