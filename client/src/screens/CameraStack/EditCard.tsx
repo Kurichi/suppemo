@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { getCards, useCard } from '../../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
@@ -32,13 +32,30 @@ export default function EditCard(props: any) {
         </View>
         <View style={styles.removeButtonContainer}>
           <Button
-            title='カードのさくじょ'
+            buttonStyle={styles.removeButton}
+            title='もどる'
+            color='warning'
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <Button
+            title='さくじょ'
             color='error'
             buttonStyle={styles.removeButton}
             onPress={() => {
-              deleteCard();
-              navigation.goBack();
-              //アラート出した方がいいかもなのでだしてください誰か
+              Alert.alert(
+                '本当に消しますか？', '',
+                [
+                  {
+                    text: 'はい', onPress: () => {
+                      deleteCard();
+                      navigation.goBack();
+                    },
+                  },
+                  { text: 'やめる' }
+                ]
+              )
             }}>
           </Button>
         </View>
@@ -71,7 +88,7 @@ export default function EditCard(props: any) {
         />
         {/* </View> */}
       </View>
-    </View>
+    </View >
   )
 }
 
@@ -98,7 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   nameChangeTextBox: {
-
     height: 100,
     fontSize: 30,
     borderRadius: 5,
@@ -120,12 +136,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 40,
-
+    flexDirection: 'row',
   },
   removeButton: {
     justifyContent: 'center',
     borderRadius: 15,
     height: 80,
+    width: 150,
+    marginHorizontal: 10,
   },
   image: {
     height: 200,

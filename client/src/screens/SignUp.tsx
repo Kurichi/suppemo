@@ -41,26 +41,16 @@ export default function SignUp(props: any) {
                 const { user } = useAuth();
 
                 const pushToken = await registerForPushNotificationsAsync()
-                if (pushToken != null) {
-                  const result = await axios.post('http://27.133.132.254', {
-                    name: 'test',
-                    push_token: pushToken,
-                  }, {
-                    headers: { 'Authorization': await user?.getIdToken() }
-                  });
-                  console.log(result);
-                }
-
-                axios.post('http://27.133.132.254/init', {}, {
+                // if (pushToken != null) {
+                const res = await axios.post('http://27.133.132.254', {
+                  name: 'test',
+                  push_token: pushToken,
+                }, {
                   headers: { 'Authorization': await user?.getIdToken() }
-                }).then((result) => {
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Tab' }]
-                  });
-                }).catch((error) => {
-                  console.log(error);
                 });
+                console.log(res);
+                console.log('--------------------------------------------------')
+                // }
 
                 navigation.reset({
                   index: 0,
@@ -81,7 +71,7 @@ export default function SignUp(props: any) {
           onLongPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'SignUp' }]
+              routes: [{ name: 'Login' }]
             });
           }}>
           <Text style={styles.signupMessage}>登録はこちら</Text>

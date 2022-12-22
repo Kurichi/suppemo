@@ -1,119 +1,131 @@
 package handler
 
 import (
-	"bytes"
-	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 	middleware "suppemo-api/middleware"
 	"suppemo-api/model"
 
 	"github.com/labstack/echo/v4"
+	expo "github.com/oliveroneill/exponent-server-sdk-golang/sdk"
 )
 
 func SendMessage(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 	auth, err := middleware.Auth(authHeader)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	message := model.Message{}
-	err = c.Bind(&message)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	message := new(model.Message)
+	if err = c.Bind(&message); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	message.UID = auth.UID
 
-	user, err := model.FindUser(message.UID)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	if res, err := model.FindUser(message.UID); err != nil && res {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	_, err = model.FindUser(message.TargetUID)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	if res, err := model.FindUser(message.TargetUID); err != nil && res {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	if err = model.InsertMessage(message); err != nil {
+		fmt.Printf("[ERROR] insert message error %v", err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	// ========== Send request to expo push notification server ==========
-	push_tokens, err := model.FindPushTokens(message.TargetUID)
+
+	pushTokens, err := model.FindPushTokens(message.TargetUID)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	type RequestBody struct {
-		to    string
-		title string
-		body  string
+	pushToken := []expo.ExponentPushToken{}
+	for _, _token := range pushTokens {
+		token, err := expo.NewExponentPushToken(_token)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
+		pushToken = append(pushToken, token)
 	}
 
-	url := "https://exp.host/--/api/v2/push/send"
-	body := []RequestBody{}
-	for _, token := range push_tokens {
-		body = append(body, RequestBody{
-			to:    token.Token,
-			title: user.Name,
-			body:  message.Text,
-		})
-	}
-	// struct to json string
-	body_json, err := json.Marshal(body)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
-	}
-	// create request
-	req, err := http.NewRequest(
-		"POST",
-		url,
-		bytes.NewBuffer([]byte(body_json)),
+	client := expo.NewPushClient(nil)
+
+	response, err := client.Publish(
+		&expo.PushMessage{
+			To:    pushToken,
+			Body:  message.Text,
+			Sound: "default",
+			Title: auth.DisplayName,
+		},
 	)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
-	}
-	req.Header.Set("Content-Type", "application/json")
 
-	// send http request
-	client := &http.Client{}
-	_, err = client.Do(req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		fmt.Printf("[ERROR] push error %v", err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	err = model.InsertMessage(message)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	if err := response.ValidateResponse(); err != nil {
+		fmt.Printf("[ERROR] res validate error %v", err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	return c.String(http.StatusOK, "messages send complete")
 }
 
 func GetMessages(c echo.Context) error {
+
 	authHeader := c.Request().Header.Get("Authorization")
-	auth, err := middleware.Auth(authHeader)
+	_, err := middleware.Auth(authHeader)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	type targetUIDs struct {
-		TargetUIDs []string `json:"target_uid"`
+	id, err := strconv.Atoi(c.QueryParam("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	targets := &targetUIDs{}
-	c.Bind(targets)
 
-	type messages struct {
-		target_uid string          `json:"target_uid"`
-		messages   []model.Message `json:"messages"`
+	msgs, err := model.FindMessages("PGF8whP6JTR7apGjkYFMay1IbbC3", id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	msgs := []messages{}
-	for _, targetUID := range targets.TargetUIDs {
-		message, err := model.FindMessages(auth.UID, targetUID)
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, err)
+
+	type Messages struct {
+		TalkWith string          `json:"talk_with"`
+		Messages []model.Message `json:"messages"`
+	}
+	messages := []Messages{}
+	for _, msg := range msgs {
+		// 話し相手のUID
+		uid := msg.UID
+		if msg.UID == "PGF8whP6JTR7apGjkYFMay1IbbC3" {
+			uid = msg.TargetUID
 		}
-		msgs = append(msgs, messages{
-			target_uid: targetUID,
-			messages:   message,
-		})
+
+		// messagesにUIDの相手がいるか
+		index := -1
+		for i, message := range messages {
+			if uid == message.TalkWith {
+				index = i
+				break
+			}
+		}
+
+		// messages に msg を追加
+		if index != -1 {
+			messages[index].Messages = append(messages[index].Messages, msg)
+		} else {
+			messages = append(messages, Messages{
+				TalkWith: uid,
+				Messages: []model.Message{msg},
+			})
+		}
 	}
 
-	return c.JSON(http.StatusOK, model.Message{})
+	return c.JSON(http.StatusOK, messages)
 }

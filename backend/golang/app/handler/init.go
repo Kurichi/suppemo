@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	middlware "suppemo-api/middleware"
+	middleware "suppemo-api/middleware"
 	"suppemo-api/model"
 
 	"github.com/labstack/echo/v4"
@@ -10,33 +10,30 @@ import (
 
 func InitHandler(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
-	user, err := middlware.Auth(authHeader)
+	user, err := middleware.Auth(authHeader)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	type bodyType struct {
-		name       string `json:"name"`
-		push_token string `json:"push_token"`
+	type BodyType struct {
+		PushToken string `json:"push_token"`
 	}
-	body := &bodyType{}
-	err = c.Bind(body)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	body := &BodyType{}
+	if err = c.Bind(body); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	// Create userif not exists
-	err = model.CreateUser(user.UID, body.name)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+	if err = model.CreateUser(user.UID); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	if body.push_token == "" {
+	if body.PushToken == "" {
 		return c.String(http.StatusOK, "not push")
 	}
-	model.CreatePushToken(user.UID, body.push_token)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+
+	if err = model.CreatePushToken(user.UID, body.PushToken); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	return c.String(http.StatusOK, "push")

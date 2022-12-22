@@ -6,6 +6,8 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
 import { NavigationProp } from "@react-navigation/native";
+import Login from "../Login";
+
 interface User {
   id: number,
   icon: string,
@@ -39,13 +41,12 @@ export default function ChatSelector({ navigation, route }: props) {
 
   if (user == null) {
     Alert.alert(
-      'ログインしてないよ',
-      '',
-      [
-        { text: 'ログイン', onPress: () => { navigation.navigate('Login', {}) } },
-        { text: 'もどる', onPress: () => { navigation.navigate('Home', {}) } }
-      ]
-    )
+      'ログインしてね',
+      'チャットをするには\nログインがひつようだよ',
+    );
+    return (
+      <Login chat={true} />
+    );
   }
 
   return (
@@ -105,11 +106,6 @@ export default function ChatSelector({ navigation, route }: props) {
         </ScrollView>
       )
       }
-
-      <Button
-        title='aaa'
-        onPress={() => { navigation.navigate('list', { name: 'selector' }) }}
-      />
 
       <View style={styles.userPlus}>
         <Button
