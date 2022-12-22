@@ -48,8 +48,21 @@ func GetFriends(c echo.Context) error {
 	}
 
 	type response struct {
-		FriendUID []string `json:"friend_uid"`
+		UID         string `json:"uid"`
+		DisplayName string `json:"display_name"`
+		PhotoURL    string `json:"photo_url"`
 	}
 
-	return c.JSON(http.StatusOK, &response{friends})
+	res := make([]response, len(friends))
+	for i, friend := range friends {
+		user, err := middlware.GetUser(friend)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
+		res[i].UID = friend
+		res[i].DisplayName = user.DisplayName
+		res[i].PhotoURL = user.PhotoURL
+	}
+
+	return c.JSON(http.StatusOK, res)
 }

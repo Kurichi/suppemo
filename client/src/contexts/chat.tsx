@@ -64,12 +64,19 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://${host}/friend`).then((result) => {
-      const friends = result.data?.friends;
-      console.log(friends);
-    }).catch((error) => {
-      console.log(error);
-    });
+    user?.getIdToken().then((token) => {
+      axios.get(`http://${host}/friend`, {
+        headers: { 'Authorization': token }
+      }).then((result) => {
+        const friends = result.data?.friend_uid;
+
+
+
+      }).catch((error) => {
+        console.log(error);
+      });
+    })
+
   }, [user])
 
   useEffect(() => {
@@ -77,6 +84,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
       const friends = result.data?.friends;
       console.log(friends);
     }).catch((error) => {
+      console.log('chat.tsx:87');
       console.log(error);
     });
   }, [user])
