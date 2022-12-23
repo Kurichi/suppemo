@@ -5,8 +5,11 @@ import WorkSpace from '../components/WorkSpace';
 import { useTemplates } from '../contexts/template';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useIsFocused } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export default function Home() {
+type props = StackScreenProps<NavigationProps, 'Home'>
+
+export default function Home({ navigation, route }: props) {
   const isFocused = useIsFocused();
 
   const [isVertical, setIsVertical] = useState<boolean>(true);
@@ -34,7 +37,11 @@ export default function Home() {
     <View style={styles.container}>
       {/* WorkSpace */}
       <View style={styles.workSpace}>
-        <WorkSpace current_ws={current_ws} setCurrent={setCurrent} isVertical={isVertical} />
+        <WorkSpace
+          current_ws={current_ws}
+          setCurrent={setCurrent}
+          isVertical={isVertical}
+          init_index={route.params.init_WS_index} />
       </View>
 
       {/* CardsFolder */}
@@ -43,9 +50,7 @@ export default function Home() {
           <View style={styles.cardsFolder}>
             <CardsFolder current_ws={current_ws} />
           </View>
-        ) : (
-          <></>
-        )
+        ) : (<></>)
       }
     </View>
   )

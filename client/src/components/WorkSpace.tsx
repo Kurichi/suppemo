@@ -23,12 +23,13 @@ interface props_type {
   current_ws: number,
   setCurrent: React.Dispatch<React.SetStateAction<number>>,
   isVertical: boolean,
+  init_index?: number,
 }
 
 export default function WorkSpace(props: props_type) {
 
   const { cards } = useCard();
-  const { current_ws, setCurrent, isVertical } = props
+  const { current_ws, setCurrent, isVertical, init_index } = props
   const { templates, modifyTemplate } = useTemplates();
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -36,10 +37,11 @@ export default function WorkSpace(props: props_type) {
 
   const scrollViewRef = useRef<ScrollView>(null);
   useEffect(() => {
+    const position = { x: init_index ? init_index * 0.94 * windowWidth : 0, y: 0, animated: false }
     if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: false });
+      scrollViewRef.current.scrollTo();
     }
-  }, [isVertical]);
+  }, [isVertical, init_index]);
 
   const setCurrentID = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.targetContentOffset) {

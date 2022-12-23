@@ -3,16 +3,17 @@ import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { useAuth } from '../contexts/auth';
 import MyOverlay from '../components/MyOverlay';
+import { User } from 'firebase/auth';
 import { EmailAuthCredential, EmailAuthProvider, getAuth, reauthenticateWithCredential, signInWithEmailAndPassword, updateEmail, updateProfile } from 'firebase/auth';
 
 export default function Settings() {
   const { user } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = useState<boolean>(false);
-  const [photoURL, setPhotoURL] = useState<string>(user?.photoURL);
+  const [photoURL, setPhotoURL] = useState<string>(user && user.photoURL ? user.photoURL : '');
   const [nameModalVisible, setNameModalVisible] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(user?.displayName);
+  const [userName, setUserName] = useState<string>(user && user.displayName ? user.displayName : 'ななし');
   const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>(user?.email);
+  const [email, setEmail] = useState<string>(user && user.email ? user.email : 'nanashi@wakanne.com');
 
   const s = require('../../assets/default_logo_for_qr.png');
   return (
@@ -123,13 +124,13 @@ export default function Settings() {
               {
                 text: '変更', onPress: async () => {
                   const auth = getAuth();
-                  if (auth.currentUser !== null && user != null && user?.email !== email) {
+                  if (auth.currentUser !== null && user != null && user?.email !== email, auth.currentUser?.email) {
                     const crediental = await EmailAuthProvider.credential(
                       auth.currentUser.email,
                       "password"
                     );
                     reauthenticateWithCredential(auth.currentUser, crediental).then(() => {
-                      updateEmail(auth.currentUser, email);
+                      auth.currentUser ? updateEmail(auth.currentUser, email) : void 0;
                     });
                   }
                   setEmailModalVisible(!emailModalVisible);

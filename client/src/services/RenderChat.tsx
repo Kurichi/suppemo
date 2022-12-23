@@ -8,6 +8,9 @@ import {
   InputToolbarProps,
   ComposerProps,
   Composer,
+  MessageImageProps,
+  IMessage,
+  MessageImage
 } from 'react-native-gifted-chat';
 
 
@@ -25,9 +28,7 @@ export const renderSend = (props: SendProps<Message>) => {
 
 export const renderAction = (setShow: React.Dispatch<React.SetStateAction<boolean>>, isShowTemplate: boolean) => {
   return (
-    <View
-      style={styles.action}
-    >
+    <View style={styles.action}>
       <Button
         type='clear'
         icon={{
@@ -54,6 +55,18 @@ export const renderInputToolbar = (props: InputToolbarProps<Message>) => {
 export const renderComposer = (props: ComposerProps) => {
   return (
     <Composer {...props} textInputStyle={styles.composer} />
+  )
+}
+
+export const renderMessageImage = (props: MessageImageProps<IMessage>) => {
+  return (
+    <MessageImage
+      {...props}
+      containerStyle={{
+        width: 300,
+        height: 160,
+      }}
+    />
   )
 }
 

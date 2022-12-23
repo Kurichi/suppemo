@@ -107,7 +107,9 @@ type template_modify_props = {
 //==NAVIGATION PROPS ================
 
 type NavigationProps = {
-  Home: {},
+  Home: {
+    init_WS_index: number = 0,
+  },
   TemplateList: {},
   ChatSelector: {},
   Camera: {},

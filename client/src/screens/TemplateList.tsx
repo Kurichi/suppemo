@@ -12,12 +12,15 @@ import ViewShot, { captureRef } from 'react-native-view-shot';
 import { useTemplates } from '../contexts/template';
 import { useCard, getCards } from '../contexts/card';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StackScreenProps } from '@react-navigation/stack';
 
-interface props {
+interface onPressProps {
   onPress?: (viewShot: ViewShot, height: number, width: number) => Promise<void>
 }
 
-export default function TemplateList({ onPress }: props) {
+type props = StackScreenProps<NavigationProps, 'TemplateList'>
+
+export default function TemplateList({ onPress }: onPressProps, { navigation }: props) {
 
   const { templates, modifyTemplate } = useTemplates();
   const { cards } = useCard();
@@ -89,7 +92,10 @@ export default function TemplateList({ onPress }: props) {
               />
               <View style={styles.frameContainer}>
                 <TouchableOpacity
-                  onPress={() => { if (onPress) onPress(viewShot_list.current[index], height, width); console.log('press') }}
+                  onPress={() => {
+                    if (onPress) onPress(viewShot_list.current[index], height, width)
+                    else navigation.navigate('Home', { init_WS_index: index })
+                  }}
 
                 >
                   <ViewShot
