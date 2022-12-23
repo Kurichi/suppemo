@@ -4,18 +4,25 @@ import CardsFolder from '../components/CardsFolder';
 import WorkSpace from '../components/WorkSpace';
 import { useTemplates } from '../contexts/template';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-export default function Home() {
+export default function Home(props: any) {
+  const { navigation } = props;
   const isFocused = useIsFocused();
 
   const [isVertical, setIsVertical] = useState<boolean>(true);
   const onChangeOrientation = (event: ScreenOrientation.OrientationChangeEvent) => {
     if (event.orientationInfo.orientation === ScreenOrientation.Orientation.PORTRAIT_UP) {
       setIsVertical(true);
+      navigation.setOptions({
+        tabBarVisible: true,
+      })
     }
     else {
       setIsVertical(false);
+      navigation.setOptions({
+        tabBarVisible: false,
+      })
     }
   }
 
