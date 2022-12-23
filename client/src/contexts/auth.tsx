@@ -1,6 +1,7 @@
 import React, { useEffect, createContext, useState, useContext, PropsWithChildren } from 'react';
 import { auth } from '../services/firebase';
 import { User } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 
 interface ContextInterface {
   user: User | null,

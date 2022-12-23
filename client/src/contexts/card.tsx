@@ -59,7 +59,7 @@ export function getCards(cards: card_detail[], ids: number | number[]) {
     var res: card_detail[] = [];
     for (let id of ids) {
       const index = fs.getIndex(cards, id)
-      if (index != -1 && cards[index].exists)
+      if (index != -1 && cards[index]?.exists)
         res.push(cards[index]);
     }
     return res;

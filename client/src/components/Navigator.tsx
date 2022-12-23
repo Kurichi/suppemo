@@ -40,6 +40,7 @@ function TabNavigator(props: any) {
           tabBarIcon: (({ size, color }) => (
             <Feather name="home" size={iconSize} color={color} />
           ))
+
         }}
       />
 
@@ -109,7 +110,6 @@ export default function Navigator() {
           component={Login}
           options={({ navigation }) => ({
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
-
           })}
         />
         <Stack.Screen

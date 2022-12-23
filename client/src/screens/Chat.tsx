@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet, useWindowDimensions, } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import { GiftedChat, IMessage, Message, User } from 'react-native-gifted-chat';
 import { useChat } from '../contexts/chat';
 import { StackScreenProps } from '@react-navigation/stack';
 import TemplateList from './TemplateList';
@@ -8,17 +8,17 @@ import ViewShot, { captureRef } from 'react-native-view-shot';
 import * as Render from '../services/RenderChat';
 
 import { useCard } from '../contexts/card';
+import { getAuth } from 'firebase/auth';
 
 type props = StackScreenProps<NavigationProps, "Chat">
 
 export default function Chat({ navigation, route }: props) {
-
   const { cards } = useCard();
   const { talk } = route.params;
   const { sendMessage } = useChat();
   const [isShowTemplate, setShow] = useState<boolean>(false);
 
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  // const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -38,23 +38,25 @@ export default function Chat({ navigation, route }: props) {
 
 
   const onSend = useCallback((messages: IMessage[] = []) => {
-    console.log(messages)
-    sendMessage(messages[0]);
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    sendMessage(talk.talk_with._id, messages);
+    // setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])
 
-  const onImageSend = (image: captureImage) => {
+  const onImageSend = async (image: captureImage) => {
+    const auth = getAuth();
     const sendedImage: IMessage = {
       _id: getUniqueStr(),
       text: '',
       createdAt: new Date(),
       user: {
-        _id: 1,
+        _id: auth.currentUser?.uid ?? '',
+        avatar: auth.currentUser?.photoURL ?? '',
+        name: auth.currentUser?.displayName ?? '',
       },
       image: image.uri,
     };
 
-    setMessages(previousMessages => GiftedChat.append(previousMessages, [sendedImage]));
+    sendMessage(talk.talk_with._id, [sendedImage]);
   }
 
   const capture = async (viewShot: ViewShot, height: number, width: number) => {
@@ -73,7 +75,7 @@ export default function Chat({ navigation, route }: props) {
     <View style={styles.container}>
       <View style={{ flex: isShowTemplate ? 6 : 1 }}>
         <GiftedChat
-          messages={messages as Message[]}
+          messages={talk.messages as Message[]}
           placeholder='メッセージを入力'
           onSend={messages => onSend(messages)}
           user={{
