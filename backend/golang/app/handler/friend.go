@@ -48,9 +48,9 @@ func GetFriends(c echo.Context) error {
 	}
 
 	type response struct {
-		UID         string `json:"uid"`
-		DisplayName string `json:"display_name"`
-		PhotoURL    string `json:"photo_url"`
+		UID         string `json:"_id"`
+		DisplayName string `json:"name"`
+		PhotoURL    string `json:"avatar"`
 	}
 
 	res := make([]response, len(friends))
