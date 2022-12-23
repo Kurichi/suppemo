@@ -10,12 +10,12 @@ type Message struct {
 	ID        int       `json:"id" form:"id" query:"id"`
 	UID       string    `json:"uid" form:"uid" query:"uid"`
 	TargetUID string    `json:"to" form:"to" query:"to"`
-	Type      string    `json:"type" form:"type" query:"type"`
 	Text      string    `json:"text" form:"text" query:"text"`
+	Image     string    `json:"image" form:"image" query:"image"`
 	Created   time.Time `json:"created" form:"created" query:"created"`
 }
 
-func CreateMessage(uid string, target_uid string, _type string, text string) error {
+func CreateMessage(uid string, target_uid string, image string, text string) error {
 	db := mydb.GetDB()
 
 	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
@@ -25,7 +25,7 @@ func CreateMessage(uid string, target_uid string, _type string, text string) err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(uid, target_uid, _type, text)
+	_, err = stmt.Exec(uid, target_uid, image, text)
 	if err != nil {
 		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
@@ -44,7 +44,7 @@ func InsertMessage(message *Message) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(message.UID, message.TargetUID, message.Type, message.Text)
+	_, err = stmt.Exec(message.UID, message.TargetUID, message.Image, message.Text)
 	if err != nil {
 		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
@@ -73,7 +73,7 @@ func FindMessages(uid string, id int) ([]Message, error) {
 	messages := []Message{}
 	for rows.Next() {
 		message := &Message{}
-		err = rows.Scan(&message.ID, &message.UID, &message.TargetUID, &message.Type, &message.Text, &message.Created)
+		err = rows.Scan(&message.ID, &message.UID, &message.TargetUID, &message.Image, &message.Text, &message.Created)
 		if err != nil {
 			fmt.Printf("[ERROR] message scan error: %v", err)
 			return nil, err

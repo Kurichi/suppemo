@@ -6,6 +6,7 @@ import (
 	"strconv"
 	middleware "suppemo-api/middleware"
 	"suppemo-api/model"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	expo "github.com/oliveroneill/exponent-server-sdk-golang/sdk"
@@ -84,7 +85,7 @@ func SendMessage(c echo.Context) error {
 func GetMessages(c echo.Context) error {
 
 	authHeader := c.Request().Header.Get("Authorization")
-	_, err := middleware.Auth(authHeader)
+	user, err := middleware.Auth(authHeader)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -94,27 +95,54 @@ func GetMessages(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	msgs, err := model.FindMessages("PGF8whP6JTR7apGjkYFMay1IbbC3", id)
+	msgs, err := model.FindMessages(user.UID, id)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
+	type u struct {
+		ID     string `json:"_id"`
+		Name   string `json:"name"`
+		Avatar string `json:"avatar"`
+	}
+
+	type talk struct {
+		ID      int       `json:"_id"`
+		Text    string    `json:"text"`
+		Image   string    `json:"image"`
+		User    u         `json:"user"`
+		Created time.Time `json:"createdAt"`
+	}
+
 	type Messages struct {
-		TalkWith string          `json:"talk_with"`
-		Messages []model.Message `json:"messages"`
+		TalkWith u      `json:"talk_with"`
+		Messages []talk `json:"messages"`
 	}
 	messages := []Messages{}
 	for _, msg := range msgs {
 		// 話し相手のUID
 		uid := msg.UID
-		if msg.UID == "PGF8whP6JTR7apGjkYFMay1IbbC3" {
-			uid = msg.TargetUID
+		talk_with, err := middleware.GetUser(uid)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
 		}
 
+		author := u{}
+
+		if msg.UID == user.UID {
+			uid = msg.TargetUID
+			author.ID = user.UID
+			author.Name = user.DisplayName
+			author.Avatar = user.PhotoURL
+		} else {
+			author.ID = talk_with.UID
+			author.Name = talk_with.DisplayName
+			author.Avatar = talk_with.PhotoURL
+		}
 		// messagesにUIDの相手がいるか
 		index := -1
 		for i, message := range messages {
-			if uid == message.TalkWith {
+			if uid == message.TalkWith.ID {
 				index = i
 				break
 			}
@@ -122,11 +150,29 @@ func GetMessages(c echo.Context) error {
 
 		// messages に msg を追加
 		if index != -1 {
-			messages[index].Messages = append(messages[index].Messages, msg)
+			messages[index].Messages = append(messages[index].Messages, talk{
+				ID:      msg.ID,
+				Text:    msg.Text,
+				Image:   msg.Image,
+				User:    author,
+				Created: msg.Created,
+			})
 		} else {
 			messages = append(messages, Messages{
-				TalkWith: uid,
-				Messages: []model.Message{msg},
+				TalkWith: u{
+					ID:     uid,
+					Name:   talk_with.DisplayName,
+					Avatar: talk_with.PhotoURL,
+				},
+				Messages: []talk{
+					{
+						ID:      msg.ID,
+						Text:    msg.Text,
+						Image:   msg.Image,
+						User:    author,
+						Created: msg.Created,
+					},
+				},
 			})
 		}
 	}
