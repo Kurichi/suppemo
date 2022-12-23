@@ -6,8 +6,9 @@ import { useTemplates } from '../contexts/template';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-type props = StackScreenProps<NavigationProps, 'Home'>
+type props = BottomTabScreenProps<NavigationProps, 'Home'>
 
 export default function Home({ navigation, route }: props) {
   const isFocused = useIsFocused();
