@@ -21,18 +21,9 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
   const host = '27.133.132.254';
   const [talks, setTalks] = useState<talk[]>([]);
   const { user } = useAuth();
-  const [idToken, setIdToken] = useState<string>();
 
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
-
-  const fetcher = (url: string) => {
-    axios.get(url, {
-      headers: {
-        'Authorization': idToken
-      }
-    })
-  }
 
   useEffect(() => {
     (async () => {
@@ -44,13 +35,14 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
     notificationListener.current = Notifications.addNotificationReceivedListener(async notification => {
       console.log(notification);
       const token = await user?.getIdToken();
-      setIdToken(token);
-      axios.get(`http://${host}/chat`, {
+      console.log(token);
+      axios.get(`http://${host}/chat?id=0`, {
         headers: {
-          'Authorization': await user?.getIdToken()
+          'Authorization': token
         }
       }).then((result) => {
-        console.log(result);
+        setTalks(result.data);
+        console.log(result.data);
       }).catch((error) => {
         console.log(error)
       });
@@ -62,6 +54,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
       console.log(response);
     });
 
+
     return () => {
       if (typeof notificationListener.current !== 'undefined')
         Notifications.removeNotificationSubscription(notificationListener.current);
@@ -69,6 +62,32 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  useEffect(() => {
+    user?.getIdToken().then((token) => {
+      axios.get(`http://${host}/friend`, {
+        headers: { 'Authorization': token }
+      }).then((result) => {
+        const friends = result.data?.friend_uid;
+
+
+
+      }).catch((error) => {
+        console.log(error);
+      });
+    })
+
+  }, [user])
+
+  useEffect(() => {
+    axios.get(`http://${host}/friend`).then((result) => {
+      const friends = result.data?.friends;
+      console.log(friends);
+    }).catch((error) => {
+      console.log('chat.tsx:87');
+      console.log(error);
+    });
+  }, [user])
 
   const sendMessage = async (message?: IMessage): Promise<void> => {
     if (typeof message === 'undefined') {

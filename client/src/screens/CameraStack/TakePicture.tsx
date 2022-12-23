@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { Button } from '@rneui/base';
 import { useCard } from '../../contexts/card';
@@ -84,49 +84,54 @@ export default function TakePicture(props: any) {
           </View>
         </Camera>
       ) : (
-        <View style={{ flex: 1 }}>
-
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>カードのなまえ</Text>
-            <TextInput
-              onChangeText={setTitle}
-              value={title}
-              style={styles.titleSpace}
-              maxLength={20}
-            />
-          </View>
-
-          <View style={styles.photoContainer}>
-            <Image
-              style={styles.photo}
-              source={{ uri: picture }}
-            />
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <View style={[styles.button, { backgroundColor: '#D4D4D4' }]}>
-              <Button
-                type='clear'
-                onPress={() => {
-                  setPicture('')
-                }}
-                title='とりなおす'
-                titleStyle={styles.buttonTitle}
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1 }}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>カードのなまえ</Text>
+              <TextInput
+                autoFocus={true}
+                placeholder='なまえをきめてね'
+                onChangeText={setTitle}
+                value={title}
+                style={styles.titleSpace}
+                maxLength={20}
               />
             </View>
-            <View style={[styles.button, { backgroundColor: '#FC6A2C' }]}>
-              <Button
-                type='clear'
-                onPress={() => {
-                  apply();
-                  navigation.navigate('CameraTop');
-                }}
-                title='つくる'
-                titleStyle={styles.buttonTitle}
+
+            <View style={styles.photoContainer}>
+              <Image
+                style={styles.photo}
+                source={{ uri: picture }}
               />
             </View>
+
+            <View style={styles.buttonContainer}>
+              <View style={[styles.button, { backgroundColor: '#D4D4D4' }]}>
+                <Button
+                  type='clear'
+                  onPress={() => {
+                    setPicture('')
+                  }}
+                  title='とりなおす'
+                  titleStyle={styles.buttonTitle}
+                />
+              </View>
+              {title !== '' && <View style={[styles.button, { backgroundColor: '#FC6A2C' }]}>
+                <Button
+                  type='clear'
+                  onPress={() => {
+                    apply();
+                    navigation.navigate('CameraTop');
+                  }}
+                  title='つくる'
+                  titleStyle={styles.buttonTitle}
+                />
+              </View>}
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
+
       )}
     </View >
   );

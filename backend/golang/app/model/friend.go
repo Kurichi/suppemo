@@ -15,7 +15,7 @@ type Friend struct {
 func CreateFriend(uid string, fuid string) error {
 	db := mydb.GetDB()
 
-	stmt, err := db.Prepare("INSERT INTO users(uid, friend_uid) VALUES(?,?)")
+	stmt, err := db.Prepare("INSERT INTO friends(uid, friend_uid) VALUES(?,?)")
 	if err != nil {
 		fmt.Printf("[ERROR] friend prepare error: %v", err)
 		return err
@@ -32,7 +32,7 @@ func CreateFriend(uid string, fuid string) error {
 func FindFriends(uid string) ([]string, error) {
 	db := mydb.GetDB()
 
-	stmt, err := db.Prepare("SELECT * FROM friends WHERE uid = ?")
+	stmt, err := db.Prepare("SELECT friend_uid FROM friends WHERE uid = ?")
 	if err != nil {
 		fmt.Printf("[ERROR] friend prepare error: %v", err)
 		return nil, err

@@ -18,11 +18,13 @@ export default function Login(props: any) {
 
   const login = async () => {
     await signInWithEmailAndPassword(auth, email, password).then(async (result) => {
-      // if (auth.currentUser !== null)
-      //   await updateProfile(auth.currentUser, {
-      //     displayName: "くりち",
-      //     photoURL: "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/81/chestnut_1f330.png",
-      //   });
+      // navigate to home
+      if (navigation !== null)
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Tab' }]
+        });
+
       const pushToken = await registerForPushNotificationsAsync();
 
       axios.post('http://27.133.132.254', {
@@ -33,7 +35,7 @@ export default function Login(props: any) {
           'Authorization': await user?.getIdToken(),
         }
       }).then((result) => {
-        console.log(result);
+        // console.log(result);
       }).catch((error) => {
         console.log(error);
       });
@@ -57,12 +59,7 @@ export default function Login(props: any) {
       }
     });
 
-    // navigate to home
-    if (navigation !== null)
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Tab' }]
-      });
+
   }
 
   return (

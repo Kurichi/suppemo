@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Alert } from 'react-native';
-import { Button, Overlay } from '@rneui/base';
+import { Button } from '@rneui/base';
 import { useAuth } from '../contexts/auth';
-import { TextInput } from 'react-native-gesture-handler';
+import MyOverlay from '../components/MyOverlay';
+import { EmailAuthCredential, EmailAuthProvider, getAuth, reauthenticateWithCredential, signInWithEmailAndPassword, updateEmail, updateProfile } from 'firebase/auth';
 
 export default function Settings() {
-  const [modalVisible, setModalVisible] = useState<boolean>(true);
-  const [userName, setUserName] = useState<string>();
   const { user } = useAuth();
-  const s = require('../../assets/default_logo.png');
+  const [photoModalVisible, setPhotoModalVisible] = useState<boolean>(false);
+  const [photoURL, setPhotoURL] = useState<string>(user?.photoURL);
+  const [nameModalVisible, setNameModalVisible] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>(user?.displayName);
+  const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>(user?.email);
+
+  const s = require('../../assets/default_logo_for_qr.png');
   return (
     <View style={styles.container}>
       <View style={styles.userItemContainer}>
@@ -29,17 +35,19 @@ export default function Settings() {
           title='アイコン画像の変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
+          onPress={() => { setPhotoModalVisible(true) }}
         />
         <Button
           title='名前の変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
-          onPress={() => { setModalVisible(true); }}
+          onPress={() => { setNameModalVisible(true); }}
         />
         <Button
           title='メールアドレスの変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
+          onPress={() => { setEmailModalVisible(true); }}
         />
       </View>
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
@@ -65,22 +73,73 @@ export default function Settings() {
           }}
         />
       </View>
-      <Overlay
-        overlayStyle={{
-          backgroundColor: 'white'
+
+      <MyOverlay
+        title='画像の変更'
+        isVisible={photoModalVisible}
+        onBackdropPress={() => { setPhotoModalVisible(!photoModalVisible); }}
+        children={<Text>childrenを与えるとそれが，与えなければTextInput</Text>}
+      />
+
+
+      <MyOverlay
+        title='名前の変更'
+        currentValue={userName}
+        isVisible={nameModalVisible}
+        onChangeText={(value) => { setUserName(value); }}
+        onBackdropPress={() => { setNameModalVisible(!nameModalVisible); }}
+        onPress={() => {
+          Alert.alert(
+            '名前を変更しますか？',
+            '',
+            [
+              {
+                text: '変更', onPress: async (value) => {
+                  const auth = getAuth();
+                  if (auth.currentUser !== null && user?.displayName !== userName)
+                    await updateProfile(auth.currentUser, {
+                      displayName: userName,
+                    });
+                  setNameModalVisible(!nameModalVisible);
+                }
+              },
+              { text: 'キャンセル' }
+            ]
+          )
         }}
-        isVisible={modalVisible}
-        onBackdropPress={() => { setModalVisible(!modalVisible) }}>
-        <View >
-          <Text>なまえを変更する</Text>
-          <TextInput
-            value={user?.displayName as string}
-            onChangeText={(value) => {
-            }}
-          />
-          <Button></Button>
-        </View>
-      </Overlay>
+      />
+
+      <MyOverlay
+        title='メールアドレスの変更'
+        currentValue={email}
+        isVisible={emailModalVisible}
+        onChangeText={(value) => { setEmail(value); }}
+        onBackdropPress={() => { setEmailModalVisible(!emailModalVisible); }}
+        onPress={() => {
+          Alert.alert(
+            'メールアドレスを変更しますか？',
+            '',
+            [
+              {
+                text: '変更', onPress: async () => {
+                  const auth = getAuth();
+                  if (auth.currentUser !== null && user != null && user?.email !== email) {
+                    const crediental = await EmailAuthProvider.credential(
+                      auth.currentUser.email,
+                      "password"
+                    );
+                    reauthenticateWithCredential(auth.currentUser, crediental).then(() => {
+                      updateEmail(auth.currentUser, email);
+                    });
+                  }
+                  setEmailModalVisible(!emailModalVisible);
+                }
+              },
+              { text: 'キャンセル' }
+            ]
+          )
+        }}
+      />
     </View>
   );
 
