@@ -151,18 +151,6 @@ export class FSCard extends multipleFS {
   }
 }
 
-export class FSChat extends multipleFS {
-  constructor() {
-    super(`${FS.documentDirectory}chat_cache.json`);
-  }
-
-  writeTalkCache(talks: talk[]) {
-    FS.writeAsStringAsync(this.file_path, JSON.stringify(talks));
-  }
-
-
-}
-
 export class FSSetting {
   readonly setting_file_path = `${FS.documentDirectory}settings.json`;
   init_data: setting_contents = {

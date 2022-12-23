@@ -47,7 +47,6 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
         }
       }
 
-
       if (flag) {
         console.log('カード枚数上限')
         await Sounder('error', 'play');
@@ -80,9 +79,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       await fs.deleteData(template_id);
     }
 
-    const reloadTemplates = await fs.readData<template_cards>();
-    setTemplates(reloadTemplates)
-    console.log('reloaded templates!');
+    reloadTemplates();
   }
 
   return (

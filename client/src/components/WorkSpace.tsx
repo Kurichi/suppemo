@@ -74,12 +74,18 @@ export default function WorkSpace(props: props_type) {
           {templates.map((template, index) => {
             const cards_info = getCards(cards, template.item_ids);
             const items = cards_info.map((_c, index) => {
-              return ({
+              return (_c ? {
                 id: index,
                 card_id: _c.id,
                 exists: _c.exists,
                 uri: _c.uri,
                 name: _c.name,
+              } : {
+                id: index,
+                card_id: -1,
+                exists: false,
+                uri: '',
+                name: '',
               })
             });
             const colmns_length = Math.round(8 / 2);

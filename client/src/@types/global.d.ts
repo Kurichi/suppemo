@@ -39,28 +39,13 @@ type setting_contents = {
   vol: number,
 }
 
-type multipleType = card_detail | template_cards | address | talk;
-
+type multipleType = card_detail | template_cards | address;
 
 //==CHAT NAVIGATION TYPE=====================
 
-interface User {
-  _id: number,
-  name: string,
-  avatar: string,
-}
-
-interface Message {
-  _id: number,
-  text: string,
-  createdAt: Date,
-  user: User,
-}
-
-type talk = {
-  id: number,
+type Talk = {
   talk_with: User,
-  messages: Message[]
+  messages: IMessage[]
 }
 
 
@@ -116,7 +101,7 @@ type NavigationProps = {
 
   Login: {},
   SignUp: {},
-  Chat: { talk: talk },
+  Chat: { talk: Talk },
 
   reader: {},
   show: {

@@ -53,19 +53,24 @@ export default function ChatSelector({ navigation, route }: props) {
             return (
               <View style={styles.chatCard} key={index}>
                 <Button
-                  title={talk.talk_with.name}
+                  title={talk.talk_with.name !== '' ? talk.talk_with.name : 'No name'}
                   titleStyle={{
                     color: 'black',
                     textAlign: 'left',
                     flex: 10,
                   }}
                   type='clear'
-                  icon={{
-                    name: 'home',
-                    type: 'font-awesome',
-                    color: 'black',
-                    iconStyle: { marginHorizontal: 10, flex: 1 }
-                  }}
+                  icon={
+                    <Image
+                      source={{ uri: talk.talk_with.avatar }}
+                      style={{
+                        height: 50,
+                        width: 50,
+                        borderRadius: 25,
+                        backgroundColor: 'white',
+                        marginRight: 10,
+                      }} />
+                  }
                   onPress={() => {
                     navigation.navigate('Chat', { 'talk': talk });
                   }}

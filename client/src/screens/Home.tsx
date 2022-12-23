@@ -4,7 +4,7 @@ import CardsFolder from '../components/CardsFolder';
 import WorkSpace from '../components/WorkSpace';
 import { useTemplates } from '../contexts/template';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 type props = StackScreenProps<NavigationProps, 'Home'>
@@ -16,9 +16,15 @@ export default function Home({ navigation, route }: props) {
   const onChangeOrientation = (event: ScreenOrientation.OrientationChangeEvent) => {
     if (event.orientationInfo.orientation === ScreenOrientation.Orientation.PORTRAIT_UP) {
       setIsVertical(true);
+      navigation.setOptions({
+        tabBarVisible: true,
+      })
     }
     else {
       setIsVertical(false);
+      navigation.setOptions({
+        tabBarVisible: false,
+      })
     }
   }
 
