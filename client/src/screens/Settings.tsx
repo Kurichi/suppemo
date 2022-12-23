@@ -14,7 +14,7 @@ export default function Settings() {
       <View style={styles.userItemContainer}>
         <View style={styles.iconBox}>
           <Image
-            source={{ uri: user ? user.photoURL : '' }}
+            source={{ uri: user && user.photoURL ? user.photoURL : '' }}
             style={styles.iconImage}
           />
         </View>
@@ -74,7 +74,7 @@ export default function Settings() {
         <View >
           <Text>なまえを変更する</Text>
           <TextInput
-            value={user?.displayName}
+            value={user?.displayName as string}
             onChangeText={(value) => {
             }}
           />

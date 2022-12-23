@@ -13,6 +13,7 @@ export default function TakePicture(props: any) {
   const [camera, setCamera] = useState<Camera>();
   const [picture, setPicture] = useState<string>('');
   const [title, setTitle] = useState<string>('');
+  const [height, setHeight] = useState<number>(0);
 
   const { modifyCard } = useCard()
 
@@ -45,7 +46,12 @@ export default function TakePicture(props: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={(e) => {
+        setHeight((e.nativeEvent.layout.height - e.nativeEvent.layout.width) / 2);
+      }}
+    >
       {!picture ? (
         <Camera
           style={{ flex: 1, alignItems: 'center' }}
@@ -53,9 +59,20 @@ export default function TakePicture(props: any) {
           ref={(ref: Camera) => {
             setCamera(ref);
           }}>
-          <View style={styles.cameraButton}>
+          <View style={{ width: '100%', height: height, backgroundColor: 'rgba(0,0,0,0.7)' }}>
+          </View>
+          <View style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            position: 'absolute',
+            height: height,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}>
             <Button
               type='clear'
+              buttonStyle={styles.cameraButton}
               onPress={() => takePicture()}
               icon={{
                 name: 'camera',
@@ -121,14 +138,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF8B0',
   },
   cameraButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    height: 100,
+    width: 160,
     borderRadius: 60,
-    bottom: 10,
     backgroundColor: 'red',
-    position: 'absolute',
   },
   titleSpace: {
     backgroundColor: '#FFFFFF',

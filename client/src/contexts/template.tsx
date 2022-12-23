@@ -28,7 +28,6 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     console.log('reloaded templates!');
   };
 
-  //const modifyTemplate = async (modifyType: string, template_id?: number, card_id_or_idx?: number): Promise<void> => {
   const modifyTemplate = async (modifyType: string, { template_id, card_id, index, title }: template_modify_props): Promise<void> => {
     // 新規テンプレート
     if (modifyType == 'add_empty') {
@@ -75,6 +74,10 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     //タイトル変更
     else if (modifyType == 'edit_title' && typeof template_id != 'undefined' && typeof title != 'undefined') {
       await fs.modifyData(template_id, { 'name': title });
+    }
+    //テンプレートの削除
+    else if (modifyType == 'delete' && typeof template_id != 'undefined') {
+      await fs.deleteData(template_id);
     }
 
     const reloadTemplates = await fs.readData<template_cards>();

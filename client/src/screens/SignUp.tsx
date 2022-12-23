@@ -65,10 +65,10 @@ export default function SignUp(props: any) {
         </View>
         <Button
           type="clear"
+          // onPress={() => {
+          //   Alert.alert('長押ししてね');
+          // }}
           onPress={() => {
-            Alert.alert('長押ししてね');
-          }}
-          onLongPress={() => {
             navigation.reset({
               index: 0,
               routes: [{ name: 'Login' }]

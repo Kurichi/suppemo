@@ -28,6 +28,27 @@ export default function TemplateList({ onPress }: props) {
   var height = 168;
   var width = 200;
 
+  const alert = (index: number, name: string) => {
+    Alert.alert(
+      'なまえのへんこう',
+      'なまえをかえる？',
+      [
+        {
+          text: 'かえる', onPress: () => {
+            modifyTemplate('edit_title', { title: title_list[index] });
+          }
+        },
+        {
+          text: 'かえない', onPress: () => {
+            setTitle(
+              title_list.map((title, idx) => (idx === index ? name : title))
+            );
+          }
+        }
+      ]
+    )
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
@@ -51,6 +72,7 @@ export default function TemplateList({ onPress }: props) {
             else lower_cards.push(items[i])
           }
 
+
           return (
             <View style={styles.frame} key={index}>
               <TextInput
@@ -63,26 +85,7 @@ export default function TemplateList({ onPress }: props) {
                     title_list.map((title, idx) => (idx === index ? text : title))
                   );
                 }}
-                onEndEditing={() => {
-                  Alert.alert(
-                    'なまえのへんこう',
-                    'なまえをかえる？',
-                    [
-                      {
-                        text: 'かえる', onPress: () => {
-                          modifyTemplate('edit_title', { title: title_list[index] });
-                        }
-                      },
-                      {
-                        text: 'かえない', onPress: () => {
-                          setTitle(
-                            title_list.map((title, idx) => (idx === index ? template.name : title))
-                          );
-                        }
-                      }
-                    ]
-                  )
-                }}
+                onEndEditing={() => { alert(index, template.name) }}
               />
               <View style={styles.frameContainer}>
                 <TouchableOpacity
@@ -99,7 +102,7 @@ export default function TemplateList({ onPress }: props) {
                     <View style={{ width: '100%', flexDirection: 'row', marginTop: 4 }}>
                       {(upper_cards.length != 0) &&
                         upper_cards.map((c, index1) => (
-                          <View style={styles.imageContainer} >
+                          <View style={styles.imageContainer} key={index1}>
                             <Image
                               source={{ uri: c.uri }}
                               style={[styles.cardStyle,
@@ -116,7 +119,7 @@ export default function TemplateList({ onPress }: props) {
                     <View style={{ width: '100%', flexDirection: 'row', marginBottom: 4 }}>
                       {(lower_cards.length != 0) &&
                         lower_cards.map((c, index1) => (
-                          <View style={styles.imageContainer} >
+                          <View style={styles.imageContainer} key={index1}>
                             <Image
                               source={{ uri: c.uri }}
                               style={[styles.cardStyle,

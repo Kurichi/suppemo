@@ -24,12 +24,8 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (isFocused) {
-      ScreenOrientation.unlockAsync();
-    }
-    else {
+    isFocused ? ScreenOrientation.unlockAsync() :
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-    }
   }, [isFocused]);
 
   const [current_ws, setCurrent] = useState<number>(0);

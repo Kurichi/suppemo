@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import { Image } from '@rneui/base';
 import { StackScreenProps } from '@react-navigation/stack';
 
-type props = StackScreenProps<tabNavigationProps, "chatData">;
+type props = StackScreenProps<NavigationProps, "show">;
 
 export default function ShowQRCode({ navigation, route }: props) {
 

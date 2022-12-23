@@ -5,7 +5,6 @@ import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-n
 import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
-import { NavigationProp } from "@react-navigation/native";
 import Login from "../Login";
 
 interface User {

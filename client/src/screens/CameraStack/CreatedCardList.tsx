@@ -76,7 +76,7 @@ export default function CreatedCardList(props: any) {
                     source={{ uri: item.uri }}
                     style={styles.photo}
                   />
-                  <Text>{item.name}</Text>
+                  <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.name}</Text>
                 </TouchableOpacity>
               )}
               numColumns={3}
@@ -115,7 +115,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   card: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 16,
+    maxWidth: 100,
+
   },
   searchContainer: {
     backgroundColor: '#FCD12C',

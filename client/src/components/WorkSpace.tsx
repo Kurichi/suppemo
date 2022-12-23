@@ -26,12 +26,20 @@ interface props_type {
 }
 
 export default function WorkSpace(props: props_type) {
+
   const { cards } = useCard();
   const { current_ws, setCurrent, isVertical } = props
   const { templates, modifyTemplate } = useTemplates();
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: false });
+    }
+  }, [isVertical]);
 
   const setCurrentID = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.targetContentOffset) {
@@ -45,6 +53,7 @@ export default function WorkSpace(props: props_type) {
     <SafeAreaView style={styles.container}>
       <View style={[styles.scrollContainer, { height: isVertical ? 200 : '90%' }]}>
         <ScrollView
+          ref={scrollViewRef}
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
@@ -82,15 +91,15 @@ export default function WorkSpace(props: props_type) {
                   data={items}
                   renderItem={({ item }) =>
                     <TouchableOpacity
-                      onLongPress={() => modifyTemplate('exit_card', { template_id: current_ws, index: item.id })}
+                      onPress={() => modifyTemplate('exit_card', { template_id: current_ws, index: item.id })}
                     >
                       <View style={styles.imageContainer}>
                         <Image
                           source={{ uri: item.uri }}
                           style={[styles.cardStyle,
                           {
-                            width: colmns_length > template.item_num ? 100 : 70,
-                            height: colmns_length > template.item_num ? 100 : 70,
+                            width: windowWidth / (colmns_length + (colmns_length > template.item_num ? 0 : 1.5)),
+                            height: windowWidth / (colmns_length + (colmns_length > template.item_num ? 0 : 1.5)),
                           },
                           ]}
                         />

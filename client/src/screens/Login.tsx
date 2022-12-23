@@ -122,10 +122,10 @@ export default function Login(props: any) {
       <Button
         disabled={!isButtonTouchable}
         type="clear"
+        // onPress={() => {
+        //   Alert.alert('長押ししてね');
+        // }}
         onPress={() => {
-          Alert.alert('長押ししてね');
-        }}
-        onLongPress={() => {
           setButtonTouchable(false);
           navigation.reset({
             index: 0,

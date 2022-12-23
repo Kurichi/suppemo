@@ -29,7 +29,7 @@ function TabNavigator(props: any) {
         inactiveBackgroundColor: '#FCD12C',
         activeTintColor: '#ffffff',
         inactiveTintColor: '#000000',
-        showLabel: false
+        showLabel: false,
       }}
     >
       {/* Home */}
@@ -144,7 +144,7 @@ export default function Navigator() {
                 icon={{
                   name: 'cog',
                   type: 'font-awesome',
-                  color: 'black',
+                  color: 'white',
                   size: 30,
                 }}
                 onLongPress={() => {

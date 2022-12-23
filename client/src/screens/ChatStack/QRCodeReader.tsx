@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
 import { Button } from '@rneui/base';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export default function QRCodeReader(props: any) {
+type props = StackScreenProps<NavigationProps, 'reader'>
+
+export default function QRCodeReader({ navigation }: props) {
 
   const [hasPermission, setHaspermission] = useState<Boolean | null>(null);
   const [scanned, setScanned] = useState<string>('');
 
-  const { navigation } = props;
 
   useEffect(() => {
     const getBarCodeScannerPermission = async () => {
@@ -51,7 +53,7 @@ export default function QRCodeReader(props: any) {
             title={'じぶんのQRコード'}
             type={'outline'}
             buttonStyle={styles.myButton}
-            onLongPress={() => navigation.navigate('show')}
+            onPress={() => navigation.navigate('show', { uri: '', height: 100, width: 100 })}
           />
         </View>
       ) : (

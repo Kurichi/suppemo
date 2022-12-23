@@ -73,7 +73,7 @@ export default function Chat({ navigation, route }: props) {
     <View style={styles.container}>
       <View style={{ flex: isShowTemplate ? 6 : 1 }}>
         <GiftedChat
-          messages={messages}
+          messages={messages as Message[]}
           placeholder='メッセージを入力'
           onSend={messages => onSend(messages)}
           user={{

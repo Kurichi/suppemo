@@ -117,7 +117,11 @@ type NavigationProps = {
   Chat: { talk: talk },
 
   reader: {},
-  show: {},
+  show: {
+    uri: string,
+    height: number,
+    width: number,
+  },
   apply: {},
   list: {},
 }
