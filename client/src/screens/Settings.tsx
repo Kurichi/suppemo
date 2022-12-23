@@ -3,24 +3,40 @@ import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { useAuth } from '../contexts/auth';
 import MyOverlay from '../components/MyOverlay';
-import { EmailAuthCredential, EmailAuthProvider, getAuth, reauthenticateWithCredential, signInWithEmailAndPassword, updateEmail, updateProfile } from 'firebase/auth';
+import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updateEmail, updateProfile } from 'firebase/auth';
+import * as ImagePicker from 'expo-image-picker';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function Settings() {
   const { user } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = useState<boolean>(false);
-  const [photoURL, setPhotoURL] = useState<string>(user?.photoURL);
+  const [imageURI, setImageUri] = useState<string>('');
   const [nameModalVisible, setNameModalVisible] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(user?.displayName);
+  const [userName, setUserName] = useState<string>(user?.displayName ?? '');
   const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>(user?.email);
+  const [email, setEmail] = useState<string>(user?.email ?? '');
 
-  const s = require('../../assets/default_logo_for_qr.png');
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      allowsMultipleSelection: false,
+      exif: false,
+      aspect: [1, 1],
+    });
+
+    if (!result.cancelled) {
+      setImageUri(result.uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.userItemContainer}>
         <View style={styles.iconBox}>
           <Image
-            source={{ uri: user && user.photoURL ? user.photoURL : '' }}
+            source={{ uri: getAuth().currentUser?.photoURL }}
             style={styles.iconImage}
           />
         </View>
@@ -78,9 +94,54 @@ export default function Settings() {
         title='画像の変更'
         isVisible={photoModalVisible}
         onBackdropPress={() => { setPhotoModalVisible(!photoModalVisible); }}
-        children={<Text>childrenを与えるとそれが，与えなければTextInput</Text>}
-      />
+        onPress={async () => {
+          const storage = getStorage();
+          const imageRef = ref(storage, `avatar/${user?.uid}`);
 
+          const image = await fetch(imageURI);
+          const blob = await image.blob();
+          const uploadTask = uploadBytesResumable(imageRef, blob);
+
+          uploadTask.on('state_changed',
+            () => { },
+            (error) => {
+              // A full list of error codes is available at
+              // https://firebase.google.com/docs/storage/web/handle-errors
+
+              console.log(error);
+              switch (error.code) {
+                case 'storage/unauthorized':
+                  // User doesn't have permission to access the object
+                  break;
+                case 'storage/canceled':
+                  // User canceled the upload
+                  break;
+
+                case 'storage/unknown':
+                  // Unknown error occurred, inspect error.serverResponse
+                  break;
+              }
+            },
+            () => {
+              console.log('complete upload');
+              // Upload completed successfully, now we can get the download URL
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                updateProfile(getAuth().currentUser, {
+                  photoURL: downloadURL,
+                })
+                console.log(user?.photoURL);
+              });
+              setPhotoModalVisible(!photoModalVisible);
+            })
+        }}
+      >
+        {imageURI && <Image source={{ uri: imageURI }} style={{ width: 200, height: 200 }} />}
+        <Button
+          title='Pick an image'
+          onPress={pickImage}>
+        </Button>
+      </MyOverlay>
 
       <MyOverlay
         title='名前の変更'
@@ -161,14 +222,15 @@ const styles = StyleSheet.create({
   },
   iconBox: {
     backgroundColor: 'white',
-    padding: 20,
+    // padding: 20,
     borderRadius: 1000,
   },
   iconImage: {
-    height: 100,
-    width: 100,
+    height: 150,
+    width: 150,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 75,
   },
   userSettingsContainer: {
     marginTop: 30,
