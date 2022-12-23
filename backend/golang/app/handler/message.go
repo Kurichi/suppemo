@@ -20,15 +20,19 @@ func SendMessage(c echo.Context) error {
 
 	message := new(model.Message)
 	if err = c.Bind(&message); err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	fmt.Println(message)
 	message.UID = auth.UID
 
 	if res, err := model.FindUser(message.UID); err != nil && res {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	if res, err := model.FindUser(message.TargetUID); err != nil && res {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 

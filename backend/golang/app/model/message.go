@@ -9,7 +9,7 @@ import (
 type Message struct {
 	ID        int       `json:"id" form:"id" query:"id"`
 	UID       string    `json:"uid" form:"uid" query:"uid"`
-	TargetUID string    `json:"target_uid" form:"target_uid" query:"target_uid"`
+	TargetUID string    `json:"to" form:"to" query:"to"`
 	Type      string    `json:"type" form:"type" query:"type"`
 	Text      string    `json:"text" form:"text" query:"text"`
 	Created   time.Time `json:"created" form:"created" query:"created"`
