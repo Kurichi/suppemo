@@ -5,7 +5,7 @@ import axios from 'axios';
 import { IMessage, User } from 'react-native-gifted-chat';
 import { getAuth } from 'firebase/auth';
 
-const ini_talk: Talk[] = []
+const ini_talk: Map<string, Talk> = new Map();
 const ini_func = async (to: string, message: IMessage[]): Promise<void> => { };
 const ChatContext = createContext({ talks: ini_talk, sendMessage: ini_func });
 
@@ -16,7 +16,7 @@ export const useChat = () => {
 export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
   const auth = getAuth();
   const host = 'http://27.133.132.254';
-  const [talks, setTalks] = useState<Talk[]>([]);
+  const [talks, setTalks] = useState<Map<string, Talk>>(new Map());
 
   const notificationListener = useRef<Subscription>();
 
@@ -44,47 +44,46 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // フレンド一覧を取得
   useEffect(() => {
-    auth.currentUser?.getIdToken().then((token) => {
-      axios.get(`${host}/friend`, {
-        headers: { 'Authorization': token }
-      }).then((result) => {
-        console.log(result.data);
-        setTalks(result.data.map((friend: User): Talk => {
-          return (
-            {
+    const unsubscribed = auth.onAuthStateChanged((user) => {
+      user?.getIdToken().then((token) => {
+        axios.get(`${host}/friend`, {
+          headers: { 'Authorization': token }
+        }).then((result) => {
+          result.data.map((friend: User): void => {
+            setTalks(new Map(talks.set(friend._id as string, {
               talk_with: friend,
               messages: [],
-            }
-          );
-        }));
+            })));
+          });
+        }).catch((error) => {
+          console.log(error);
+        });
       }).catch((error) => {
         console.log(error);
       });
-    }).catch((error) => {
-      console.log(error);
     });
-  }, [auth.currentUser])
 
+    return () => unsubscribed();
+  }, []);
+
+  useEffect(() => {
+    console.log('talks 更新');
+  }, [talks]);
 
   const sendMessage = async (to: string, messages: IMessage[]): Promise<void> => {
     if (messages.length === 0) return;
 
-    const token = await auth.currentUser?.getIdToken();
-    if (typeof token === 'undefined') return;
+    setTalks(new Map(talks.set(to, {
+      talk_with: talks.get(to)?.talk_with,
+      messages: talks.get(to)?.messages.concat(messages) ?? [],
+    })));
 
-    console.log(talks.map((value) => {
-      if (value.talk_with._uid !== to) return value;
-      return ({
-        talk_with: value.talk_with,
-        messages: value.messages.concat(messages),
-      });
-    }));
-
+    const token = auth.currentUser?.getIdToken();
     axios.post(`${host}/chat`, {
       to: to,
-      messages: messages,
+      text: messages[0].text,
     }, {
-      headers: { 'Authorization': token }
+      headers: { 'Authorization': token && '' }
     });
   }
 

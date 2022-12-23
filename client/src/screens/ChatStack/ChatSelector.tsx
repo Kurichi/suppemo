@@ -1,17 +1,12 @@
 import { Button, Icon } from "@rneui/base";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
 import Login from "../Login";
-
-interface User {
-  id: number,
-  icon: string,
-  userName: string,
-}
+import { User } from "react-native-gifted-chat";
 
 type props = StackScreenProps<NavigationProps, 'ChatSelector'>
 
@@ -19,15 +14,14 @@ export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
 
-  const memo: talk = {
-    id: -1,
-    talk_with: {
-      _id: -1,
-      name: 'じぶんよう',
-      avatar: require('../../../assets/default_logo_background.png'),
-    },
-    messages: [],
-  }
+  // const memo: Talk = new Map(
+  //   {
+  //     _id: -1,
+  //     name: 'じぶんよう',
+  //     avatar: require('../../../assets/default_logo_background.png'),
+  //   },
+  //   []
+  // )
 
   if (user == null) {
     Alert.alert(
@@ -49,11 +43,12 @@ export default function ChatSelector({ navigation, route }: props) {
         </View>
       ) : (
         <ScrollView>
-          {talks?.map((talk, index) => {
+          {[...talks].map(([_id, { talk_with }]) => {
+            console.log(_id);
             return (
-              <View style={styles.chatCard} key={index}>
+              <View style={styles.chatCard} key={_id}>
                 <Button
-                  title={talk.talk_with.name !== '' ? talk.talk_with.name : 'No name'}
+                  title={talk_with.name !== '' ? talk_with.name : 'No name'}
                   titleStyle={{
                     color: 'black',
                     textAlign: 'left',
@@ -61,8 +56,9 @@ export default function ChatSelector({ navigation, route }: props) {
                   }}
                   type='clear'
                   icon={
+                    talk_with.avatar &&
                     <Image
-                      source={{ uri: talk.talk_with.avatar }}
+                      source={{ uri: talk_with.avatar }}
                       style={{
                         height: 50,
                         width: 50,
@@ -72,13 +68,13 @@ export default function ChatSelector({ navigation, route }: props) {
                       }} />
                   }
                   onPress={() => {
-                    navigation.navigate('Chat', { 'talk': talk });
+                    navigation.navigate('Chat', { '_id': _id });
                   }}
                 />
               </View>
-            )
+            );
           })}
-          <View style={styles.chatCard}>
+          {/* <View style={styles.chatCard}>
             <Button
               title='メモ'
               titleStyle={{
@@ -94,10 +90,10 @@ export default function ChatSelector({ navigation, route }: props) {
                 iconStyle: { marginHorizontal: 10, flex: 1 }
               }}
               onPress={() => {
-                navigation.navigate('Chat', { 'talk': memo });
+                navigation.navigate('Chat', { 'talk_with': memo.talk_with });
               }}
             />
-          </View>
+          </View> */}
         </ScrollView>
       )
       }

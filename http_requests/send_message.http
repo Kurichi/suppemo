@@ -19,8 +19,8 @@ Content-Type: application/json
 @test_uid=OxUbEbMAsmPP2A71FfU7DQuMBTB3
 @yammer_uid=EieJoM9ChXfyfVMGoJbwQWLWvXj2
 
-@host = http://localhost/
-# @host = http://27.133.132.254/
+# @host = http://localhost/
+@host = http://27.133.132.254/
 
 ### login
 POST {{host}} HTTP/1.1
