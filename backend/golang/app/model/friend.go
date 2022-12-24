@@ -34,13 +34,32 @@ func FindFriends(uid string) ([]string, error) {
 
 	stmt, err := db.Prepare("SELECT friend_uid FROM friends WHERE uid = ?")
 	if err != nil {
-		fmt.Printf("[ERROR] friend prepare error: %v", err)
 		return nil, err
 	}
 	defer stmt.Close()
 
 	var friend_uids []string
 	rows, err := stmt.Query(uid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var fuid string
+		if err := rows.Scan(&fuid); err != nil {
+			return nil, err
+		}
+		friend_uids = append(friend_uids, fuid)
+	}
+
+	stmt, err = db.Prepare("SELECT uid FROM friends WHERE friend_uid = ?")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	rows, err = stmt.Query(uid)
 	if err != nil {
 		return nil, err
 	}

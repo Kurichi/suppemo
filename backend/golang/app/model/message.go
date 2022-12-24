@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"fmt"
 	"suppemo-api/mydb"
 	"time"
@@ -73,11 +74,20 @@ func FindMessages(uid string, id int) ([]Message, error) {
 	messages := []Message{}
 	for rows.Next() {
 		message := &Message{}
-		err = rows.Scan(&message.ID, &message.UID, &message.TargetUID, &message.Image, &message.Text, &message.Created)
+		nullText := new(sql.NullString)
+		nullImg := new(sql.NullString)
+		err = rows.Scan(&message.ID, &message.UID, &message.TargetUID, nullText, nullImg, &message.Created)
 		if err != nil {
 			fmt.Printf("[ERROR] message scan error: %v", err)
 			return nil, err
 		}
+		if nullText.Valid {
+			message.Text = nullText.String
+		}
+		if nullImg.Valid {
+			message.Image = nullImg.String
+		}
+
 		messages = append(messages, *message)
 	}
 

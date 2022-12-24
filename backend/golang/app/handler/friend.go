@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	middlware "suppemo-api/middleware"
 	"suppemo-api/model"
@@ -16,11 +17,13 @@ func AddFriend(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 	user, err := middlware.Auth(authHeader)
 	if err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	reqBody := new(requestBody)
 	if err := c.Bind(reqBody); err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
@@ -29,6 +32,7 @@ func AddFriend(c echo.Context) error {
 	}
 
 	if err := model.CreateFriend(user.UID, reqBody.UID); err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
@@ -39,11 +43,13 @@ func GetFriends(c echo.Context) error {
 	authHeader := c.Request().Header.Get("Authorization")
 	user, err := middlware.Auth(authHeader)
 	if err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	friends, err := model.FindFriends(user.UID)
 	if err != nil {
+		fmt.Printf("[ERROR] %v", err)
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
@@ -57,6 +63,7 @@ func GetFriends(c echo.Context) error {
 	for i, friend := range friends {
 		user, err := middlware.GetUser(friend)
 		if err != nil {
+			fmt.Printf("[ERROR] %v", err)
 			return c.JSON(http.StatusBadRequest, err.Error())
 		}
 		res[i].UID = friend

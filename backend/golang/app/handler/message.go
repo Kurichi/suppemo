@@ -100,49 +100,34 @@ func GetMessages(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	type u struct {
-		ID     string `json:"_id"`
-		Name   string `json:"name"`
-		Avatar string `json:"avatar"`
-	}
-
 	type talk struct {
 		ID      int       `json:"_id"`
 		Text    string    `json:"text"`
 		Image   string    `json:"image"`
-		User    u         `json:"user"`
+		Author  string    `json:"user"`
 		Created time.Time `json:"createdAt"`
 	}
 
 	type Messages struct {
-		TalkWith u      `json:"talk_with"`
+		TalkWith string `json:"talk_with"`
 		Messages []talk `json:"messages"`
 	}
 	messages := []Messages{}
 	for _, msg := range msgs {
 		// 話し相手のUID
 		uid := msg.UID
-		talk_with, err := middleware.GetUser(uid)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err.Error())
 		}
 
-		author := u{}
-
 		if msg.UID == user.UID {
 			uid = msg.TargetUID
-			author.ID = user.UID
-			author.Name = user.DisplayName
-			author.Avatar = user.PhotoURL
-		} else {
-			author.ID = talk_with.UID
-			author.Name = talk_with.DisplayName
-			author.Avatar = talk_with.PhotoURL
 		}
+
 		// messagesにUIDの相手がいるか
 		index := -1
 		for i, message := range messages {
-			if uid == message.TalkWith.ID {
+			if uid == message.TalkWith {
 				index = i
 				break
 			}
@@ -154,22 +139,18 @@ func GetMessages(c echo.Context) error {
 				ID:      msg.ID,
 				Text:    msg.Text,
 				Image:   msg.Image,
-				User:    author,
+				Author:  msg.UID,
 				Created: msg.Created,
 			})
 		} else {
 			messages = append(messages, Messages{
-				TalkWith: u{
-					ID:     uid,
-					Name:   talk_with.DisplayName,
-					Avatar: talk_with.PhotoURL,
-				},
+				TalkWith: uid,
 				Messages: []talk{
 					{
 						ID:      msg.ID,
 						Text:    msg.Text,
 						Image:   msg.Image,
-						User:    author,
+						Author:  msg.UID,
 						Created: msg.Created,
 					},
 				},
