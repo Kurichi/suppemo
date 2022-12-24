@@ -18,8 +18,7 @@ export default function CardsFolder(props: { current_ws: number }) {
   const { current_ws } = props;
 
 
-  const folders: folder_type[] = [
-  ];
+  const folders: folder_type[] = [];
 
   var ccard_ids: number[] = [];
   for (const _c of cards) if (_c.exists) ccard_ids.push(_c.id);
