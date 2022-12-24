@@ -15,7 +15,7 @@ import {
 
 
 
-export const renderSend = (props: SendProps<Message>) => {
+export const renderSend = (props: SendProps<IMessage>) => {
   return (
     <Send
       {...props}
@@ -43,7 +43,7 @@ export const renderAction = (setShow: React.Dispatch<React.SetStateAction<boolea
   )
 }
 
-export const renderInputToolbar = (props: InputToolbarProps<Message>) => {
+export const renderInputToolbar = (props: InputToolbarProps<IMessage>) => {
   return (
     <InputToolbar
       {...props}
@@ -63,7 +63,7 @@ export const renderMessageImage = (props: MessageImageProps<IMessage>) => {
     <MessageImage
       {...props}
       containerStyle={{
-        width: 300,
+        width: 500,
         height: 160,
       }}
     />

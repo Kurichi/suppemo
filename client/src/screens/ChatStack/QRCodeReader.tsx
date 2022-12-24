@@ -91,8 +91,8 @@ export default function QRCodeReader({ closeOverlay }: { closeOverlay: () => voi
           />
         </View>
       ) : (
-        <View style={{ width: '100%', height: '100%' }}>
-          <View style={{ width: '100%', height: '80%', }}>
+        <View style={{ width: '100%', height: '100%', alignItems: 'center' }}>
+          <View style={{ width: '100%', height: '80%', alignItems: 'center' }}>
             <Text>{name}</Text>
             <Image source={{ uri: avatar }} style={{ width: '80%', paddingTop: '80%' }} />
           </View>

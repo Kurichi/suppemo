@@ -54,23 +54,21 @@ export default function EditCard(props: any) {
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'blue' }}>
+      <View style={{ flex: 1, alignItems: 'center', width: '94%' }}>
 
         <Text style={styles.titleText}>カードのへんしゅう</Text>
-        <View style={styles.removeButtonContainer}>
-          <View style={[styles.shadow, { width: '50%' }]}>
-          </View>
-          <View style={[styles.shadow, { width: '50%' }]}>
-            <Button
-              type='clear'
-              title='さくじょ'
-              buttonStyle={[styles.removeButton, { backgroundColor: 'red' }]}
-              titleStyle={styles.buttonText}
-              onPress={alert}
-            />
-          </View>
+        <View style={[styles.shadow, { width: '50%' }]}>
+          <Button
+            type='clear'
+            icon={{
+              name: "cancel",
+              type: "material",
+            }}
+            buttonStyle={[styles.removeButton]}
+            titleStyle={styles.buttonText}
+            onPress={alert}
+          />
         </View>
-
         <Image
           style={styles.image}
           source={{ uri: card.uri != null ? card.uri : '' }}
@@ -78,12 +76,14 @@ export default function EditCard(props: any) {
 
         <View style={styles.rejectContainer}>
           <Text style={{ fontSize: 20, marginLeft: 4 }}>なまえをかえる</Text>
-          <TextInput
-            value={new_name}
-            style={styles.nameChangeTextBox}
-            maxLength={8}
-            onChangeText={(value) => { setName(value); }}
-          />
+          <View style={styles.nameChangeTextBox} >
+            <TextInput
+              value={new_name}
+              style={{ fontSize: 30, }}
+              maxLength={8}
+              onChangeText={(value) => { setName(value); }}
+            />
+          </View>
           <View style={styles.shadow}>
             <Button
               title='へんこうする'
@@ -120,8 +120,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   backButton: {
-    backgroundColor: 'red',
     width: 100,
+    borderBottomColor: 'rgba(0,0,0,0.2)',
+    borderBottomWidth: 2,
   },
   nameChangeContainer: {
     justifyContent: "center",
@@ -131,13 +132,14 @@ const styles = StyleSheet.create({
   },
   nameChangeTextBox: {
     width: '100%',
-    fontSize: 30,
     height: 60,
     borderRadius: 20,
     backgroundColor: "#FFFFFF",
     marginBottom: 16,
     borderColor: 'rgba(100,100,100,0.2)',
     borderWidth: 2,
+    justifyContent: 'center',
+    paddingLeft: 4,
   },
   changeButton: {
     width: '100%',
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   rejectContainer: {
-    width: '94%',
+    width: '100%',
     marginVertical: 24,
   },
   shadow: {

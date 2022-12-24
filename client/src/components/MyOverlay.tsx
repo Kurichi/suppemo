@@ -40,9 +40,9 @@ export default function MyOverlay({
     <Overlay
       isVisible={isVisible}
       onBackdropPress={onBackdropPress}
-      overlayStyle={[styles.overlay, overlayStyle]}
+      overlayStyle={[styles.overlay, overlayStyle,]}
     >
-      <View >
+      <View>
         <Text style={[styles.title, titleStyle]} >{title}</Text>
         {inputElement ?? (
           <TextInput
