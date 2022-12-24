@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
 import Home from './../screens/Home';
-import TemplateList from '../screens/TemplateList';
+import TemplateList from './../screens/TemplateList';
 import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
 import Chat from '../screens/Chat';

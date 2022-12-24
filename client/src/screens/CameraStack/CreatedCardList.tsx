@@ -6,7 +6,6 @@ import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
 import { useCard } from '../../contexts/card';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default function CreatedCardList(props: any) {
   const { navigation } = props;
@@ -20,9 +19,6 @@ export default function CreatedCardList(props: any) {
     setData(cards);
   }, [cards]);
 
-  // useFocusEffect(() => {
-  //   console.log('test');
-  // });
 
   const sort = async (target: string) => {
     console.log(sort_target)

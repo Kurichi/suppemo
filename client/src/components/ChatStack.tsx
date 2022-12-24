@@ -5,7 +5,7 @@ import ChatSelector from "../screens/ChatStack/ChatSelector";
 import QRCodeReader from "../screens/ChatStack/QRCodeReader";
 import ApplyReader from "../screens/ChatStack/ApplyReader";
 import ShowQRCode from "../screens/ChatStack/ShowQRCode";
-import TemplateList from "../screens/TemplateList";
+import TemplateList from "./TListView";
 
 const Stack = createStackNavigator();
 

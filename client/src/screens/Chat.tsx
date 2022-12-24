@@ -2,8 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet, useWindowDimensions, } from 'react-native';
 import { GiftedChat, IMessage, Message, User } from 'react-native-gifted-chat';
 import { useChat } from '../contexts/chat';
+import TListView from '../components/TListView';
 import { StackScreenProps } from '@react-navigation/stack';
-import TemplateList from './TemplateList';
 import ViewShot, { captureRef } from 'react-native-view-shot';
 import * as Render from '../services/RenderChat';
 
@@ -55,7 +55,6 @@ export default function Chat({ navigation, route }: props) {
       },
       image: image.uri,
     };
-
     sendMessage(talk.talk_with._id, [sendedImage]);
   }
 
@@ -68,6 +67,7 @@ export default function Chat({ navigation, route }: props) {
     }
     setShow(false);
     onImageSend(image);
+    console.log(image)
   }
 
 
@@ -93,7 +93,7 @@ export default function Chat({ navigation, route }: props) {
       </View>
       {isShowTemplate ? (
         <View style={[{ flex: 4 }]}>
-          <TemplateList onPress={capture} />
+          <TListView viewShot={capture} />
         </View>
       ) : (
         <View>

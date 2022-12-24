@@ -19,16 +19,6 @@ export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
 
-  const memo: talk = {
-    id: -1,
-    talk_with: {
-      _id: -1,
-      name: 'じぶんよう',
-      avatar: require('../../../assets/default_logo_background.png'),
-    },
-    messages: [],
-  }
-
   if (user == null) {
     Alert.alert(
       'ログインしてね',
@@ -78,7 +68,7 @@ export default function ChatSelector({ navigation, route }: props) {
               </View>
             )
           })}
-          <View style={styles.chatCard}>
+          {/* <View style={styles.chatCard}>
             <Button
               title='メモ'
               titleStyle={{
@@ -97,7 +87,7 @@ export default function ChatSelector({ navigation, route }: props) {
                 navigation.navigate('Chat', { 'talk': memo });
               }}
             />
-          </View>
+          </View> */}
         </ScrollView>
       )
       }

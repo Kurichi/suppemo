@@ -86,6 +86,7 @@ type template_modify_props = {
   card_id?: number,
   index?: number,
   title?: string,
+  nonexistCard_id?: nubmer[],
 }
 
 

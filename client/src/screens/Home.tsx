@@ -5,7 +5,6 @@ import WorkSpace from '../components/WorkSpace';
 import { useTemplates } from '../contexts/template';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 type props = BottomTabScreenProps<NavigationProps, 'Home'>
@@ -14,7 +13,10 @@ export default function Home({ navigation, route }: props) {
   const isFocused = useIsFocused();
 
   const [isVertical, setIsVertical] = useState<boolean>(true);
-  const onChangeOrientation = (event: ScreenOrientation.OrientationChangeEvent) => {
+  const [current_ws, setCurrent] = useState<number>(0);
+  const [init_index, setIndex] = useState<number>(0);
+
+  const onChangeOrientation: ScreenOrientation.OrientationChangeListener = (event: ScreenOrientation.OrientationChangeEvent) => {
     if (event.orientationInfo.orientation === ScreenOrientation.Orientation.PORTRAIT_UP) {
       setIsVertical(true);
       navigation.setOptions({
@@ -38,7 +40,14 @@ export default function Home({ navigation, route }: props) {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
   }, [isFocused]);
 
-  const [current_ws, setCurrent] = useState<number>(0);
+
+  useEffect(() => {
+    if (route.params) {
+      setIndex(route.params.init_WS_index);
+      setCurrent(route.params.init_WS_index);
+    }
+  }, [route.params])
+
 
   return (
     <View style={styles.container}>
@@ -48,7 +57,8 @@ export default function Home({ navigation, route }: props) {
           current_ws={current_ws}
           setCurrent={setCurrent}
           isVertical={isVertical}
-          init_index={route.params.init_WS_index} />
+          init_index={init_index}
+        />
       </View>
 
       {/* CardsFolder */}
