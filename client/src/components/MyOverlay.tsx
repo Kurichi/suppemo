@@ -55,6 +55,7 @@ export default function MyOverlay({
           title={buttonText ? buttonText : '変更する'}
           type="clear"
           style={[styles.button, buttonStyle]}
+          titleStyle={{ color: "#FFFFFF", }}
           onPress={onPress}
         />
       </View>
@@ -70,14 +71,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     margin: 20,
+    textAlign: "center",
   },
   input: {
     fontSize: 28,
     margin: 20,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#5555556b',
   },
   button: {
-
-  }
+    backgroundColor: "#ffc343",
+    borderRadius: 5,
+  },
 });
