@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -42,6 +43,12 @@ func SendMessage(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
+	msgJson, err := json.Marshal(message)
+	if err != nil {
+		fmt.Printf("[ERROR] struct to json message error %v", err)
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
 	// ========== Send request to expo push notification server ==========
 
 	pushTokens, err := model.FindPushTokens(message.TargetUID)
@@ -66,6 +73,7 @@ func SendMessage(c echo.Context) error {
 			Body:  message.Text,
 			Sound: "default",
 			Title: auth.DisplayName,
+			Data:  map[string]string{"message": string(msgJson)},
 		},
 	)
 
