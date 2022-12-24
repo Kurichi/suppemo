@@ -5,15 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
 import Home from './../screens/Home';
-import TemplateList from '../screens/TemplateList';
+import TemplateList from './../screens/TemplateList';
 import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
 import Chat from '../screens/Chat';
 import CameraStack from './CameraStack';
-import ChatStack from './ChatStack';
-import { ScreenStackHeaderRightView } from 'react-native-screens';
 import { Button } from '@rneui/base';
 import Settings from '../screens/Settings';
+import ChatSelector from '../screens/ChatStack/ChatSelector';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,7 +28,7 @@ function TabNavigator(props: any) {
         inactiveBackgroundColor: '#FCD12C',
         activeTintColor: '#ffffff',
         inactiveTintColor: '#000000',
-        showLabel: false
+        showLabel: false,
       }}
     >
       {/* Home */}
@@ -40,6 +39,7 @@ function TabNavigator(props: any) {
           tabBarIcon: (({ size, color }) => (
             <Feather name="home" size={iconSize} color={color} />
           ))
+
         }}
       />
 
@@ -57,7 +57,7 @@ function TabNavigator(props: any) {
       {/* Chat */}
       <Tab.Screen
         name="ChatSelector"
-        component={ChatStack}
+        component={ChatSelector}
         // initialParams={{ stack: navigation }}
         options={{
           tabBarIcon: (({ size, color }) => (
@@ -109,7 +109,6 @@ export default function Navigator() {
           component={Login}
           options={({ navigation }) => ({
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
-
           })}
         />
         <Stack.Screen
@@ -144,7 +143,7 @@ export default function Navigator() {
                 icon={{
                   name: 'cog',
                   type: 'font-awesome',
-                  color: 'black',
+                  color: 'white',
                   size: 30,
                 }}
                 onLongPress={() => {

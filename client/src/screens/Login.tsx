@@ -3,9 +3,7 @@ import React, { useEffect } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../services/firebase';
-import { useAuth } from '../contexts/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { registerForPushNotificationsAsync } from '../services/notification';
 
 
@@ -13,32 +11,38 @@ export default function Login(props: any) {
   const { navigation, chat } = props;
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { user } = useAuth();
+  const auth = getAuth();
   const [isButtonTouchable, setButtonTouchable] = useState<boolean>(true);
 
-  const login = async () => {
-    await signInWithEmailAndPassword(auth, email, password).then(async (result) => {
-      // navigate to home
-      if (navigation !== null)
+  useEffect(() => {
+    const unsubscribed = auth.onAuthStateChanged((user) => {
+      if (user !== null) {
+        // navigate to home
         navigation.reset({
           index: 0,
           routes: [{ name: 'Tab' }]
         });
+      }
+    });
+    return () => unsubscribed();
+  }, []);
 
+  const login = async () => {
+    await signInWithEmailAndPassword(auth, email, password).then(async (result) => {
       const pushToken = await registerForPushNotificationsAsync();
 
-      axios.post('http://27.133.132.254', {
-        name: 'test',
-        push_token: pushToken,
-      }, {
-        headers: {
-          'Authorization': await user?.getIdToken(),
-        }
-      }).then((result) => {
-        // console.log(result);
-      }).catch((error) => {
-        console.log(error);
-      });
+      axios
+        .post('http://27.133.132.254', {
+          push_token: pushToken,
+        }, {
+          headers: {
+            'Authorization': await auth.currentUser?.getIdToken(),
+          }
+        })
+        .then(() => { })
+        .catch((error) => {
+          console.log(error);
+        });
     }).catch((error) => {
       setButtonTouchable(true);
       switch (error.code) {
@@ -119,10 +123,10 @@ export default function Login(props: any) {
       <Button
         disabled={!isButtonTouchable}
         type="clear"
+        // onPress={() => {
+        //   Alert.alert('長押ししてね');
+        // }}
         onPress={() => {
-          Alert.alert('長押ししてね');
-        }}
-        onLongPress={() => {
           setButtonTouchable(false);
           navigation.reset({
             index: 0,

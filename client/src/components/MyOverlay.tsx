@@ -12,7 +12,7 @@ export interface MyOverlayProps {
   isVisible: boolean
   onBackdropPress?: () => void | undefined
   buttonText?: string | undefined
-  onPress?: (event: GestureResponderEvent) => void | undefined
+  onPress?: (event: GestureResponderEvent) => any | undefined
 
   titleStyle?: StyleProp<ViewStyle> | undefined,
   overlayStyle?: StyleProp<ViewStyle> | undefined,
@@ -44,9 +44,7 @@ export default function MyOverlay({
     >
       <View >
         <Text style={[styles.title, titleStyle]} >{title}</Text>
-        {inputElement ? (
-          inputElement
-        ) : (
+        {inputElement ?? (
           <TextInput
             defaultValue={currentValue}
             onChangeText={onChangeText}

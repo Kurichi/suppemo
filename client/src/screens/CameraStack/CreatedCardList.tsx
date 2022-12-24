@@ -6,7 +6,6 @@ import { Feather } from '@expo/vector-icons';
 import { FlatList, ScrollView, TextInput } from 'react-native-gesture-handler';
 import { useCard } from '../../contexts/card';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default function CreatedCardList(props: any) {
   const { navigation } = props;
@@ -20,9 +19,6 @@ export default function CreatedCardList(props: any) {
     setData(cards);
   }, [cards]);
 
-  // useFocusEffect(() => {
-  //   console.log('test');
-  // });
 
   const sort = async (target: string) => {
     console.log(sort_target)
@@ -39,25 +35,6 @@ export default function CreatedCardList(props: any) {
         <Feather name="search" size={24} color="white" />
         <TextInput style={{ backgroundColor: 'white', width: '70%' }} />
       </View>
-      <DropDownPicker
-        items={[
-          { label: "よく使う", value: "frequency" },
-          { label: "なまえ　はやい順", value: "name_ascending" },
-          { label: "なまえ　おそい順", value: "name_descending" },
-          { label: "つくった順", value: "date_ascending" },
-          { label: "古い順", value: "date_descending" },
-        ]}
-        value={sort_target}
-        setValue={setTarget}
-        multiple={false}
-        open={open}
-        setOpen={setOpen}
-        onChangeValue={(item) => sort(item as string)}
-        style={styles.selectBox}
-        labelStyle={styles.dropBoxLabel}
-        containerStyle={styles.dropBoxContainer}
-        placeholder="ならべかえ"
-      />
       <View style={styles.listContainer}>
         {
           data.length > 0 ? (
@@ -76,7 +53,7 @@ export default function CreatedCardList(props: any) {
                     source={{ uri: item.uri }}
                     style={styles.photo}
                   />
-                  <Text>{item.name}</Text>
+                  <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.name}</Text>
                 </TouchableOpacity>
               )}
               numColumns={3}
@@ -115,7 +92,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   card: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 16,
+    maxWidth: 100,
+
   },
   searchContainer: {
     backgroundColor: '#FCD12C',

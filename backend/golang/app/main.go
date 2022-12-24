@@ -26,11 +26,15 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 
+	e.Static("/assets", "assets")
+	e.GET("/setup", handler.SetUp)
+
 	e.POST("/", handler.InitHandler)
 	e.POST("/chat", handler.SendMessage)
 	e.GET("/chat", handler.GetMessages)
 	e.POST("/friend", handler.AddFriend)
 	e.GET("/friend", handler.GetFriends)
+	e.GET("/user", handler.GetUser)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

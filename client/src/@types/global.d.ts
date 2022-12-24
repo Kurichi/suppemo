@@ -17,7 +17,9 @@ type card_detail = {
   uri: string = '',
   count: number = 0,
   createdDate: string = '',
+  isDefault: boolean = false,
   exists: boolean = false,
+  isDefault: boolean = false,
 }
 
 type template_cards = {
@@ -39,28 +41,13 @@ type setting_contents = {
   vol: number,
 }
 
-type multipleType = card_detail | template_cards | address | talk;
-
+type multipleType = card_detail | template_cards | address;
 
 //==CHAT NAVIGATION TYPE=====================
 
-interface User {
-  _id: number,
-  name: string,
-  avatar: string,
-}
-
-interface Message {
-  _id: number,
-  text: string,
-  createdAt: Date,
-  user: User,
-}
-
-type talk = {
-  id: number,
+type Talk = {
   talk_with: User,
-  messages: Message[]
+  messages: IMessage[]
 }
 
 
@@ -74,7 +61,8 @@ type ws_props = {
 
 type folder_type = {
   id: number,
-  feather_name: string,
+  iconName: string,
+  type: string,
   background_color: string,
   cards_ids: number[],
 }
@@ -101,23 +89,30 @@ type template_modify_props = {
   card_id?: number,
   index?: number,
   title?: string,
+  nonexistCard_id?: nubmer[],
 }
 
 
 //==NAVIGATION PROPS ================
 
 type NavigationProps = {
-  Home: {},
+  Home: {
+    init_WS_index: number = 0,
+  },
   TemplateList: {},
   ChatSelector: {},
   Camera: {},
 
   Login: {},
   SignUp: {},
-  Chat: { talk: talk },
+  Chat: { _id: string },
 
   reader: {},
-  show: {},
+  show: {
+    uri: string,
+    height: number,
+    width: number,
+  },
   apply: {},
   list: {},
 }

@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { Button } from '@rneui/base';
-import { getCards, useCard } from '../../contexts/card';
+import { getCards, getDeletedCards, useCard } from '../../contexts/card';
 import { TextInput } from 'react-native-gesture-handler';
 import { StylePropType } from 'react-native-gifted-chat';
+import { useTemplates } from '../../contexts/template';
 
 export default function EditCard(props: any) {
   const { navigation, route } = props;
   const { card } = route.params;
   const [new_name, setName] = useState<string>(card.name);
-  const { modifyCard } = useCard();
+  const { cards, modifyCard } = useCard();
+  const { modifyTemplate } = useTemplates();
 
   const deleteCard = async () => {
     await modifyCard('delete', {
       id: card.id,
     });
+
+    await modifyTemplate('refresh', { nonexistCard_id: getDeletedCards(cards) });
   }
 
   const setCard = async (name: string) => {
@@ -24,77 +28,81 @@ export default function EditCard(props: any) {
     });
   }
 
+  const alert = () => {
+    Alert.alert(
+      '本当に消しますか？', '',
+      [
+        {
+          text: 'はい', onPress: () => {
+            deleteCard();
+            navigation.goBack();
+          },
+        },
+        { text: 'やめる' }
+      ]
+    )
+  }
+
   return (
     <View style={styles.container}>
-      <View style={{ marginHorizontal: 16 }}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>カードのへんしゅう</Text>
-        </View>
-        <View style={styles.removeButtonContainer}>
+      <Text style={styles.titleText}>カードのへんしゅう</Text>
+      <View style={styles.removeButtonContainer}>
+        <View style={styles.shadow}>
           <Button
-            buttonStyle={styles.removeButton}
+            type='clear'
+            buttonStyle={[styles.removeButton, { backgroundColor: 'gray' }]}
+            titleStyle={styles.buttonText}
             title='もどる'
-            color='warning'
-            onPress={() => {
-              navigation.goBack();
-            }}
+            onPress={() => navigation.goBack()}
           />
-          <Button
-            title='さくじょ'
-            color='error'
-            buttonStyle={styles.removeButton}
-            onPress={() => {
-              Alert.alert(
-                '本当に消しますか？', '',
-                [
-                  {
-                    text: 'はい', onPress: () => {
-                      deleteCard();
-                      navigation.goBack();
-                    },
-                  },
-                  { text: 'やめる' }
-                ]
-              )
-            }}>
-          </Button>
         </View>
-        <Image
-          style={styles.image}
-          source={{ uri: card.uri != null ? card.uri : '' }}
-        />
-        <Text style={styles.nameChangeText}>なまえをかえる</Text>
+        <View style={styles.shadow}>
+          <Button
+            type='clear'
+            title='さくじょ'
+            buttonStyle={[styles.removeButton, { backgroundColor: 'red' }]}
+            titleStyle={styles.buttonText}
+            onPress={alert}
+          />
+        </View>
+      </View>
+
+      <Image
+        style={styles.image}
+        source={{ uri: card.uri != null ? card.uri : '' }}
+      />
+
+      <View style={styles.rejectContainer}>
+        <Text style={{ fontSize: 20, marginLeft: 4 }}>なまえをかえる</Text>
         <TextInput
           value={new_name}
           style={styles.nameChangeTextBox}
           maxLength={8}
           onChangeText={(value) => { setName(value); }}
         />
-        {/* <View style={styles.changeButtonContainer}> */}
-        <Button
-          title='へんこうする'
-          buttonStyle={styles.changeButton}
-          titleStyle={{
-            color: 'black',
-          }}
-          onPress={() => {
-            if (new_name === '')
-              setCard('なまえがないよ');
-            else
-              setCard(new_name);
-            navigation.goBack();
-          }}
-          type={"clear"}
-        />
-        {/* </View> */}
+        <View style={styles.shadow}>
+          <Button
+            title='へんこうする'
+            buttonStyle={styles.changeButton}
+            titleStyle={styles.buttonText}
+            onPress={() => {
+              if (new_name === '') setCard('なまえがないよ');
+              else setCard(new_name);
+              navigation.goBack();
+            }}
+            type={"clear"}
+          />
+        </View>
       </View>
-    </View >
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF8B0',
+    flex: 1,
+    alignItems: 'center',
   },
   titleContainer: {
     paddingTop: 15,
@@ -111,43 +119,50 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingTop: 20,
   },
-  nameChangeText: {
-    fontSize: 20,
-  },
   nameChangeTextBox: {
-    height: 100,
+    width: '100%',
     fontSize: 30,
-    borderRadius: 5,
-    backgroundColor: "#FFFFFF"
-  },
-  changeButtonContainer: {
-    justifyContent: "center",
-    alignItems: 'center',
-    paddingBottom: 20,
-    backgroundColor: 'red',
+    height: 60,
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    marginBottom: 16,
+    borderColor: 'rgba(100,100,100,0.2)',
+    borderWidth: 2,
   },
   changeButton: {
-    height: 100,
+    width: '100%',
     backgroundColor: "#FC6A2C",
     borderRadius: 15,
-
   },
   removeButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 40,
+    marginVertical: 16,
     flexDirection: 'row',
+    paddingBottom: 8,
   },
   removeButton: {
     justifyContent: 'center',
     borderRadius: 15,
-    height: 80,
     width: 150,
-    marginHorizontal: 10,
+    marginHorizontal: 16,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 24,
   },
   image: {
     height: 200,
     width: 200,
-    alignSelf: 'center'
+  },
+  rejectContainer: {
+    width: '94%',
+    marginVertical: 24,
+  },
+  shadow: {
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
   }
 });

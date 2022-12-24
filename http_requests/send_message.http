@@ -8,8 +8,8 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=A
 Content-Type: application/json
 
 {
-    "email":"{{kurichi_email}}",
-    "password":"{{kurichi_pass}}",
+    "email":"{{test_email}}",
+    "password":"{{test_pass}}",
     "returnSecureToken":true
 }
 ###
@@ -19,8 +19,8 @@ Content-Type: application/json
 @test_uid=OxUbEbMAsmPP2A71FfU7DQuMBTB3
 @yammer_uid=EieJoM9ChXfyfVMGoJbwQWLWvXj2
 
-@host = http://localhost/
-# @host = http://27.133.132.254/
+# @host = http://localhost/
+@host = http://27.133.132.254/
 
 ### login
 POST {{host}} HTTP/1.1
@@ -37,9 +37,8 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "target_uid": "{{Kurichi_uid}}",
-    "type": "text",
-    "text": "testteteteteteetetteet"
+    "to": "{{Kurichi_uid}}",
+    "text": "helloworld:Warning: "
 }
 
 ###
@@ -57,4 +56,8 @@ Content-Type: application/json
 
 ###
 GET {{host}}friend HTTP/1.1
+Authorization: {{token}}
+
+###
+GET {{host}}user?uid={{Kurichi_uid}} HTTP/1.1
 Authorization: {{token}}

@@ -18,7 +18,6 @@ export async function registerForPushNotificationsAsync() {
     }
     //③通知用トークンの取得
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     //実機以外の場合
     alert('Must use physical device for Push Notifications');

@@ -1,4 +1,5 @@
 import React, { useState, PropsWithChildren, createContext, useContext, useEffect } from 'react';
+import { DATE_FORMAT } from 'react-native-gifted-chat';
 import { Sounder } from '../components/Sounder';
 import { FSTemplate } from '../services/FileSystem';
 
@@ -28,14 +29,13 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     console.log('reloaded templates!');
   };
 
-  //const modifyTemplate = async (modifyType: string, template_id?: number, card_id_or_idx?: number): Promise<void> => {
-  const modifyTemplate = async (modifyType: string, { template_id, card_id, index, title }: template_modify_props): Promise<void> => {
+  const modifyTemplate = async (modifyType: string, { template_id, card_id, index, title, nonexistCard_id }: template_modify_props): Promise<void> => {
     // 新規テンプレート
     if (modifyType == 'add_empty') {
       await fs.addEmpty();
     }
     // カードの追加
-    else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id != 'undefined') {
+    else if (modifyType == 'add_card' && template_id && card_id) {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num;
@@ -48,7 +48,6 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
         }
       }
 
-
       if (flag) {
         console.log('カード枚数上限')
         await Sounder('error', 'play');
@@ -59,7 +58,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     }
     // カードの削除
-    else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof index != 'undefined') {
+    else if (modifyType == 'exit_card' && template_id && index) {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num - 1;
@@ -73,13 +72,38 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       await fs.modifyData(template_id, { 'item_ids': card_ids, 'item_num': card_num });
     }
     //タイトル変更
-    else if (modifyType == 'edit_title' && typeof template_id != 'undefined' && typeof title != 'undefined') {
+    else if (modifyType == 'edit_title' && template_id && title) {
       await fs.modifyData(template_id, { 'name': title });
     }
+    //テンプレートの削除
+    else if (modifyType == 'delete' && template_id) {
+      await fs.deleteData(template_id);
+    }
+    //カードの削除(カードID指定)
+    else if (modifyType == 'refresh' && nonexistCard_id) {
 
-    const reloadTemplates = await fs.readData<template_cards>();
-    setTemplates(reloadTemplates)
-    console.log('reloaded templates!');
+      const data = await fs.readData<template_cards>();
+
+      const search = (id: number) => {
+        for (var nonid of nonexistCard_id) if (id == nonid) return false;
+        return true;
+      }
+
+      for (var template of data) {
+        const newIds: number[] = Array(8).fill(-1);
+        var i = 0;
+
+        for (var id of template.item_ids) {
+          if (search(id)) newIds[i++] = id;
+        }
+
+        await fs.modifyData(template.id, { item_ids: newIds, item_num: i })
+
+      }
+
+    }
+
+    reloadTemplates();
   }
 
   return (
@@ -87,4 +111,8 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       {children}
     </TemplateContext.Provider>
   )
+}
+
+export function deleteAll() {
+  fs._deleteAll();
 }

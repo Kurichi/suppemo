@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from '@rneui/base';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../services/firebase';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth';
 import axios from 'axios';
 import { registerForPushNotificationsAsync } from '../services/notification';
-import { useAuth } from '../contexts/auth';
 
 export default function SignUp(props: any) {
   const { navigation } = props;
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const auth = getAuth();
 
   return (
     <View style={styles.container} >
       <View>
+        <TextInput
+          placeholder='なまえ'
+          value={name}
+          autoComplete='name'
+          style={styles.signupForm}
+          onChangeText={(value) => {
+            setName(value);
+          }} />
         <TextInput
           placeholder='メールアドレス'
           value={email}
@@ -38,26 +46,42 @@ export default function SignUp(props: any) {
           <Button type="clear"
             onPress={async () => {
               createUserWithEmailAndPassword(auth, email, password).then(async (result) => {
-                const { user } = useAuth();
-
-                const pushToken = await registerForPushNotificationsAsync()
-                // if (pushToken != null) {
-                const res = await axios.post('http://27.133.132.254', {
-                  name: 'test',
-                  push_token: pushToken,
-                }, {
-                  headers: { 'Authorization': await user?.getIdToken() }
-                });
-                console.log(res);
-                console.log('--------------------------------------------------')
-                // }
-
                 navigation.reset({
                   index: 0,
                   routes: [{ name: 'Tab' }],
                 });
+
+                sendEmailVerification(result.user);
+                updateProfile(result.user, {
+                  displayName: name,
+                  photoURL: 'https://firebasestorage.googleapis.com/v0/b/suppemo-3aec0.appspot.com/o/avatar%2Fdefault_logo.png?alt=media&token=956be05f-0a09-467f-80f2-659948ae2531'
+                });
+
+                const pushToken = await registerForPushNotificationsAsync()
+
+                axios.post('http://27.133.132.254', {
+                  push_token: pushToken,
+                }, {
+                  headers: { 'Authorization': await result.user?.getIdToken() }
+                });
               }).catch((error) => {
-                console.log(error.message);
+                switch (error.code) {
+                  case "auth/network-request-failed":
+                    Alert.alert("通信がエラーになったのか、またはタイムアウトになりました。通信環境がいい所で再度やり直してください。");
+                    break;
+                  case "auth/weak-password":  //バリデーションでいかないようにするので、基本的にはこのコードはこない
+                    Alert.alert("パスワードが短すぎます。6文字以上を入力してください。");
+                    break;
+                  case "auth/invalid-email":  //バリデーションでいかないようにするので、基本的にはこのコードはこない
+                    Alert.alert("メールアドレスが正しくありません");
+                    break;
+                  case "auth/email-already-in-use":
+                    Alert.alert("メールアドレスがすでに使用されています。ログインするか別のメールアドレスで作成してください");
+                    break;
+                  default:  //想定外
+                    Alert.alert("アカウントの作成に失敗しました。通信環境がいい所で再度やり直してください。");
+                    console.log(error.message);
+                }
               });
             }}>
             <Text style={styles.signupButtonText}>とうろく</Text>
@@ -65,10 +89,10 @@ export default function SignUp(props: any) {
         </View>
         <Button
           type="clear"
+          // onPress={() => {
+          //   Alert.alert('長押ししてね');
+          // }}
           onPress={() => {
-            Alert.alert('長押ししてね');
-          }}
-          onLongPress={() => {
             navigation.reset({
               index: 0,
               routes: [{ name: 'Login' }]

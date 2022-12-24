@@ -1,5 +1,4 @@
 import React, { useState, PropsWithChildren, createContext, useContext, useEffect } from 'react';
-import CardsFolder from '../components/CardsFolder';
 import { FSCard } from '../services/FileSystem';
 
 const ini_cards: card_detail[] = [];
@@ -64,4 +63,18 @@ export function getCards(cards: card_detail[], ids: number | number[]) {
     }
     return res;
   }
+}
+
+export function getDeletedCards(cards: card_detail[]) {
+  var res: number[] = [];
+
+  for (var card of cards) {
+    if (!card.exists) res.push(card.id)
+  }
+
+  return res;
+}
+
+export function deleteAll() {
+  fs._deleteAll();
 }

@@ -1,93 +1,135 @@
 import React, { useState, PropsWithChildren, createContext, useContext, useEffect, useRef } from 'react';
-import { FSChat } from '../services/FileSystem';
-import { useAuth } from './auth';
 import * as Notifications from 'expo-notifications';
 import { Subscription } from 'expo-screen-orientation';
-import useSWR from 'swr';
 import axios from 'axios';
-import { UserInterfaceIdiom } from 'expo-constants';
-import { IMessage } from 'react-native-gifted-chat';
+import { IMessage, User } from 'react-native-gifted-chat';
+import { getAuth } from 'firebase/auth';
 
-const ini_talks: talk[] = [];
-const ini_func = async (message: IMessage): Promise<void> => { };
-const fs = new FSChat();
-const ChatContext = createContext({ talks: ini_talks, sendMessage: ini_func });
+const ini_talk: Map<string, Talk> = new Map();
+const ini_func = async (to: string, message: IMessage[]): Promise<void> => { };
+const ChatContext = createContext({ talks: ini_talk, sendMessage: ini_func });
 
 export const useChat = () => {
   return useContext(ChatContext);
 }
 
 export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
-  const host = '27.133.132.254';
-  const [talks, setTalks] = useState<talk[]>([]);
-  const { user } = useAuth();
+  const auth = getAuth();
+  const host = 'http://27.133.132.254';
+  const [talks, setTalks] = useState<Map<string, Talk>>(new Map());
 
   const notificationListener = useRef<Subscription>();
-  const responseListener = useRef<Subscription>();
 
   useEffect(() => {
-    (async () => {
-      const _talks = await fs.readData<talk>();
-      setTalks(_talks)
-    })();
-
-    // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(async notification => {
-      console.log(notification);
-      const token = await user?.getIdToken();
-      console.log(token);
-      axios.get(`http://${host}/chat?id=0`, {
-        headers: {
-          'Authorization': token
-        }
-      }).then((result) => {
-        setTalks(result.data);
-        console.log(result.data);
-      }).catch((error) => {
-        console.log(error)
-      });
-      // const { data, error } = useSWR('/chat/', fetcher)
+      const message = JSON.parse(notification.request.content.data.message as string);
+      // console.log(talks.get(message.uid)?.talk_with);
+      setTalks(new Map(talks.set(message.uid, {
+        talk_with: talks.get(message.uid)?.talk_with,
+        messages: talks.get(message.uid)?.messages.concat([{
+          _id: -1,
+          text: message.text,
+          image: message.image,
+          user: talks.get(message.uid)?.talk_with,
+        }]),
+      })));
     });
 
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
 
 
     return () => {
       if (typeof notificationListener.current !== 'undefined')
         Notifications.removeNotificationSubscription(notificationListener.current);
-      if (typeof responseListener.current !== 'undefined')
-        Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
+  // フレンド一覧を取得
   useEffect(() => {
-    axios.get(`http://${host}/friend`).then((result) => {
-      const friends = result.data?.friends;
-      console.log(friends);
+    const unsubscribed = auth.onAuthStateChanged((user) => {
+      user?.getIdToken().then((token) => {
+        axios.get(`${host}/friend`, {
+          headers: { 'Authorization': token }
+        }).then((result) => {
+          result.data.map((friend: User): void => {
+            setTalks(new Map(talks.set(friend._id as string, {
+              talk_with: friend,
+              messages: [],
+            })));
+          });
+          console.log(talks);
+          axios.get(`${host}/chat?id=-1`, {
+            headers: { 'Authorization': token }
+          }).then((result) => {
+            // console.log(result.data);
+            result.data.map(({ talk_with, messages }: { talk_with: string, messages: any }) => {
+              console.log('test')
+              console.log(talk_with);
+              if (talks.has(talk_with as string)) {
+                setTalks(new Map(talks.set(talk_with,
+                  {
+                    talk_with: talks.get(talk_with)?.talk_with,
+                    messages: messages.map((value: any): IMessage => {
+                      if (value.user === auth.currentUser?.uid) {
+                        return ({
+                          _id: value._id,
+                          text: value.text,
+                          image: value.image,
+                          createdAt: value.createdAt,
+                          user: {
+                            _id: value.user,
+                            name: auth.currentUser?.displayName ?? '',
+                            avatar: auth.currentUser?.photoURL ?? '',
+                          }
+                        })
+                      }
+                      else {
+                        return ({
+                          _id: value._id,
+                          text: value.text,
+                          image: value.image,
+                          createdAt: value.createdAt,
+                          user: talks.get(talk_with)?.talk_with,
+                        })
+                      }
+                    })
+                  }
+                )));
+              }
+            })
+            // console.log(talks)
+          }).catch((error) => {
+            console.log(error);
+          })
+        }).catch((error) => {
+          console.log(error);
+        });
+
+      }).catch((error) => {
+        console.log(error);
+      });
+
+    });
+
+    return () => unsubscribed();
+  }, []);
+
+  const sendMessage = async (to: string, messages: IMessage[]): Promise<void> => {
+    if (messages.length === 0) return;
+
+    setTalks(new Map(talks.set(to, {
+      talk_with: talks.get(to)?.talk_with,
+      messages: talks.get(to)?.messages.concat(messages) ?? [],
+    })));
+
+    const token = await auth.currentUser?.getIdToken();
+    axios.post(`${host}/chat`, {
+      to: to,
+      text: messages[0].text,
+    }, {
+      headers: { 'Authorization': token }
     }).catch((error) => {
       console.log(error);
     });
-  }, [user])
-
-  useEffect(() => {
-    axios.get(`http://${host}/friend`).then((result) => {
-      const friends = result.data?.friends;
-      console.log(friends);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, [user])
-
-  const sendMessage = async (message?: IMessage): Promise<void> => {
-    if (typeof message === 'undefined') {
-
-    }
-    else {
-      const user = useAuth();
-    }
   }
 
   return (
@@ -95,21 +137,4 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
       {children}
     </ChatContext.Provider>
   )
-}
-
-export function getCards(cards: card_detail[], ids: number): card_detail | null;
-export function getCards(cards: card_detail[], ids: number[]): card_detail[];
-export function getCards(cards: card_detail[], ids: number | number[]) {
-  if (typeof ids == 'number') {
-    const index = fs.getIndex(cards, ids);
-    return index != -1 ? cards[index] : null;
-  }
-  else {
-    var res: card_detail[] = [];
-    for (let id of ids) {
-      const index = fs.getIndex(cards, id)
-      res.push(cards[index]);
-    }
-    return res;
-  }
 }

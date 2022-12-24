@@ -1,0 +1,2823 @@
+[
+    {
+        "id": 0,
+        "name": "ほしがた",
+        "uri": "./assets/cards/shape/ほしがた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 1,
+        "name": "ひしがた",
+        "uri": "./assets/cards/shape/ひしがた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 2,
+        "name": "じぐざぐ",
+        "uri": "./assets/cards/shape/じぐざぐ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 3,
+        "name": "たまごがた",
+        "uri": "./assets/cards/shape/たまごがた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 4,
+        "name": "なみせん",
+        "uri": "./assets/cards/shape/なみせん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 5,
+        "name": "クローバー",
+        "uri": "./assets/cards/shape/クローバー.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 6,
+        "name": "スペード",
+        "uri": "./assets/cards/shape/スペード.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 7,
+        "name": "おうぎがた",
+        "uri": "./assets/cards/shape/おうぎがた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 8,
+        "name": "みかづきがた",
+        "uri": "./assets/cards/shape/みかづきがた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 9,
+        "name": "ばつ",
+        "uri": "./assets/cards/shape/ばつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 10,
+        "name": "ハート",
+        "uri": "./assets/cards/shape/ハート.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 11,
+        "name": "ろっかくけい",
+        "uri": "./assets/cards/shape/ろっかくけい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 12,
+        "name": "ちょうほうけい",
+        "uri": "./assets/cards/shape/ちょうほうけい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 13,
+        "name": "ごかくけい",
+        "uri": "./assets/cards/shape/ごかくけい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 14,
+        "name": "やじるし",
+        "uri": "./assets/cards/shape/やじるし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 15,
+        "name": "しかく",
+        "uri": "./assets/cards/shape/しかく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 16,
+        "name": "さんかく",
+        "uri": "./assets/cards/shape/さんかく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 17,
+        "name": "うずまき",
+        "uri": "./assets/cards/shape/うずまき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 18,
+        "name": "てんせん",
+        "uri": "./assets/cards/shape/てんせん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 19,
+        "name": "まる",
+        "uri": "./assets/cards/shape/まる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 20,
+        "name": "ふくらはぎ",
+        "uri": "./assets/cards/body/ふくらはぎ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 21,
+        "name": "はな",
+        "uri": "./assets/cards/body/はな.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 22,
+        "name": "みけん",
+        "uri": "./assets/cards/body/みけん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 23,
+        "name": "むね",
+        "uri": "./assets/cards/body/むね.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 24,
+        "name": "にのうで",
+        "uri": "./assets/cards/body/にのうで.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 25,
+        "name": "あし",
+        "uri": "./assets/cards/body/あし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 26,
+        "name": "せなか",
+        "uri": "./assets/cards/body/せなか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 27,
+        "name": "かた",
+        "uri": "./assets/cards/body/かた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 28,
+        "name": "てのこう",
+        "uri": "./assets/cards/body/てのこう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 29,
+        "name": "さこつ",
+        "uri": "./assets/cards/body/さこつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 30,
+        "name": "は",
+        "uri": "./assets/cards/body/は.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 31,
+        "name": "て",
+        "uri": "./assets/cards/body/て.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 32,
+        "name": "した",
+        "uri": "./assets/cards/body/した.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 33,
+        "name": "ひとさしゆび",
+        "uri": "./assets/cards/body/ひとさしゆび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 34,
+        "name": "えくぼ",
+        "uri": "./assets/cards/body/えくぼ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 35,
+        "name": "おしり",
+        "uri": "./assets/cards/body/おしり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 36,
+        "name": "ふともも",
+        "uri": "./assets/cards/body/ふともも.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 37,
+        "name": "かお",
+        "uri": "./assets/cards/body/かお.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 38,
+        "name": "かかと",
+        "uri": "./assets/cards/body/かかと.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 39,
+        "name": "かみのけ",
+        "uri": "./assets/cards/body/かみのけ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 40,
+        "name": "あたま",
+        "uri": "./assets/cards/body/あたま.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 41,
+        "name": "あしくび",
+        "uri": "./assets/cards/body/あしくび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 42,
+        "name": "おなか",
+        "uri": "./assets/cards/body/おなか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 43,
+        "name": "わき",
+        "uri": "./assets/cards/body/わき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 44,
+        "name": "こめかみ",
+        "uri": "./assets/cards/body/こめかみ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 45,
+        "name": "あしのうら",
+        "uri": "./assets/cards/body/あしのうら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 46,
+        "name": "こし",
+        "uri": "./assets/cards/body/こし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 47,
+        "name": "おでこ",
+        "uri": "./assets/cards/body/おでこ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 48,
+        "name": "なかゆび",
+        "uri": "./assets/cards/body/なかゆび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 49,
+        "name": "くび",
+        "uri": "./assets/cards/body/くび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 50,
+        "name": "てくび",
+        "uri": "./assets/cards/body/てくび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 51,
+        "name": "へそ",
+        "uri": "./assets/cards/body/へそ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 52,
+        "name": "まぶた",
+        "uri": "./assets/cards/body/まぶた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 53,
+        "name": "こゆび",
+        "uri": "./assets/cards/body/こゆび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 54,
+        "name": "め",
+        "uri": "./assets/cards/body/め.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 55,
+        "name": "ひじ",
+        "uri": "./assets/cards/body/ひじ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 56,
+        "name": "くすりゆび",
+        "uri": "./assets/cards/body/くすりゆび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 57,
+        "name": "ほほ",
+        "uri": "./assets/cards/body/ほほ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 58,
+        "name": "くち",
+        "uri": "./assets/cards/body/くち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 59,
+        "name": "おやゆび",
+        "uri": "./assets/cards/body/おやゆび.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 60,
+        "name": "つまさき",
+        "uri": "./assets/cards/body/つまさき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 61,
+        "name": "つむじ",
+        "uri": "./assets/cards/body/つむじ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 62,
+        "name": "みみ",
+        "uri": "./assets/cards/body/みみ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 63,
+        "name": "あご",
+        "uri": "./assets/cards/body/あご.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 64,
+        "name": "まゆげ",
+        "uri": "./assets/cards/body/まゆげ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 65,
+        "name": "てのひら",
+        "uri": "./assets/cards/body/てのひら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 66,
+        "name": "すね",
+        "uri": "./assets/cards/body/すね.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 67,
+        "name": "ひざ",
+        "uri": "./assets/cards/body/ひざ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 68,
+        "name": "せつない",
+        "uri": "./assets/cards/emote/せつない.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 69,
+        "name": "おちこむ",
+        "uri": "./assets/cards/emote/おちこむ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 70,
+        "name": "かわいい",
+        "uri": "./assets/cards/emote/かわいい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 71,
+        "name": "つまらない",
+        "uri": "./assets/cards/emote/つまらない.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 72,
+        "name": "さびしい",
+        "uri": "./assets/cards/emote/さびしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 73,
+        "name": "かなしい",
+        "uri": "./assets/cards/emote/かなしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 74,
+        "name": "かわいそうだ",
+        "uri": "./assets/cards/emote/かわいそうだ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 75,
+        "name": "かんしゃする",
+        "uri": "./assets/cards/emote/かんしゃする.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 76,
+        "name": "むちゅう",
+        "uri": "./assets/cards/emote/むちゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 77,
+        "name": "きもちいい",
+        "uri": "./assets/cards/emote/きもちいい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 78,
+        "name": "どきどきする",
+        "uri": "./assets/cards/emote/どきどきする.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 79,
+        "name": "うれしい",
+        "uri": "./assets/cards/emote/うれしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 80,
+        "name": "くるしい",
+        "uri": "./assets/cards/emote/くるしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 81,
+        "name": "ふしぎだ",
+        "uri": "./assets/cards/emote/ふしぎだ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 82,
+        "name": "おもしろい",
+        "uri": "./assets/cards/emote/おもしろい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 83,
+        "name": "はずかしい",
+        "uri": "./assets/cards/emote/はずかしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 84,
+        "name": "まんぞくだ",
+        "uri": "./assets/cards/emote/まんぞくだ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 85,
+        "name": "かんげきする",
+        "uri": "./assets/cards/emote/かんげきする.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 86,
+        "name": "くやしい",
+        "uri": "./assets/cards/emote/くやしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 87,
+        "name": "あきれる",
+        "uri": "./assets/cards/emote/あきれる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 88,
+        "name": "たのしい",
+        "uri": "./assets/cards/emote/たのしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 89,
+        "name": "うらやましい",
+        "uri": "./assets/cards/emote/うらやましい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 90,
+        "name": "なつかしい",
+        "uri": "./assets/cards/emote/なつかしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 91,
+        "name": "きんちょうする",
+        "uri": "./assets/cards/emote/きんちょうする.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 92,
+        "name": "ぞっとする",
+        "uri": "./assets/cards/emote/ぞっとする.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 93,
+        "name": "ほこらしい",
+        "uri": "./assets/cards/emote/ほこらしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 94,
+        "name": "きもちわるい",
+        "uri": "./assets/cards/emote/きもちわるい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 95,
+        "name": "こわい",
+        "uri": "./assets/cards/emote/こわい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 96,
+        "name": "しんぱいだ",
+        "uri": "./assets/cards/emote/しんぱいだ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 97,
+        "name": "おこる",
+        "uri": "./assets/cards/emote/おこる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 98,
+        "name": "ながれる",
+        "uri": "./assets/cards/verb/ながれる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 99,
+        "name": "こわす",
+        "uri": "./assets/cards/verb/こわす.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 100,
+        "name": "はいる",
+        "uri": "./assets/cards/verb/はいる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 101,
+        "name": "はなす",
+        "uri": "./assets/cards/verb/はなす.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 102,
+        "name": "さげる",
+        "uri": "./assets/cards/verb/さげる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 103,
+        "name": "さそう",
+        "uri": "./assets/cards/verb/さそう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 104,
+        "name": "またがる",
+        "uri": "./assets/cards/verb/またがる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 105,
+        "name": "おく",
+        "uri": "./assets/cards/verb/おく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 106,
+        "name": "あるく",
+        "uri": "./assets/cards/verb/あるく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 107,
+        "name": "はたらく",
+        "uri": "./assets/cards/verb/はたらく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 108,
+        "name": "あう",
+        "uri": "./assets/cards/verb/あう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 109,
+        "name": "よむ",
+        "uri": "./assets/cards/verb/よむ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 110,
+        "name": "あげる",
+        "uri": "./assets/cards/verb/あげる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 111,
+        "name": "のむ",
+        "uri": "./assets/cards/verb/のむ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 112,
+        "name": "かく",
+        "uri": "./assets/cards/verb/かく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 113,
+        "name": "さけぶ",
+        "uri": "./assets/cards/verb/さけぶ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 114,
+        "name": "かえる",
+        "uri": "./assets/cards/verb/かえる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 115,
+        "name": "とぶ",
+        "uri": "./assets/cards/verb/とぶ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 116,
+        "name": "おもう",
+        "uri": "./assets/cards/verb/おもう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 117,
+        "name": "きく",
+        "uri": "./assets/cards/verb/きく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 118,
+        "name": "つくる",
+        "uri": "./assets/cards/verb/つくる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 119,
+        "name": "わらう",
+        "uri": "./assets/cards/verb/わらう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 120,
+        "name": "たべる",
+        "uri": "./assets/cards/verb/たべる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 121,
+        "name": "つむ",
+        "uri": "./assets/cards/verb/つむ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 122,
+        "name": "なく",
+        "uri": "./assets/cards/verb/なく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 123,
+        "name": "いく",
+        "uri": "./assets/cards/verb/いく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 124,
+        "name": "みる",
+        "uri": "./assets/cards/verb/みる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 125,
+        "name": "くる",
+        "uri": "./assets/cards/verb/くる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 126,
+        "name": "まつ",
+        "uri": "./assets/cards/verb/まつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 127,
+        "name": "うむ",
+        "uri": "./assets/cards/verb/うむ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 128,
+        "name": "ける",
+        "uri": "./assets/cards/verb/ける.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 129,
+        "name": "さがす",
+        "uri": "./assets/cards/verb/さがす.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 130,
+        "name": "でる",
+        "uri": "./assets/cards/verb/でる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 131,
+        "name": "すわる",
+        "uri": "./assets/cards/verb/すわる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 132,
+        "name": "ねる",
+        "uri": "./assets/cards/verb/ねる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 133,
+        "name": "わたす",
+        "uri": "./assets/cards/verb/わたす.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 134,
+        "name": "あやまる",
+        "uri": "./assets/cards/verb/あやまる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 135,
+        "name": "たつ",
+        "uri": "./assets/cards/verb/たつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 136,
+        "name": "はしる",
+        "uri": "./assets/cards/verb/はしる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 137,
+        "name": "おこる",
+        "uri": "./assets/cards/verb/おこる.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 138,
+        "name": "えき",
+        "uri": "./assets/cards/building/えき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 139,
+        "name": "はたけ",
+        "uri": "./assets/cards/building/はたけ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 140,
+        "name": "やおや",
+        "uri": "./assets/cards/building/やおや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 141,
+        "name": "たいいくかん",
+        "uri": "./assets/cards/building/たいいくかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 142,
+        "name": "しょうがっこう",
+        "uri": "./assets/cards/building/しょうがっこう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 143,
+        "name": "すなはま",
+        "uri": "./assets/cards/building/すなはま.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 144,
+        "name": "とこや",
+        "uri": "./assets/cards/building/とこや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 145,
+        "name": "ぱんや",
+        "uri": "./assets/cards/building/ぱんや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 146,
+        "name": "みなと",
+        "uri": "./assets/cards/building/みなと.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 147,
+        "name": "ゆうえんち",
+        "uri": "./assets/cards/building/ゆうえんち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 148,
+        "name": "レストラン",
+        "uri": "./assets/cards/building/レストラン.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 149,
+        "name": "きっさてん",
+        "uri": "./assets/cards/building/きっさてん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 150,
+        "name": "プール",
+        "uri": "./assets/cards/building/プール.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 151,
+        "name": "ゆうびんきょく",
+        "uri": "./assets/cards/building/ゆうびんきょく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 152,
+        "name": "はし",
+        "uri": "./assets/cards/building/はし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 153,
+        "name": "ようちえん",
+        "uri": "./assets/cards/building/ようちえん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 154,
+        "name": "しょうぼうしょ",
+        "uri": "./assets/cards/building/しょうぼうしょ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 155,
+        "name": "はなや",
+        "uri": "./assets/cards/building/はなや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 156,
+        "name": "びじゅつかん",
+        "uri": "./assets/cards/building/びじゅつかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 157,
+        "name": "えいがかん",
+        "uri": "./assets/cards/building/えいがかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 158,
+        "name": "デパート",
+        "uri": "./assets/cards/building/デパート.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 159,
+        "name": "クリーニングや",
+        "uri": "./assets/cards/building/クリーニングや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 160,
+        "name": "コンビニ",
+        "uri": "./assets/cards/building/コンビニ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 161,
+        "name": "ガソリンスタンド",
+        "uri": "./assets/cards/building/ガソリンスタンド.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 162,
+        "name": "びょういん",
+        "uri": "./assets/cards/building/びょういん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 163,
+        "name": "さかなや",
+        "uri": "./assets/cards/building/さかなや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 164,
+        "name": "スーパーマーケット",
+        "uri": "./assets/cards/building/スーパーマーケット.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 165,
+        "name": "としょかん",
+        "uri": "./assets/cards/building/としょかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 166,
+        "name": "かわ",
+        "uri": "./assets/cards/building/かわ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 167,
+        "name": "こうばん",
+        "uri": "./assets/cards/building/こうばん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 168,
+        "name": "ぎんこう",
+        "uri": "./assets/cards/building/ぎんこう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 169,
+        "name": "こうえん",
+        "uri": "./assets/cards/building/こうえん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 170,
+        "name": "じゅうなな",
+        "uri": "./assets/cards/number/じゅうなな.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 171,
+        "name": "ご",
+        "uri": "./assets/cards/number/ご.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 172,
+        "name": "にじゅう",
+        "uri": "./assets/cards/number/にじゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 173,
+        "name": "なな",
+        "uri": "./assets/cards/number/なな.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 174,
+        "name": "ろく",
+        "uri": "./assets/cards/number/ろく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 175,
+        "name": "じゅうよん",
+        "uri": "./assets/cards/number/じゅうよん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 176,
+        "name": "はち",
+        "uri": "./assets/cards/number/はち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 177,
+        "name": "じゅうきゅう",
+        "uri": "./assets/cards/number/じゅうきゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 178,
+        "name": "ひゃく",
+        "uri": "./assets/cards/number/ひゃく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 179,
+        "name": "じゅうさん",
+        "uri": "./assets/cards/number/じゅうさん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 180,
+        "name": "ごじゅう",
+        "uri": "./assets/cards/number/ごじゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 181,
+        "name": "じゅうはち",
+        "uri": "./assets/cards/number/じゅうはち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 182,
+        "name": "じゅうろく",
+        "uri": "./assets/cards/number/じゅうろく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 183,
+        "name": "よんじゅう",
+        "uri": "./assets/cards/number/よんじゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 184,
+        "name": "いち",
+        "uri": "./assets/cards/number/いち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 185,
+        "name": "に",
+        "uri": "./assets/cards/number/に.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 186,
+        "name": "さんじゅう",
+        "uri": "./assets/cards/number/さんじゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 187,
+        "name": "じゅう",
+        "uri": "./assets/cards/number/じゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 188,
+        "name": "きゅう",
+        "uri": "./assets/cards/number/きゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 189,
+        "name": "さん",
+        "uri": "./assets/cards/number/さん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 190,
+        "name": "じゅういち",
+        "uri": "./assets/cards/number/じゅういち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 191,
+        "name": "せん",
+        "uri": "./assets/cards/number/せん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 192,
+        "name": "よん",
+        "uri": "./assets/cards/number/よん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 193,
+        "name": "じゅうに",
+        "uri": "./assets/cards/number/じゅうに.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 194,
+        "name": "じゅうご",
+        "uri": "./assets/cards/number/じゅうご.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 195,
+        "name": "べんきょう",
+        "uri": "./assets/cards/school/べんきょう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 196,
+        "name": "かく",
+        "uri": "./assets/cards/school/かく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 197,
+        "name": "がっこう",
+        "uri": "./assets/cards/school/がっこう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 198,
+        "name": "じゅぎょう",
+        "uri": "./assets/cards/school/じゅぎょう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 199,
+        "name": "くつ",
+        "uri": "./assets/cards/object/くつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 200,
+        "name": "れいぞうこ",
+        "uri": "./assets/cards/object/れいぞうこ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 201,
+        "name": "ふく",
+        "uri": "./assets/cards/object/ふく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 202,
+        "name": "テレビ",
+        "uri": "./assets/cards/object/テレビ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 203,
+        "name": "ずぼん",
+        "uri": "./assets/cards/object/ずぼん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 204,
+        "name": "スマートフォン",
+        "uri": "./assets/cards/object/スマートフォン.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 205,
+        "name": "ベッド",
+        "uri": "./assets/cards/object/ベッド.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 206,
+        "name": "５じ",
+        "uri": "./assets/cards/clock/５じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 207,
+        "name": "７じ",
+        "uri": "./assets/cards/clock/７じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 208,
+        "name": "２じ",
+        "uri": "./assets/cards/clock/２じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 209,
+        "name": "８じ",
+        "uri": "./assets/cards/clock/８じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 210,
+        "name": "６じ",
+        "uri": "./assets/cards/clock/６じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 211,
+        "name": "１じ",
+        "uri": "./assets/cards/clock/１じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 212,
+        "name": "５じ３０ふん",
+        "uri": "./assets/cards/clock/５じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 213,
+        "name": "１０じ",
+        "uri": "./assets/cards/clock/１０じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 214,
+        "name": "６じ３０ふん",
+        "uri": "./assets/cards/clock/６じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 215,
+        "name": "３じ",
+        "uri": "./assets/cards/clock/３じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 216,
+        "name": "２じ３０ふん",
+        "uri": "./assets/cards/clock/２じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 217,
+        "name": "１じ３０ふん",
+        "uri": "./assets/cards/clock/１じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 218,
+        "name": "３じ３０ふん",
+        "uri": "./assets/cards/clock/３じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 219,
+        "name": "１２じ",
+        "uri": "./assets/cards/clock/１２じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 220,
+        "name": "１２じ３０ふん",
+        "uri": "./assets/cards/clock/１２じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 221,
+        "name": "４じ",
+        "uri": "./assets/cards/clock/４じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 222,
+        "name": "４じ３０ふん",
+        "uri": "./assets/cards/clock/４じ３０ふん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 223,
+        "name": "９じ",
+        "uri": "./assets/cards/clock/９じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 224,
+        "name": "１１じ",
+        "uri": "./assets/cards/clock/１１じ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 225,
+        "name": "かぶ",
+        "uri": "./assets/cards/vegetable/かぶ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 226,
+        "name": "じゃがいも",
+        "uri": "./assets/cards/vegetable/じゃがいも.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 227,
+        "name": "ねぎ",
+        "uri": "./assets/cards/vegetable/ねぎ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 228,
+        "name": "とうがらし",
+        "uri": "./assets/cards/vegetable/とうがらし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 229,
+        "name": "ごぼう",
+        "uri": "./assets/cards/vegetable/ごぼう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 230,
+        "name": "さつまいも",
+        "uri": "./assets/cards/vegetable/さつまいも.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 231,
+        "name": "レタス",
+        "uri": "./assets/cards/vegetable/レタス.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 232,
+        "name": "ゴーヤ",
+        "uri": "./assets/cards/vegetable/ゴーヤ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 233,
+        "name": "ブロッコリー",
+        "uri": "./assets/cards/vegetable/ブロッコリー.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 234,
+        "name": "はくさい",
+        "uri": "./assets/cards/vegetable/はくさい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 235,
+        "name": "なす",
+        "uri": "./assets/cards/vegetable/なす.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 236,
+        "name": "だいこん",
+        "uri": "./assets/cards/vegetable/だいこん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 237,
+        "name": "にんじん",
+        "uri": "./assets/cards/vegetable/にんじん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 238,
+        "name": "にら",
+        "uri": "./assets/cards/vegetable/にら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 239,
+        "name": "おくら",
+        "uri": "./assets/cards/vegetable/おくら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 240,
+        "name": "ピーマン",
+        "uri": "./assets/cards/vegetable/ピーマン.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 241,
+        "name": "アスパラガス",
+        "uri": "./assets/cards/vegetable/アスパラガス.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 242,
+        "name": "れんこん",
+        "uri": "./assets/cards/vegetable/れんこん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 243,
+        "name": "しいたけ",
+        "uri": "./assets/cards/vegetable/しいたけ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 244,
+        "name": "とまと",
+        "uri": "./assets/cards/vegetable/とまと.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 245,
+        "name": "とうもろこし",
+        "uri": "./assets/cards/vegetable/とうもろこし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 246,
+        "name": "にんにく",
+        "uri": "./assets/cards/vegetable/にんにく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 247,
+        "name": "きゅうり",
+        "uri": "./assets/cards/vegetable/きゅうり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 248,
+        "name": "たまねぎ",
+        "uri": "./assets/cards/vegetable/たまねぎ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 249,
+        "name": "えだまめ",
+        "uri": "./assets/cards/vegetable/えだまめ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 250,
+        "name": "たけのこ",
+        "uri": "./assets/cards/vegetable/たけのこ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 251,
+        "name": "キャベツ",
+        "uri": "./assets/cards/vegetable/キャベツ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 252,
+        "name": "みょうが",
+        "uri": "./assets/cards/vegetable/みょうが.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 253,
+        "name": "ほうれんそう",
+        "uri": "./assets/cards/vegetable/ほうれんそう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 254,
+        "name": "かぼちゃ",
+        "uri": "./assets/cards/vegetable/かぼちゃ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 255,
+        "name": "かんごしさん",
+        "uri": "./assets/cards/person/かんごしさん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 256,
+        "name": "かぞく",
+        "uri": "./assets/cards/person/かぞく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 257,
+        "name": "おとうさん",
+        "uri": "./assets/cards/person/おとうさん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 258,
+        "name": "おかあさん",
+        "uri": "./assets/cards/person/おかあさん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 259,
+        "name": "わたし",
+        "uri": "./assets/cards/person/わたし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 260,
+        "name": "おじいちゃん",
+        "uri": "./assets/cards/person/おじいちゃん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 261,
+        "name": "おねえちゃん",
+        "uri": "./assets/cards/person/おねえちゃん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 262,
+        "name": "ぼく",
+        "uri": "./assets/cards/person/ぼく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 263,
+        "name": "おにいちゃん",
+        "uri": "./assets/cards/person/おにいちゃん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 264,
+        "name": "びょういんのせんせい",
+        "uri": "./assets/cards/person/びょういんのせんせい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 265,
+        "name": "おばあちゃん",
+        "uri": "./assets/cards/person/おばあちゃん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 266,
+        "name": "くらい",
+        "uri": "./assets/cards/adjective/くらい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 267,
+        "name": "おそい",
+        "uri": "./assets/cards/adjective/おそい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 268,
+        "name": "あつい",
+        "uri": "./assets/cards/adjective/あつい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 269,
+        "name": "あかるい",
+        "uri": "./assets/cards/adjective/あかるい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 270,
+        "name": "おおきい",
+        "uri": "./assets/cards/adjective/おおきい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 271,
+        "name": "うすい",
+        "uri": "./assets/cards/adjective/うすい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 272,
+        "name": "ひろい",
+        "uri": "./assets/cards/adjective/ひろい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 273,
+        "name": "あまい",
+        "uri": "./assets/cards/adjective/あまい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 274,
+        "name": "ひくい",
+        "uri": "./assets/cards/adjective/ひくい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 275,
+        "name": "ふるい",
+        "uri": "./assets/cards/adjective/ふるい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 276,
+        "name": "ながい",
+        "uri": "./assets/cards/adjective/ながい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 277,
+        "name": "とおい",
+        "uri": "./assets/cards/adjective/とおい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 278,
+        "name": "さむい",
+        "uri": "./assets/cards/adjective/さむい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 279,
+        "name": "あつい1",
+        "uri": "./assets/cards/adjective/あつい1.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 280,
+        "name": "あさい",
+        "uri": "./assets/cards/adjective/あさい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 281,
+        "name": "すくない",
+        "uri": "./assets/cards/adjective/すくない.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 282,
+        "name": "ふかい",
+        "uri": "./assets/cards/adjective/ふかい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 283,
+        "name": "おおい",
+        "uri": "./assets/cards/adjective/おおい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 284,
+        "name": "はやい",
+        "uri": "./assets/cards/adjective/はやい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 285,
+        "name": "ちいさい",
+        "uri": "./assets/cards/adjective/ちいさい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 286,
+        "name": "たかい",
+        "uri": "./assets/cards/adjective/たかい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 287,
+        "name": "ふとい",
+        "uri": "./assets/cards/adjective/ふとい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 288,
+        "name": "ちかい",
+        "uri": "./assets/cards/adjective/ちかい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 289,
+        "name": "かたい",
+        "uri": "./assets/cards/adjective/かたい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 290,
+        "name": "やわらかい",
+        "uri": "./assets/cards/adjective/やわらかい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 291,
+        "name": "みじかい",
+        "uri": "./assets/cards/adjective/みじかい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 292,
+        "name": "おもい",
+        "uri": "./assets/cards/adjective/おもい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 293,
+        "name": "せまい",
+        "uri": "./assets/cards/adjective/せまい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 294,
+        "name": "ほそい",
+        "uri": "./assets/cards/adjective/ほそい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 295,
+        "name": "かるい",
+        "uri": "./assets/cards/adjective/かるい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 296,
+        "name": "あたらしい",
+        "uri": "./assets/cards/adjective/あたらしい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 297,
+        "name": "からい",
+        "uri": "./assets/cards/adjective/からい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 298,
+        "name": "たぶんきりん",
+        "uri": "./assets/cards/useful/たぶんきりん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 299,
+        "name": "クリスマス",
+        "uri": "./assets/cards/useful/クリスマス.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 300,
+        "name": "はをみがく",
+        "uri": "./assets/cards/useful/はをみがく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 301,
+        "name": "びょうき",
+        "uri": "./assets/cards/useful/びょうき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 302,
+        "name": "たぶんぞう",
+        "uri": "./assets/cards/useful/たぶんぞう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 303,
+        "name": "ちきゅうおんだんか",
+        "uri": "./assets/cards/useful/ちきゅうおんだんか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 304,
+        "name": "さばかん",
+        "uri": "./assets/cards/useful/さばかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 305,
+        "name": "おうえんしている",
+        "uri": "./assets/cards/useful/おうえんしている.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 306,
+        "name": "キウイフルーツ",
+        "uri": "./assets/cards/fruit/キウイフルーツ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 307,
+        "name": "パイナップル",
+        "uri": "./assets/cards/fruit/パイナップル.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 308,
+        "name": "もも",
+        "uri": "./assets/cards/fruit/もも.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 309,
+        "name": "メロン",
+        "uri": "./assets/cards/fruit/メロン.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 310,
+        "name": "いちご",
+        "uri": "./assets/cards/fruit/いちご.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 311,
+        "name": "なし",
+        "uri": "./assets/cards/fruit/なし.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 312,
+        "name": "みかん",
+        "uri": "./assets/cards/fruit/みかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 313,
+        "name": "ぶどう",
+        "uri": "./assets/cards/fruit/ぶどう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 314,
+        "name": "すもも",
+        "uri": "./assets/cards/fruit/すもも.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 315,
+        "name": "りんご",
+        "uri": "./assets/cards/fruit/りんご.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 316,
+        "name": "くり",
+        "uri": "./assets/cards/fruit/くり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 317,
+        "name": "かき",
+        "uri": "./assets/cards/fruit/かき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 318,
+        "name": "マンゴー",
+        "uri": "./assets/cards/fruit/マンゴー.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 319,
+        "name": "パパイヤ",
+        "uri": "./assets/cards/fruit/パパイヤ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 320,
+        "name": "レモン",
+        "uri": "./assets/cards/fruit/レモン.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 321,
+        "name": "すいか",
+        "uri": "./assets/cards/fruit/すいか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 322,
+        "name": "さくらんぼ",
+        "uri": "./assets/cards/fruit/さくらんぼ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 323,
+        "name": "バナナ",
+        "uri": "./assets/cards/fruit/バナナ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 324,
+        "name": "ゆさゆさ",
+        "uri": "./assets/cards/onomatopoeia/ゆさゆさ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 325,
+        "name": "げんなり",
+        "uri": "./assets/cards/onomatopoeia/げんなり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 326,
+        "name": "ざわざわ",
+        "uri": "./assets/cards/onomatopoeia/ざわざわ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 327,
+        "name": "うろうろ",
+        "uri": "./assets/cards/onomatopoeia/うろうろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 328,
+        "name": "はらはら",
+        "uri": "./assets/cards/onomatopoeia/はらはら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 329,
+        "name": "ふわふわ",
+        "uri": "./assets/cards/onomatopoeia/ふわふわ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 330,
+        "name": "がやがや",
+        "uri": "./assets/cards/onomatopoeia/がやがや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 331,
+        "name": "がっくり",
+        "uri": "./assets/cards/onomatopoeia/がっくり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 332,
+        "name": "さわさわ",
+        "uri": "./assets/cards/onomatopoeia/さわさわ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 333,
+        "name": "ずるっ",
+        "uri": "./assets/cards/onomatopoeia/ずるっ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 334,
+        "name": "にこにこ",
+        "uri": "./assets/cards/onomatopoeia/にこにこ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 335,
+        "name": "めろめろ",
+        "uri": "./assets/cards/onomatopoeia/めろめろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 336,
+        "name": "わくわく",
+        "uri": "./assets/cards/onomatopoeia/わくわく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 337,
+        "name": "あっさり",
+        "uri": "./assets/cards/onomatopoeia/あっさり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 338,
+        "name": "いらいら",
+        "uri": "./assets/cards/onomatopoeia/いらいら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 339,
+        "name": "ぴかぴか",
+        "uri": "./assets/cards/onomatopoeia/ぴかぴか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 340,
+        "name": "めらめら",
+        "uri": "./assets/cards/onomatopoeia/めらめら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 341,
+        "name": "ぱちぱち",
+        "uri": "./assets/cards/onomatopoeia/ぱちぱち.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 342,
+        "name": "わんわん",
+        "uri": "./assets/cards/onomatopoeia/わんわん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 343,
+        "name": "ぷしゅう",
+        "uri": "./assets/cards/onomatopoeia/ぷしゅう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 344,
+        "name": "びくびく",
+        "uri": "./assets/cards/onomatopoeia/びくびく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 345,
+        "name": "ばらばら",
+        "uri": "./assets/cards/onomatopoeia/ばらばら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 346,
+        "name": "がちゃん",
+        "uri": "./assets/cards/onomatopoeia/がちゃん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 347,
+        "name": "どすん",
+        "uri": "./assets/cards/onomatopoeia/どすん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 348,
+        "name": "きらきら",
+        "uri": "./assets/cards/onomatopoeia/きらきら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 349,
+        "name": "もくもく",
+        "uri": "./assets/cards/onomatopoeia/もくもく.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 350,
+        "name": "しとしと",
+        "uri": "./assets/cards/onomatopoeia/しとしと.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 351,
+        "name": "ぼんやり",
+        "uri": "./assets/cards/onomatopoeia/ぼんやり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 352,
+        "name": "ばたん",
+        "uri": "./assets/cards/onomatopoeia/ばたん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 353,
+        "name": "がりがり",
+        "uri": "./assets/cards/onomatopoeia/がりがり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 354,
+        "name": "こんこん",
+        "uri": "./assets/cards/onomatopoeia/こんこん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 355,
+        "name": "どかん",
+        "uri": "./assets/cards/onomatopoeia/どかん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 356,
+        "name": "そよそよ",
+        "uri": "./assets/cards/onomatopoeia/そよそよ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 357,
+        "name": "いそいそ",
+        "uri": "./assets/cards/onomatopoeia/いそいそ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 358,
+        "name": "びりびり",
+        "uri": "./assets/cards/onomatopoeia/びりびり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 359,
+        "name": "きみどり",
+        "uri": "./assets/cards/color/きみどり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 360,
+        "name": "きいろ",
+        "uri": "./assets/cards/color/きいろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 361,
+        "name": "みどり",
+        "uri": "./assets/cards/color/みどり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 362,
+        "name": "あか",
+        "uri": "./assets/cards/color/あか.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 363,
+        "name": "あお",
+        "uri": "./assets/cards/color/あお.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 364,
+        "name": "くろ",
+        "uri": "./assets/cards/color/くろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 365,
+        "name": "みずいろ",
+        "uri": "./assets/cards/color/みずいろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 366,
+        "name": "むらさき",
+        "uri": "./assets/cards/color/むらさき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 367,
+        "name": "しろ",
+        "uri": "./assets/cards/color/しろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 368,
+        "name": "ピンク",
+        "uri": "./assets/cards/color/ピンク.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 369,
+        "name": "オレンジ",
+        "uri": "./assets/cards/color/オレンジ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 370,
+        "name": "ちゃいろ",
+        "uri": "./assets/cards/color/ちゃいろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 371,
+        "name": "じみ",
+        "uri": "./assets/cards/adjective2/じみ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 372,
+        "name": "げんき",
+        "uri": "./assets/cards/adjective2/げんき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 373,
+        "name": "しあわせ",
+        "uri": "./assets/cards/adjective2/しあわせ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 374,
+        "name": "きらい",
+        "uri": "./assets/cards/adjective2/きらい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 375,
+        "name": "たいら",
+        "uri": "./assets/cards/adjective2/たいら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 376,
+        "name": "おなじ",
+        "uri": "./assets/cards/adjective2/おなじ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 377,
+        "name": "たくさん",
+        "uri": "./assets/cards/adjective2/たくさん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 378,
+        "name": "あんぜん",
+        "uri": "./assets/cards/adjective2/あんぜん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 379,
+        "name": "じょうず",
+        "uri": "./assets/cards/adjective2/じょうず.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 380,
+        "name": "いろいろ",
+        "uri": "./assets/cards/adjective2/いろいろ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 381,
+        "name": "かんたん",
+        "uri": "./assets/cards/adjective2/かんたん.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 382,
+        "name": "たいせつ",
+        "uri": "./assets/cards/adjective2/たいせつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 383,
+        "name": "はで",
+        "uri": "./assets/cards/adjective2/はで.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 384,
+        "name": "いや",
+        "uri": "./assets/cards/adjective2/いや.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 385,
+        "name": "すき",
+        "uri": "./assets/cards/adjective2/すき.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 386,
+        "name": "そっくり",
+        "uri": "./assets/cards/adjective2/そっくり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 387,
+        "name": "まっすぐ",
+        "uri": "./assets/cards/adjective2/まっすぐ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 388,
+        "name": "たのしみ",
+        "uri": "./assets/cards/adjective2/たのしみ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 389,
+        "name": "だぶだぶ",
+        "uri": "./assets/cards/adjective2/だぶだぶ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 390,
+        "name": "ふくざつ",
+        "uri": "./assets/cards/adjective2/ふくざつ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 391,
+        "name": "へた",
+        "uri": "./assets/cards/adjective2/へた.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 392,
+        "name": "りっぱ",
+        "uri": "./assets/cards/adjective2/りっぱ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 393,
+        "name": "かわいそう",
+        "uri": "./assets/cards/adjective2/かわいそう.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 394,
+        "name": "ぎざぎざ",
+        "uri": "./assets/cards/adjective2/ぎざぎざ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 395,
+        "name": "ばらばら",
+        "uri": "./assets/cards/adjective2/ばらばら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 396,
+        "name": "ぴったり",
+        "uri": "./assets/cards/adjective2/ぴったり.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 397,
+        "name": "でこぼこ",
+        "uri": "./assets/cards/adjective2/でこぼこ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 398,
+        "name": "ぐらぐら",
+        "uri": "./assets/cards/adjective2/ぐらぐら.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 399,
+        "name": "ななめ",
+        "uri": "./assets/cards/adjective2/ななめ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 400,
+        "name": "きれい",
+        "uri": "./assets/cards/adjective2/きれい.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 401,
+        "name": "びしょびしょ",
+        "uri": "./assets/cards/adjective2/びしょびしょ.jpg",
+        "exists": true,
+        "isDefault": true
+    },
+    {
+        "id": 402,
+        "name": "きけん",
+        "uri": "./assets/cards/adjective2/きけん.jpg",
+        "exists": true,
+        "isDefault": true
+    }
+]

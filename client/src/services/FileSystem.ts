@@ -128,9 +128,6 @@ export class FSCard extends multipleFS {
       { compress: 0.4, format: SaveFormat.JPEG }
     )
 
-    // console.log('image info')
-    // this._showImageInfo(picture)
-    // this._showImageInfo(resized_image.uri)
     await FS.copyAsync({
       from: resized_image.uri,
       to: imagePath,
@@ -152,29 +149,6 @@ export class FSCard extends multipleFS {
     //this._deleteAll();
     return imagePath;
   }
-
-
-  //debug============================================================
-
-  // async _deleteAll(): Promise<void> {
-  //   await FS.deleteAsync(this.save_file_path)
-  //   await FS.deleteAsync(this.file_path)
-  //   console.log('delete')
-  //   this._showInfo(this.save_file_path);
-  //   this._showInfo(this.file_path);
-  // }
-}
-
-export class FSChat extends multipleFS {
-  constructor() {
-    super(`${FS.documentDirectory}chat_cache.json`);
-  }
-
-  writeTalkCache(talks: talk[]) {
-    FS.writeAsStringAsync(this.file_path, JSON.stringify(talks));
-  }
-
-
 }
 
 export class FSSetting {
@@ -214,18 +188,20 @@ export class FSAddress extends multipleFS {
 }
 
 export class FSTemplate extends multipleFS {
+  readonly MAX_TEMPLATE_NUM: number = 20;
   constructor() {
     super(`${FS.documentDirectory}temlpate.json`)
-    this._init = [
-      {
+    this._init = Array(this.MAX_TEMPLATE_NUM);
+    for (var i = 0; i < this.MAX_TEMPLATE_NUM; i++) {
+      this._init[i] = {
         id: 0,
-        name: '会話１',
+        name: '会話' + (i + 1).toString(),
         item_num: 0,
         item_ids: Array(ws_max_card).fill(-1),
         background_color: 'white',
         exists: true,
       }
-    ];
+    }
   }
 
   async addEmpty(): Promise<void> {

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   Image,
   FlatList,
@@ -17,21 +16,39 @@ import {
 } from 'react-native';
 import { getCards, useCard } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
-import { Sounder } from './Sounder';
 
 interface props_type {
   current_ws: number,
   setCurrent: React.Dispatch<React.SetStateAction<number>>,
   isVertical: boolean,
+  init_index: number,
 }
 
 export default function WorkSpace(props: props_type) {
+
   const { cards } = useCard();
-  const { current_ws, setCurrent, isVertical } = props
+  const { current_ws, setCurrent, isVertical, init_index } = props
   const { templates, modifyTemplate } = useTemplates();
+
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
+
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    const position = { x: current_ws * 0.94 * windowWidth, y: 0, animated: false }
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo(position);
+    }
+  }, [isVertical]);
+
+  useEffect(() => {
+    const position = { x: (init_index ? init_index : current_ws) * 0.94 * windowWidth, y: 0, animated: false }
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo(position);
+    }
+  }, [init_index])
 
   const setCurrentID = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.targetContentOffset) {
@@ -45,6 +62,7 @@ export default function WorkSpace(props: props_type) {
     <SafeAreaView style={styles.container}>
       <View style={[styles.scrollContainer, { height: isVertical ? 200 : '90%' }]}>
         <ScrollView
+          ref={scrollViewRef}
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
@@ -62,13 +80,20 @@ export default function WorkSpace(props: props_type) {
         >
           {templates.map((template, index) => {
             const cards_info = getCards(cards, template.item_ids);
+
             const items = cards_info.map((_c, index) => {
-              return ({
+              return (_c ? {
                 id: index,
                 card_id: _c.id,
                 exists: _c.exists,
                 uri: _c.uri,
                 name: _c.name,
+              } : {
+                id: index,
+                card_id: -1,
+                exists: false,
+                uri: '',
+                name: '',
               })
             });
             const colmns_length = Math.round(8 / 2);
@@ -82,15 +107,15 @@ export default function WorkSpace(props: props_type) {
                   data={items}
                   renderItem={({ item }) =>
                     <TouchableOpacity
-                      onLongPress={() => modifyTemplate('exit_card', { template_id: current_ws, index: item.id })}
+                      onPress={() => modifyTemplate('exit_card', { template_id: current_ws, index: item.id })}
                     >
                       <View style={styles.imageContainer}>
                         <Image
                           source={{ uri: item.uri }}
                           style={[styles.cardStyle,
                           {
-                            width: colmns_length > template.item_num ? 100 : 70,
-                            height: colmns_length > template.item_num ? 100 : 70,
+                            width: windowWidth / (colmns_length + (colmns_length > template.item_num ? 0 : 1.5)),
+                            height: windowWidth / (colmns_length + (colmns_length > template.item_num ? 0 : 1.5)),
                           },
                           ]}
                         />
