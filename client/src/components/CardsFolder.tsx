@@ -18,11 +18,6 @@ export default function CardsFolder(props: { current_ws: number }) {
   const { current_ws } = props;
 
   const folders: folder_type[] = [
-    // { id: 0, feather_name: "star-o", background_color: '#8BD1A5', cards_ids: [1, 2, 3, 4, 5] },
-    // { id: 1, feather_name: "music", background_color: '#abad25', cards_ids: [0, 1, 2] },
-    // { id: 2, feather_name: "github", background_color: '#2b4ad3', cards_ids: [0, 1, 2] },
-    // { id: 3, feather_name: "rocket", background_color: '#d43ba3', cards_ids: [0, 1, 2] },
-    // { id: 4, feather_name: "smile-o", background_color: '#8B5805', cards_ids: [0, 1, 2] },
   ];
 
   var ccard_ids: number[] = [];
@@ -30,7 +25,8 @@ export default function CardsFolder(props: { current_ws: number }) {
 
   const createdCardFolder: folder_type = {
     id: -1,
-    feather_name: "star-o",
+    iconName: "star-o",
+    type: 'font-awesome',
     background_color: '#d43ba3',
     cards_ids: ccard_ids,
   }
@@ -50,8 +46,8 @@ export default function CardsFolder(props: { current_ws: number }) {
                 <Button
                   type='clear'
                   icon={{
-                    name: data.feather_name,
-                    type: 'font-awesome',
+                    name: data.iconName,
+                    type: data.type,
                     size: 36,
                     color: 'white',
                   }}

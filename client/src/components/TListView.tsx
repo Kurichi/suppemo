@@ -82,11 +82,7 @@ export default function TListView(props: any) {
                 selectTextOnFocus={viewShot ? false : true}
                 value={title_list[index]}
                 style={styles.title}
-                onChangeText={(text) => {
-                  setTitle(
-                    title_list.map((title, idx) => (idx === index ? text : title))
-                  );
-                }}
+                onChangeText={(text) => { alert(index, text) }}
               />
               <View style={{ width: '100%' }}>
                 <TouchableOpacity
@@ -94,7 +90,6 @@ export default function TListView(props: any) {
                     if (viewShot) viewShot(viewShot_list.current[index], height, width)
                     else if (onPress) onPress(index)
                     else console.log(viewShot);
-                    console.log(onPress);
                   }}
 
                 >

@@ -17,6 +17,7 @@ type card_detail = {
   uri: string = '',
   count: number = 0,
   createdDate: string = '',
+  isDefault: boolean = false,
   exists: boolean = false,
 }
 
@@ -59,7 +60,8 @@ type ws_props = {
 
 type folder_type = {
   id: number,
-  feather_name: string,
+  iconName: string,
+  type: string,
   background_color: string,
   cards_ids: number[],
 }

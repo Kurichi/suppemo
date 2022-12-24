@@ -27,6 +27,8 @@ export default function Settings() {
   const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(user?.email ?? '');
 
+  const deleteAll = () => { };
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -78,6 +80,10 @@ export default function Settings() {
         />
       </View>
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
+        <Button
+          title='カードデータの削除'
+          onPress={() => { }}
+        />
         <Button
           title='アカウントの削除'
           buttonStyle={[styles.setteingItemButton, {

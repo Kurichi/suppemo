@@ -35,25 +35,6 @@ export default function CreatedCardList(props: any) {
         <Feather name="search" size={24} color="white" />
         <TextInput style={{ backgroundColor: 'white', width: '70%' }} />
       </View>
-      <DropDownPicker
-        items={[
-          { label: "よく使う", value: "frequency" },
-          { label: "なまえ　はやい順", value: "name_ascending" },
-          { label: "なまえ　おそい順", value: "name_descending" },
-          { label: "つくった順", value: "date_ascending" },
-          { label: "古い順", value: "date_descending" },
-        ]}
-        value={sort_target}
-        setValue={setTarget}
-        multiple={false}
-        open={open}
-        setOpen={setOpen}
-        onChangeValue={(item) => sort(item as string)}
-        style={styles.selectBox}
-        labelStyle={styles.dropBoxLabel}
-        containerStyle={styles.dropBoxContainer}
-        placeholder="ならべかえ"
-      />
       <View style={styles.listContainer}>
         {
           data.length > 0 ? (

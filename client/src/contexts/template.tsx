@@ -112,3 +112,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
     </TemplateContext.Provider>
   )
 }
+
+export function deleteAll() {
+  fs._deleteAll();
+}
