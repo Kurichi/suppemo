@@ -48,8 +48,6 @@ export default function QRCodeReader({ closeOverlay }: { closeOverlay: () => voi
 
 
   const applyScanned = async () => {
-    console.log(scanned);
-    return;
     const token = await auth.currentUser?.getIdToken();
     await axios.post('http://27.133.132.254/friend', {
       'friend_uid': scanned,
