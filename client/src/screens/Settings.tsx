@@ -49,8 +49,18 @@ export default function Settings() {
           titleStyle={styles.setteingItemButtonText}
           onPress={() => { setEmailModalVisible(true); }}
         />
+        <Button
+          title='パスワードの変更'
+          buttonStyle={styles.setteingItemButton}
+          titleStyle={styles.setteingItemButtonText}
+        />
       </View>
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
+        <Button
+          title='ログアウト'
+          buttonStyle={styles.setteingItemButton}
+          titleStyle={styles.setteingItemButtonText}
+        />
         <Button
           title='アカウントの削除'
           buttonStyle={[styles.setteingItemButton, {
