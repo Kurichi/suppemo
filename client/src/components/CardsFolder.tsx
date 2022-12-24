@@ -17,6 +17,7 @@ export default function CardsFolder(props: { current_ws: number }) {
   const { modifyTemplate } = useTemplates();
   const { current_ws } = props;
 
+
   const folders: folder_type[] = [
   ];
 
@@ -66,7 +67,7 @@ export default function CardsFolder(props: { current_ws: number }) {
             data={getCards(cards, folders[current_index].cards_ids)}
             renderItem={({ item }) =>
               <TouchableOpacity
-                onPress={() => modifyTemplate('add_card', { template_id: current_ws, card_id: item.id })}
+                onPress={() => { console.log(current_ws); modifyTemplate('add_card', { template_id: current_ws, card_id: item.id }) }}
               >
                 {item.exists &&
                   <View style={styles.imageContainer}>

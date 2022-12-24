@@ -35,7 +35,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       await fs.addEmpty();
     }
     // カードの追加
-    else if (modifyType == 'add_card' && template_id && card_id) {
+    else if (modifyType == 'add_card' && typeof template_id != 'undefined' && typeof card_id != 'undefined') {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num;
@@ -72,15 +72,15 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       await fs.modifyData(template_id, { 'item_ids': card_ids, 'item_num': card_num });
     }
     //タイトル変更
-    else if (modifyType == 'edit_title' && template_id && title) {
+    else if (modifyType == 'edit_title' && typeof template_id != 'undefined' && typeof title != 'undefined') {
       await fs.modifyData(template_id, { 'name': title });
     }
     //テンプレートの削除
-    else if (modifyType == 'delete' && template_id) {
+    else if (modifyType == 'delete' && typeof template_id != 'undefined') {
       await fs.deleteData(template_id);
     }
     //カードの削除(カードID指定)
-    else if (modifyType == 'refresh' && nonexistCard_id) {
+    else if (modifyType == 'refresh' && typeof nonexistCard_id != 'undefined') {
 
       const data = await fs.readData<template_cards>();
 
@@ -113,6 +113,6 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
   )
 }
 
-export function deleteAll() {
-  fs._deleteAll();
+export const deleteAllTemplates = async () => {
+  await fs._deleteAll();
 }

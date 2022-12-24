@@ -17,9 +17,11 @@ for folder in folders:
         card_details.append({
             "id" : id,
             "name" : name,
-            "uri" : file,
-            "exists": True,
+            "uri" : "require(" + file + ")",
+            "count": 0,
+            "createdDate": "",
             "isDefault": True,
+            "exists": True,
         })
         ids.append(id)
         id += 1

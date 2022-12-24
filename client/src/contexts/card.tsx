@@ -75,6 +75,7 @@ export function getDeletedCards(cards: card_detail[]) {
   return res;
 }
 
-export function deleteAll() {
-  fs._deleteAll();
+export const deleteAllCards = async () => {
+  await fs._deleteAll();
+  console.log('test dlete');
 }

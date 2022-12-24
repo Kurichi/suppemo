@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as FS from 'expo-file-system';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
@@ -11,7 +12,7 @@ class multipleFS {
   }
 
   getIndex(data: Array<multipleType>, id: number): number {
-    let res = 0
+    let res = -1
     data.forEach((value, index) => {
       if (value.id == id) res = index;
     })
@@ -76,6 +77,9 @@ class multipleFS {
       await FS.deleteAsync(`${FS.documentDirectory}${file_name}`)
       console.log(`delete ${file_name}`)
     }
+    //await FS.deleteAsync(this.file_path);
+
+    console.log(all_file_name)
   }
 
 
@@ -93,18 +97,36 @@ class multipleFS {
 
 export class FSCard extends multipleFS {
   readonly save_file_path: string = `${FS.documentDirectory}cards`;
-  readonly failed_card: card_detail = {
-    id: -1,
-    name: 'empty',
-    uri: '',
-    count: 0,
-    createdDate: '',
-    exists: false,
+
+  override async initialize(): Promise<void> {
+    if (!(await FS.getInfoAsync(this.file_path)).exists) {
+      const result: string[] = (await axios.get('http://27.133.132.254/setup')).data;
+
+      this._init = result.map((url, index) => {
+        const [_gomi, _bako, category, name_base] = url.split('/')[3];
+        const name = name_base.split('.')[0];
+
+        return ({
+          id: index,
+          name: name,
+          uri: 'http://27.133.132.254/' + url,
+          count: 0,
+          createdDate: '',
+          isDefault: true,
+          exists: true,
+        })
+      })
+
+      console.log(this._init)
+    }
+
+    await super.initialize();
   }
+
 
   constructor() {
     super(`${FS.documentDirectory}card_data.json`);
-    this._init = [this.failed_card]
+    this._init = []
   }
 
   async savePicture(picture: string, title: string): Promise<string> {
@@ -141,6 +163,7 @@ export class FSCard extends multipleFS {
       uri: imagePath,
       count: 0,
       createdDate: new Date().toISOString(),
+      isDefault: false,
       exists: true,
     });
     FS.writeAsStringAsync(this.file_path, JSON.stringify(card_data));
@@ -194,7 +217,7 @@ export class FSTemplate extends multipleFS {
     this._init = Array(this.MAX_TEMPLATE_NUM);
     for (var i = 0; i < this.MAX_TEMPLATE_NUM; i++) {
       this._init[i] = {
-        id: 0,
+        id: i,
         name: '会話' + (i + 1).toString(),
         item_num: 0,
         item_ids: Array(ws_max_card).fill(-1),
