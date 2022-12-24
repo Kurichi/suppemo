@@ -16,17 +16,17 @@ type Message struct {
 	Created   time.Time `json:"created" form:"created" query:"created"`
 }
 
-func CreateMessage(uid string, target_uid string, image string, text string) error {
+func CreateMessage(uid string, target_uid string, text string, image string) error {
 	db := mydb.GetDB()
 
-	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, text, image) VALUES(?,?,?,?)")
 	if err != nil {
 		fmt.Printf("[ERROR] message prepare error: %v", err)
 		return err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(uid, target_uid, image, text)
+	_, err = stmt.Exec(uid, target_uid, text, image)
 	if err != nil {
 		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
@@ -38,14 +38,14 @@ func CreateMessage(uid string, target_uid string, image string, text string) err
 func InsertMessage(message *Message) error {
 	db := mydb.GetDB()
 
-	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, type, text) VALUES(?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO messages(uid, target_uid, text, image) VALUES(?,?,?,?)")
 	if err != nil {
 		fmt.Printf("[ERROR] message prepare error: %v", err)
 		return err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(message.UID, message.TargetUID, message.Image, message.Text)
+	_, err = stmt.Exec(message.UID, message.TargetUID, message.Text, message.Image)
 	if err != nil {
 		fmt.Printf("[ERROR] message exec error: %v", err)
 		return err
