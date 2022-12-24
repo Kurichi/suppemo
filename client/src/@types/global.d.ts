@@ -19,7 +19,6 @@ type card_detail = {
   createdDate: string = '',
   isDefault: boolean = false,
   exists: boolean = false,
-  isDefault: boolean = false,
 }
 
 type template_cards = {

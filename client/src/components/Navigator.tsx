@@ -98,6 +98,7 @@ export default function Navigator() {
         initialRouteName='Login'
         screenOptions={{
           headerStyle: { backgroundColor: '#82292D' },
+
           headerTitleStyle: { color: '#ffffff', fontSize: 30 },
           headerTintColor: '#ffffff',
           title: 'さぽえも',

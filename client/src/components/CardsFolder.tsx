@@ -22,7 +22,6 @@ export default function CardsFolder(props: { current_ws: number }) {
 
   const folders: folder_type[] = JSON.parse(path);
 
-
   var ccard_ids: number[] = [];
   for (const _c of cards) if (_c.exists) ccard_ids.push(_c.id);
 
@@ -69,7 +68,7 @@ export default function CardsFolder(props: { current_ws: number }) {
             data={getCards(cards, folders[current_index].cards_ids)}
             renderItem={({ item }) =>
               <TouchableOpacity
-                onPress={() => modifyTemplate('add_card', { template_id: current_ws, card_id: item.id })}
+                onPress={() => { console.log(current_ws); modifyTemplate('add_card', { template_id: current_ws, card_id: item.id }) }}
               >
                 {item.exists &&
                   <View style={styles.imageContainer}>

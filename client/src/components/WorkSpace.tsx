@@ -31,6 +31,7 @@ export default function WorkSpace(props: props_type) {
   const { templates, modifyTemplate } = useTemplates();
 
 
+
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
 

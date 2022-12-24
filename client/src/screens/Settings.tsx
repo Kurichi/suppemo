@@ -9,6 +9,8 @@ import MyOverlay from '../components/MyOverlay';
 import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updateEmail, updateProfile } from 'firebase/auth';
 import * as ImagePicker from 'expo-image-picker';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { deleteAllCards } from '../contexts/card';
+import { deleteAllTemplates } from '../contexts/template';
 
 
 export default function Settings() {
@@ -27,7 +29,10 @@ export default function Settings() {
   const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(user?.email ?? '');
 
-  const deleteAll = () => { };
+  const deleteAll = async () => {
+    await deleteAllCards();
+    await deleteAllTemplates();
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -87,7 +92,7 @@ export default function Settings() {
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
         <Button
           title='カードデータの削除'
-          onPress={() => { }}
+          onPress={deleteAll}
         />
         <Button
           title='ログアウト'
