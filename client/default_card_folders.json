@@ -1,9 +1,9 @@
 [
   {
     "id": 0,
-    "iconName": "star",
+    "iconName": "star-face",
     "name": "adjective",
-    "type": "feather",
+    "type": "material-community",
     "background_color": "#E696BC",
     "cards_ids": [
       0,
@@ -42,8 +42,8 @@
   },
   {
     "id": 1,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "star-face",
+    "type": "material-community",
     "name": "adjective2",
     "background_color": "#CE96E6",
     "cards_ids": [
@@ -83,8 +83,8 @@
   },
   {
     "id": 2,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "human",
+    "type": "material-community",
     "name": "body",
     "background_color": "#AD96E6",
     "cards_ids": [
@@ -140,8 +140,8 @@
   },
   {
     "id": 3,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "building",
+    "type": "font-awesome",
     "name": "building",
     "background_color": "#9696E6",
     "cards_ids": [
@@ -181,7 +181,7 @@
   },
   {
     "id": 4,
-    "iconName": "star",
+    "iconName": "clock",
     "name": "clock",
     "type": "feather",
     "background_color": "#96BCE6",
@@ -209,9 +209,9 @@
   },
   {
     "id": 5,
-    "iconName": "star",
+    "iconName": "bucket",
     "name": "color",
-    "type": "feather",
+    "type": "entypo",
     "background_color": "#96D4E6",
     "cards_ids": [
       163,
@@ -230,8 +230,8 @@
   },
   {
     "id": 6,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "smile-o",
+    "type": "font-awesome",
     "name": "emote",
     "background_color": "#96E6D9",
     "cards_ids": [
@@ -269,8 +269,8 @@
   },
   {
     "id": 7,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "fruit-cherries",
+    "type": "material-community",
     "name": "fruit",
     "background_color": "#96E6BA",
     "cards_ids": [
@@ -296,8 +296,8 @@
   },
   {
     "id": 8,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "number",
+    "type": "octicon",
     "name": "number",
     "background_color": "#97E696",
     "cards_ids": [
@@ -330,8 +330,8 @@
   },
   {
     "id": 9,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "tennis-ball",
+    "type": "material-community",
     "name": "object",
     "background_color": "#ABE696",
     "cards_ids": [
@@ -346,8 +346,8 @@
   },
   {
     "id": 10,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "music",
+    "type": "material-community",
     "name": "onomatopoeia",
     "background_color": "#E69996",
     "cards_ids": [
@@ -390,8 +390,8 @@
   },
   {
     "id": 11,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "face-woman",
+    "type": "material-community",
     "name": "person",
     "background_color": "#AD57EC",
     "cards_ids": [
@@ -410,8 +410,8 @@
   },
   {
     "id": 12,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "school",
+    "type": "ionicon",
     "name": "school",
     "background_color": "#579CEC",
     "cards_ids": [
@@ -423,8 +423,8 @@
   },
   {
     "id": 13,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "shape",
+    "type": "material-community",
     "name": "shape",
     "background_color": "#57EC61",
     "cards_ids": [
@@ -469,8 +469,8 @@
   },
   {
     "id": 15,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "food-apple",
+    "type": "material-community",
     "name": "vegetable",
     "background_color": "#EC57C6",
     "cards_ids": [
@@ -508,8 +508,8 @@
   },
   {
     "id": 16,
-    "iconName": "star",
-    "type": "feather",
+    "iconName": "run",
+    "type": "material-community",
     "name": "verb",
     "background_color": "#5CD1DB",
     "cards_ids": [

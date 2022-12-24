@@ -32,7 +32,9 @@ export default function CardsFolder(props: { current_ws: number }) {
     cards_ids: ccard_ids,
   }
 
-  folders.push(createdCardFolder);
+  useEffect(() => {
+    folders.push(createdCardFolder);
+  }, [folders])
 
   return (
     <View style={styles.cardsFolder}>
