@@ -18,6 +18,7 @@ type card_detail = {
   count: number = 0,
   createdDate: string = '',
   exists: boolean = false,
+  isDefault: boolean = false,
 }
 
 type template_cards = {
