@@ -12,6 +12,7 @@ export default function CreatedCardList(props: any) {
 
   const { cards, modifyCard } = useCard();
   const [data, setData] = useState<Array<card_detail>>(cards);
+  const [text, setText] = useState<string>('');
 
   useEffect(() => {
     setData(cards);
@@ -24,7 +25,8 @@ export default function CreatedCardList(props: any) {
         <Feather name="search" size={32} color="black" />
         <View style={styles.searchBox}>
           <TextInput
-
+            value={text}
+            onChangeText={(text) => setText(text)}
           />
         </View>
       </View>
@@ -33,7 +35,7 @@ export default function CreatedCardList(props: any) {
           data.length > 0 ? (
             <FlatList
               data={data.filter((d) => {
-                return d.exists && !d.isDefault;
+                return d.exists && !d.isDefault && d.name.includes(text);
               })}
               renderItem={({ item }) => (
                 <TouchableOpacity
@@ -86,6 +88,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(200,200,200,0.4)',
     borderWidth: 4,
     borderRadius: 20,
+    justifyContent: 'center',
+    paddingLeft: 4,
   },
   photo: {
     width: 100,
