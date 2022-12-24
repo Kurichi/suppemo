@@ -115,6 +115,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const sendMessage = async (to: string, messages: IMessage[]): Promise<void> => {
     if (messages.length === 0) return;
+    console.log(messages)
 
     setTalks(new Map(talks.set(to, {
       talk_with: talks.get(to)?.talk_with,
@@ -125,6 +126,7 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
     axios.post(`${host}/chat`, {
       to: to,
       text: messages[0].text,
+      image: messages[0].image,
     }, {
       headers: { 'Authorization': token }
     }).catch((error) => {

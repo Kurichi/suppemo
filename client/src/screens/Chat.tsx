@@ -9,6 +9,7 @@ import * as Render from '../services/RenderChat';
 
 import { useCard } from '../contexts/card';
 import { getAuth } from 'firebase/auth';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
 type props = StackScreenProps<NavigationProps, "Chat">
 
@@ -19,54 +20,76 @@ export default function Chat({ navigation, route }: props) {
   const { talks, sendMessage } = useChat();
   const [isShowTemplate, setShow] = useState<boolean>(false);
 
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(-1);
 
-  let x = -1;
   useEffect(() => {
     navigation.setOptions({
       title: talks.get(_id)?.talk_with.name,
     });
+    const max = talks.get(_id)?.messages.reduce((l, r) => l._id > r._id ? l : r);
+    setIndex(max._id + 1);
   }, []);
 
-  useEffect(() => {
-    console.log(talks.get(_id));
-    talks.get(_id)?.messages.forEach((value) => {
-      const num = +value._id
-      if (x < num) {
-        x = num;
-      }
-      return 1;
-      setIndex(index > value._id ? index : value._id);
-    });
-  }, [talks])
-
-  function getUniqueStr(): number {
-    x++;
-    return x;
-  }
-
   const onSend = useCallback((messages: IMessage[] = []) => {
-    messages[0]._id = getUniqueStr();
+    messages[0]._id = index;
     console.log(messages);
+    setIndex(prev => prev + 1);
     sendMessage(_id, messages);
     // setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
+  }, [index])
 
   const onImageSend = async (image: captureImage) => {
-    const user = auth.currentUser;
-    const sendedImage: IMessage = {
-      _id: getUniqueStr(),
-      text: '',
-      createdAt: new Date(),
-      user: {
-        _id: user?.uid ?? '',
-        avatar: user?.photoURL ?? '',
-        name: user?.displayName ?? '',
-      },
-      image: image.uri,
-    };
+    const storage = getStorage();
+    const imageRef = ref(storage, `chat/${new Date()}`);
 
-    sendMessage(_id, [sendedImage]);
+    const _image = await fetch(image.uri);
+    const blob = await _image.blob();
+    const uploadTask = uploadBytesResumable(imageRef, blob);
+
+    uploadTask.on('state_changed',
+      () => { },
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+
+        console.log(error);
+        switch (error.code) {
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+
+          case 'storage/unknown':
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      },
+      () => {
+        console.log('complete upload');
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          image.uri = downloadURL;
+          const user = auth.currentUser;
+          const sendedImage: IMessage = {
+            _id: index,
+            text: '',
+            createdAt: new Date(),
+            user: {
+              _id: user?.uid ?? '',
+              avatar: user?.photoURL ?? '',
+              name: user?.displayName ?? '',
+            },
+            image: image.uri,
+          };
+          setIndex(prev => prev + 1);
+
+          console.log(sendedImage)
+
+          sendMessage(_id, [sendedImage]);
+        });
+      });
   }
 
   const capture = async (viewShot: ViewShot, height: number, width: number) => {
@@ -78,7 +101,6 @@ export default function Chat({ navigation, route }: props) {
     }
     setShow(false);
     onImageSend(image);
-    console.log(image)
   }
 
   return (

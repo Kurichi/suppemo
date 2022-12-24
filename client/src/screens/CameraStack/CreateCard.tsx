@@ -1,125 +1,127 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Button } from '@rneui/base';
+import React, { useState } from "react";
+import { Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { Button, Image, Text } from "@rneui/base";
+import { useCard } from "../../contexts/card";
 
-export default function CreateCard(props: any) {
-  const { navigation } = props;
+interface props {
+  navigation: any,
+  route: any
+}
+
+export const CreateCard = ({ navigation, route }: props) => {
+  const { imageURI } = route.params;
+  const [title, setTitle] = useState<string>('');
+  const { modifyCard } = useCard();
+
+  const apply = async () => {
+    //カード作成の処理
+    await modifyCard('upload', {
+      picture: imageURI,
+      title: title,
+    });
+
+    navigation.navigate('CameraTop');
+  }
   return (
-    <View style={styles.container}>
-      <View style={styles.headlineContainer}>
-        <Text style={styles.headline}>自分だけのカードをつくろう！</Text>
-      </View>
-      <View style={styles.selectButtonContainer}>
-        <View style={styles.button}>
-          <Button
-            title='しゃしんをとる'
-            buttonStyle={{
-              height: 100,
-              borderColor: 'black',
-            }}
-            titleStyle={styles.buttonText}
-            raised
-            type='outline'
-            icon={{
-              name: 'camera',
-              size: 40,
-              color: 'black',
-              type: 'feather',
-              iconStyle: styles.iconSpace,
-            }}
-            radius={20}
-            onPress={() => {
-              navigation.navigate('TakePhoto');
-            }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title='しゃしんをつかう'
-            buttonStyle={{
-              height: 100,
-              borderColor: 'black',
-            }}
-            titleStyle={styles.buttonText}
-            raised
-            type='outline'
-            icon={{
-              name: 'picture-o',
-              size: 40,
-              color: 'black',
-              type: 'font-awesome',
-              iconStyle: styles.iconSpace,
-            }}
-            radius={20}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title='つくったしゃしんをみる'
-            buttonStyle={{
-              height: 100,
-              borderColor: 'black',
-            }}
-            titleStyle={styles.buttonText}
-            raised
-            type='outline'
-            icon={{
-              name: 'camera',
-              size: 40,
-              color: 'black',
-              type: 'feather',
-              iconStyle: styles.iconSpace,
-            }}
-            radius={20}
-            onPress={() => {
-              navigation.navigate('CreatedCardList');
-            }}
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1 }}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>カードのなまえ</Text>
+          <TextInput
+            autoFocus={true}
+            placeholder='なまえをきめてね'
+            onChangeText={setTitle}
+            value={title}
+            style={styles.titleSpace}
+            maxLength={20}
           />
         </View>
 
+        <View style={styles.photoContainer}>
+          <Image
+            style={styles.photo}
+            source={{ uri: imageURI }}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <View style={[styles.button, { backgroundColor: '#D4D4D4' }]}>
+            <Button
+              type='clear'
+              onPress={() => {
+
+              }}
+              title='やり直す'
+              titleStyle={styles.buttonTitle}
+            />
+          </View>
+          {title !== '' && <View style={[styles.button, { backgroundColor: '#FC6A2C' }]}>
+            <Button
+              type='clear'
+              onPress={async () => {
+                await apply();
+                navigation.navigate('CameraTop');
+              }}
+              title='つくる'
+              titleStyle={styles.buttonTitle}
+            />
+          </View>}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
-
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF8B0',
+  titleSpace: {
+    backgroundColor: '#FFFFFF',
+    width: 350,
+    height: 50,
+    fontSize: 20,
+    borderRadius: 5,
   },
-  headlineContainer: {
-    marginTop: 20,
-    height: 120,
+  titleContainer: {
+    paddingTop: 25,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  titleText: {
+    fontSize: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  photoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headline: {
-    fontSize: 25,
+  photo: {
+    width: 250,
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 5,
+    borderColor: '#82292D',
   },
-  selectButtonContainer: {
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  button: {
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: "#333",
     shadowOffset: { width: 4, height: 4 },
-    marginBottom: 240,
+    marginHorizontal: 8,
+    width: 160,
+    height: 48,
+    borderRadius: 12,
   },
-  button: {
-    width: 350,
-    height: 100,
-    margin: 20,
-  },
-  buttonText: {
+  buttonTitle: {
     color: 'black',
-    fontSize: 20,
-  },
-  iconSpace: {
-    marginRight: 40,
-
-
+    fontSize: 24,
   }
-
-
 });
