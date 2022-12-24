@@ -36,7 +36,7 @@ export default function TListView(props: any) {
       [
         {
           text: 'かえる', onPress: () => {
-            modifyTemplate('edit_title', { title: title_list[index] });
+            modifyTemplate('edit_title', { template_id: index, title: title_list[index] });
           }
         },
         {
@@ -82,7 +82,8 @@ export default function TListView(props: any) {
                 selectTextOnFocus={viewShot ? false : true}
                 value={title_list[index]}
                 style={styles.title}
-                onChangeText={(text) => { alert(index, text) }}
+                onChangeText={(text) => { setTitle(title_list.map((v, i) => (i == index ? text : v))) }}
+                onEndEditing={() => alert(index, template.name)}
               />
               <View style={{ width: '100%' }}>
                 <TouchableOpacity

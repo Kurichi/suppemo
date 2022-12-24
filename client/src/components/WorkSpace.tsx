@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { getCards, useCard } from '../contexts/card';
-import { useTemplates } from '../contexts/template';
+import { deleteAllTemplates, useTemplates } from '../contexts/template';
 
 interface props_type {
   current_ws: number,
@@ -25,12 +25,11 @@ interface props_type {
 }
 
 export default function WorkSpace(props: props_type) {
+  // deleteAllTemplates();
 
   const { cards } = useCard();
   const { current_ws, setCurrent, isVertical, init_index } = props
   const { templates, modifyTemplate } = useTemplates();
-
-
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
@@ -58,7 +57,6 @@ export default function WorkSpace(props: props_type) {
       setCurrent(index);
     }
   }
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.scrollContainer, { height: isVertical ? 200 : '90%' }]}>

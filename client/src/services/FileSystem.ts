@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as FS from 'expo-file-system';
+import { downloadAsync, makeDirectoryAsync } from 'expo-file-system';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
+import { AsyncStorage } from 'react-native';
 
 const ws_max_card: number = 8
 class multipleFS {
@@ -99,25 +101,48 @@ export class FSCard extends multipleFS {
   readonly save_file_path: string = `${FS.documentDirectory}cards`;
 
   override async initialize(): Promise<void> {
+    const dirInfo = await FS.getInfoAsync(this.save_file_path);
+    if (!dirInfo.exists)
+      await FS.makeDirectoryAsync(this.save_file_path, { intermediates: true });
+
     if (!(await FS.getInfoAsync(this.file_path)).exists) {
       const result: string[] = (await axios.get('http://27.133.132.254/setup')).data;
+      const data: folder_type[] = require('../../default_card_folders.json')
 
-      this._init = result.map((url, index) => {
-        const [_gomi, _bako, category, name_base] = url.split('/')[3];
-        const name = name_base.split('.')[0];
+      this._init = await Promise.all(result.map(async (url, index) => {
+        const name = url.split('/')[3].split('.')[0];
+        const imagePath: string = `${this.save_file_path}/${name}${new Date().toISOString().replace(/:/g, '')}.jpg`;
 
         return ({
           id: index,
           name: name,
-          uri: 'http://27.133.132.254/' + url,
+          uri: (await downloadAsync('http://27.133.132.254/' + encodeURI(url), `${this.save_file_path}${index}.jpg`)).uri,
           count: 0,
           createdDate: '',
           isDefault: true,
           exists: true,
         })
-      })
 
-      console.log(this._init)
+      }))
+
+      // var previous: string = '';
+      // var count = -1;
+      // var i = 0;
+      // for (var url of result) {
+      //   const category = url.split('/')[2];
+      //   //console.log(url);
+      //   //console.log(category);
+
+      //   if (previous != category) count += 1;
+      //   if (data[count]) data[count].cards_ids.push(i);
+
+      //   previous = category;
+
+      //   i++;
+      // }
+      // //await FS.writeAsStringAsync(`${FS.documentDirectory}folders.json`, JSON.stringify(data));
+      // console.log(data)
+
     }
 
     await super.initialize();
@@ -168,7 +193,7 @@ export class FSCard extends multipleFS {
     });
     FS.writeAsStringAsync(this.file_path, JSON.stringify(card_data));
 
-    console.log(`save image from ${resized_image.uri} to ${imagePath}`)
+    //console.log(`save image from ${resized_image.uri} to ${imagePath}`)
     //this._deleteAll();
     return imagePath;
   }

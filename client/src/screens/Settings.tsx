@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { useAuth } from '../contexts/auth';
@@ -11,6 +11,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { deleteAllCards } from '../contexts/card';
 import { deleteAllTemplates } from '../contexts/template';
+import { downloadAsync } from 'expo-file-system';
+import * as FS from 'expo-file-system';
 
 
 export default function Settings() {
@@ -23,6 +25,7 @@ export default function Settings() {
   // const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
   // const [email, setEmail] = useState<string>(user && user.email ? user.email : 'nanashi@wakanne.com');
 
+  const [test, setTest] = useState<string>('');
   const [imageURI, setImageUri] = useState<string>('');
   const [nameModalVisible, setNameModalVisible] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>(user?.displayName ?? '');
@@ -54,7 +57,7 @@ export default function Settings() {
       <View style={styles.userItemContainer}>
         <View style={styles.iconBox}>
           <Image
-            source={{ uri: getAuth().currentUser?.photoURL }}
+            source={{ uri: getAuth().currentUser?.photoURL ?? test }}
             style={styles.iconImage}
           />
         </View>
@@ -90,10 +93,6 @@ export default function Settings() {
         />
       </View>
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
-        <Button
-          title='カードデータの削除'
-          onPress={deleteAll}
-        />
         <Button
           title='ログアウト'
           buttonStyle={styles.setteingItemButton}

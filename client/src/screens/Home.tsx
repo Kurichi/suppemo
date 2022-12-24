@@ -16,6 +16,8 @@ export default function Home({ navigation, route }: props) {
   const [current_ws, setCurrent] = useState<number>(0);
   const [init_index, setIndex] = useState<number>(0);
 
+
+
   const onChangeOrientation: ScreenOrientation.OrientationChangeListener = (event: ScreenOrientation.OrientationChangeEvent) => {
     if (event.orientationInfo.orientation === ScreenOrientation.Orientation.PORTRAIT_UP) {
       setIsVertical(true);

@@ -45,53 +45,58 @@ export default function EditCard(props: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>カードのへんしゅう</Text>
-      <View style={styles.removeButtonContainer}>
-        <View style={styles.shadow}>
-          <Button
-            type='clear'
-            buttonStyle={[styles.removeButton, { backgroundColor: 'gray' }]}
-            titleStyle={styles.buttonText}
-            title='もどる'
-            onPress={() => navigation.goBack()}
-          />
-        </View>
-        <View style={styles.shadow}>
-          <Button
-            type='clear'
-            title='さくじょ'
-            buttonStyle={[styles.removeButton, { backgroundColor: 'red' }]}
-            titleStyle={styles.buttonText}
-            onPress={alert}
-          />
-        </View>
-      </View>
-
-      <Image
-        style={styles.image}
-        source={{ uri: card.uri != null ? card.uri : '' }}
-      />
-
-      <View style={styles.rejectContainer}>
-        <Text style={{ fontSize: 20, marginLeft: 4 }}>なまえをかえる</Text>
-        <TextInput
-          value={new_name}
-          style={styles.nameChangeTextBox}
-          maxLength={8}
-          onChangeText={(value) => { setName(value); }}
+      <View style={{ width: '94%' }}>
+        <Button
+          type='clear'
+          buttonStyle={styles.backButton}
+          titleStyle={{ color: 'black' }}
+          title='もどる'
+          onPress={() => navigation.goBack()}
         />
-        <View style={styles.shadow}>
-          <Button
-            title='へんこうする'
-            buttonStyle={styles.changeButton}
-            titleStyle={styles.buttonText}
-            onPress={() => {
-              if (new_name === '') setCard('なまえがないよ');
-              else setCard(new_name);
-              navigation.goBack();
-            }}
-            type={"clear"}
+      </View>
+      <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'blue' }}>
+
+        <Text style={styles.titleText}>カードのへんしゅう</Text>
+        <View style={styles.removeButtonContainer}>
+          <View style={[styles.shadow, { width: '50%' }]}>
+          </View>
+          <View style={[styles.shadow, { width: '50%' }]}>
+            <Button
+              type='clear'
+              title='さくじょ'
+              buttonStyle={[styles.removeButton, { backgroundColor: 'red' }]}
+              titleStyle={styles.buttonText}
+              onPress={alert}
+            />
+          </View>
+        </View>
+
+        <Image
+          style={styles.image}
+          source={{ uri: card.uri != null ? card.uri : '' }}
+        />
+
+        <View style={styles.rejectContainer}>
+          <Text style={{ fontSize: 20, marginLeft: 4 }}>なまえをかえる</Text>
+          <TextInput
+            value={new_name}
+            style={styles.nameChangeTextBox}
+            maxLength={8}
+            onChangeText={(value) => { setName(value); }}
           />
+          <View style={styles.shadow}>
+            <Button
+              title='へんこうする'
+              buttonStyle={styles.changeButton}
+              titleStyle={styles.buttonText}
+              onPress={() => {
+                if (new_name === '') setCard('なまえがないよ');
+                else setCard(new_name);
+                navigation.goBack();
+              }}
+              type={"clear"}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -112,6 +117,11 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 35,
+    fontWeight: 'bold',
+  },
+  backButton: {
+    backgroundColor: 'red',
+    width: 100,
   },
   nameChangeContainer: {
     justifyContent: "center",
@@ -140,16 +150,15 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     flexDirection: 'row',
     paddingBottom: 8,
+    width: '94%',
   },
   removeButton: {
     justifyContent: 'center',
-    borderRadius: 15,
-    width: 150,
-    marginHorizontal: 16,
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 24,
+    fontWeight: 'bold',
   },
   image: {
     height: 200,

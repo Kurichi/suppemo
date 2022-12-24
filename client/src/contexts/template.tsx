@@ -58,7 +58,7 @@ export const TemplateProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     }
     // カードの削除
-    else if (modifyType == 'exit_card' && template_id && index) {
+    else if (modifyType == 'exit_card' && typeof template_id != 'undefined' && typeof index != 'undefined') {
       const data = await fs.readData<template_cards>(template_id);
       const card_ids = data.item_ids;
       var card_num = data.item_num - 1;

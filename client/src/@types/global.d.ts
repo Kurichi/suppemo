@@ -60,6 +60,7 @@ type ws_props = {
 
 type folder_type = {
   id: number,
+  name: string,
   iconName: string,
   type: string,
   background_color: string,

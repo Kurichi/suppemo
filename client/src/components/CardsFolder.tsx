@@ -8,7 +8,6 @@ import { useCard, getCards } from '../contexts/card';
 import { useTemplates } from '../contexts/template';
 import { Audio } from 'expo-av';
 import { Sounder } from './Sounder';
-import Data from '../../default_card_folders.json'
 
 export default function CardsFolder(props: { current_ws: number }) {
 
@@ -18,19 +17,17 @@ export default function CardsFolder(props: { current_ws: number }) {
   const { modifyTemplate } = useTemplates();
   const { current_ws } = props;
 
-  const path = require('../../default_card_folders.json')
 
-
-  const folders: folder_type[] = [];
-  for (let v of Data.values()) folders.push(v);
+  const folders: folder_type[] = require('../../default_card_folders.json');
 
   var ccard_ids: number[] = [];
-  for (const _c of cards) if (_c.exists) ccard_ids.push(_c.id);
+  for (const _c of cards) if (_c.exists && !_c.isDefault) ccard_ids.push(_c.id);
 
   const createdCardFolder: folder_type = {
     id: -1,
     iconName: "star-o",
     type: 'font-awesome',
+    name: 'myCard',
     background_color: '#d43ba3',
     cards_ids: ccard_ids,
   }

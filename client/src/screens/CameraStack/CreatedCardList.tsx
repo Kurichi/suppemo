@@ -12,35 +12,28 @@ export default function CreatedCardList(props: any) {
 
   const { cards, modifyCard } = useCard();
   const [data, setData] = useState<Array<card_detail>>(cards);
-  const [sort_target, setTarget] = useState<string>('ascending');
-  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setData(cards);
   }, [cards]);
 
-
-  const sort = async (target: string) => {
-    console.log(sort_target)
-    if (sort_target == "date_ascending") setData(data.sort((a, b) => a.id - b.id))
-    else if (sort_target == "date_descending") setData(data.sort((a, b) => b.id - a.id))
-    else if (sort_target == "frequency") setData(data.sort((a, b) => b.count - a.count))
-    else if (sort_target == "name_ascending") setData(data.sort((a, b) => a.name > b.name ? -1 : 1))
-    else if (sort_target == "name_descending") setData(data.sort((a, b) => a.name > b.name ? 1 : -1))
-  }
-
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row' }}>
-        <Feather name="search" size={24} color="white" />
-        <TextInput style={{ backgroundColor: 'white', width: '70%' }} />
+      <Text style={styles.sceneTitle}>つくったカード</Text>
+      <View style={styles.searchBoxContainer}>
+        <Feather name="search" size={32} color="black" />
+        <View style={styles.searchBox}>
+          <TextInput
+
+          />
+        </View>
       </View>
       <View style={styles.listContainer}>
         {
           data.length > 0 ? (
             <FlatList
               data={data.filter((d) => {
-                return d.exists;
+                return d.exists && !d.isDefault;
               })}
               renderItem={({ item }) => (
                 <TouchableOpacity
@@ -73,6 +66,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF8B0',
   },
+  sceneTitle: {
+    fontSize: 32,
+    marginVertical: 8,
+    fontWeight: 'bold',
+  },
+  searchBoxContainer: {
+    flexDirection: 'row',
+    marginBottom: 16,
+    alignItems: 'center',
+    borderTopColor: 'rgba(0,0,0,0.2)',
+    borderTopWidth: 2,
+    paddingTop: 8,
+  },
+  searchBox: {
+    backgroundColor: 'white',
+    width: '70%',
+    height: 56,
+    borderColor: 'rgba(200,200,200,0.4)',
+    borderWidth: 4,
+    borderRadius: 20,
+  },
   photo: {
     width: 100,
     height: 100,
@@ -84,9 +98,8 @@ const styles = StyleSheet.create({
     width: '70%',
     backgroundColor: 'rgba(255,255,255,0.3)',
     borderColor: 'rgba(255,255,255,0)',
-  },
-  dropBoxLabel: {
-    justifyContent: 'flex-end',
+    height: 40,
+    borderRadius: 20,
   },
   dropBoxContainer: {
     alignItems: 'flex-end',
