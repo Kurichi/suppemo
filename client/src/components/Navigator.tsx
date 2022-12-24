@@ -10,10 +10,9 @@ import Login from './../screens/Login';
 import SignUp from './../screens/SignUp';
 import Chat from '../screens/Chat';
 import CameraStack from './CameraStack';
-import ChatStack from './ChatStack';
-import { ScreenStackHeaderRightView } from 'react-native-screens';
 import { Button } from '@rneui/base';
 import Settings from '../screens/Settings';
+import ChatSelector from '../screens/ChatStack/ChatSelector';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -58,7 +57,7 @@ function TabNavigator(props: any) {
       {/* Chat */}
       <Tab.Screen
         name="ChatSelector"
-        component={ChatStack}
+        component={ChatSelector}
         // initialParams={{ stack: navigation }}
         options={{
           tabBarIcon: (({ size, color }) => (

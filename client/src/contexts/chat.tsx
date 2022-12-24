@@ -22,19 +22,20 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     notificationListener.current = Notifications.addNotificationReceivedListener(async notification => {
-      const token = await auth?.currentUser?.getIdToken();
-
-      // axios.get(`http://${host}/chat?id=0`, {
-      //   headers: {
-      //     'Authorization': token
-      //   }
-      // }).then((result) => {
-      //   setTalks(result.data);
-      //   console.log(result.data);
-      // }).catch((error) => {
-      //   console.log(error)
-      // });
+      const message = JSON.parse(notification.request.content.data.message as string);
+      // console.log(talks.get(message.uid)?.talk_with);
+      setTalks(new Map(talks.set(message.uid, {
+        talk_with: talks.get(message.uid)?.talk_with,
+        messages: talks.get(message.uid)?.messages.concat([{
+          _id: -1,
+          text: message.text,
+          image: message.image,
+          user: talks.get(message.uid)?.talk_with,
+        }]),
+      })));
     });
+
+
 
     return () => {
       if (typeof notificationListener.current !== 'undefined')
@@ -55,20 +56,62 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
               messages: [],
             })));
           });
+          console.log(talks);
+          axios.get(`${host}/chat?id=-1`, {
+            headers: { 'Authorization': token }
+          }).then((result) => {
+            // console.log(result.data);
+            result.data.map(({ talk_with, messages }: { talk_with: string, messages: any }) => {
+              console.log('test')
+              console.log(talk_with);
+              if (talks.has(talk_with as string)) {
+                setTalks(new Map(talks.set(talk_with,
+                  {
+                    talk_with: talks.get(talk_with)?.talk_with,
+                    messages: messages.map((value: any): IMessage => {
+                      if (value.user === auth.currentUser?.uid) {
+                        return ({
+                          _id: value._id,
+                          text: value.text,
+                          image: value.image,
+                          createdAt: value.createdAt,
+                          user: {
+                            _id: value.user,
+                            name: auth.currentUser?.displayName ?? '',
+                            avatar: auth.currentUser?.photoURL ?? '',
+                          }
+                        })
+                      }
+                      else {
+                        return ({
+                          _id: value._id,
+                          text: value.text,
+                          image: value.image,
+                          createdAt: value.createdAt,
+                          user: talks.get(talk_with)?.talk_with,
+                        })
+                      }
+                    })
+                  }
+                )));
+              }
+            })
+            // console.log(talks)
+          }).catch((error) => {
+            console.log(error);
+          })
         }).catch((error) => {
           console.log(error);
         });
+
       }).catch((error) => {
         console.log(error);
       });
+
     });
 
     return () => unsubscribed();
   }, []);
-
-  useEffect(() => {
-    console.log('talks 更新');
-  }, [talks]);
 
   const sendMessage = async (to: string, messages: IMessage[]): Promise<void> => {
     if (messages.length === 0) return;
@@ -78,12 +121,14 @@ export const ChatProvider = ({ children }: PropsWithChildren<{}>) => {
       messages: talks.get(to)?.messages.concat(messages) ?? [],
     })));
 
-    const token = auth.currentUser?.getIdToken();
+    const token = await auth.currentUser?.getIdToken();
     axios.post(`${host}/chat`, {
       to: to,
       text: messages[0].text,
     }, {
-      headers: { 'Authorization': token && '' }
+      headers: { 'Authorization': token }
+    }).catch((error) => {
+      console.log(error);
     });
   }
 

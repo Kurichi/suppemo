@@ -1,5 +1,5 @@
-import { Button, Icon } from "@rneui/base";
-import React, { useEffect } from "react";
+import { Button, Overlay } from "@rneui/base";
+import React from "react";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -7,21 +7,14 @@ import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
 import Login from "../Login";
 import { User } from "react-native-gifted-chat";
+import QRCodeReader from "./QRCodeReader";
 
 type props = StackScreenProps<NavigationProps, 'ChatSelector'>
 
 export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
-
-  // const memo: Talk = new Map(
-  //   {
-  //     _id: -1,
-  //     name: 'じぶんよう',
-  //     avatar: require('../../../assets/default_logo_background.png'),
-  //   },
-  //   []
-  // )
+  const [QRCodeVisible, setQRCodeVisible] = useState<boolean>(false);
 
   if (user == null) {
     Alert.alert(
@@ -44,7 +37,6 @@ export default function ChatSelector({ navigation, route }: props) {
       ) : (
         <ScrollView>
           {[...talks].map(([_id, { talk_with }]) => {
-            console.log(_id);
             return (
               <View style={styles.chatCard} key={_id}>
                 <Button
@@ -74,26 +66,6 @@ export default function ChatSelector({ navigation, route }: props) {
               </View>
             );
           })}
-          {/* <View style={styles.chatCard}>
-            <Button
-              title='メモ'
-              titleStyle={{
-                color: 'black',
-                textAlign: 'left',
-                flex: 10,
-              }}
-              type='clear'
-              icon={{
-                name: 'home',
-                type: 'font-awesome',
-                color: 'black',
-                iconStyle: { marginHorizontal: 10, flex: 1 }
-              }}
-              onPress={() => {
-                navigation.navigate('Chat', { 'talk_with': memo.talk_with });
-              }}
-            />
-          </View> */}
         </ScrollView>
       )
       }
@@ -108,10 +80,19 @@ export default function ChatSelector({ navigation, route }: props) {
             size: 32,
           }}
           onPress={() => {
-            navigation.navigate('reader', {});
+            setQRCodeVisible(true);
+            // navigation.navigate('reader', {});
           }}
         />
       </View>
+      <Overlay
+        isVisible={QRCodeVisible}
+        onBackdropPress={() => { setQRCodeVisible(false); }}
+        overlayStyle={styles.overlayStyle}
+      >
+        <QRCodeReader
+          closeOverlay={() => { setQRCodeVisible(false); }} />
+      </Overlay>
     </View >
   );
 }
@@ -141,6 +122,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 4,
+  },
+  overlayStyle: {
+    height: 400,
+    width: '90%',
+    backgroundColor: '#FCD12C',
   }
 
 });

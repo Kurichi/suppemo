@@ -18,8 +18,10 @@ export default function Chat({ navigation, route }: props) {
   const { _id } = route.params;
   const { talks, sendMessage } = useChat();
   const [isShowTemplate, setShow] = useState<boolean>(false);
-  const [messages, setMessages] = useState<IMessage[]>([]);
 
+  const [index, setIndex] = useState<number>(0);
+
+  let x = -1;
   useEffect(() => {
     navigation.setOptions({
       title: talks.get(_id)?.talk_with.name,
@@ -27,20 +29,25 @@ export default function Chat({ navigation, route }: props) {
   }, []);
 
   useEffect(() => {
-    console.log(talks);
-    setMessages(talks.get(_id)?.messages ?? []);
-  }, [talks]);
+    console.log(talks.get(_id));
+    talks.get(_id)?.messages.forEach((value) => {
+      const num = +value._id
+      if (x < num) {
+        x = num;
+      }
+      return 1;
+      setIndex(index > value._id ? index : value._id);
+    });
+  }, [talks])
 
-  function getUniqueStr(myStrong?: number): string {
-    let strong = 1000;
-    if (myStrong) strong = myStrong;
-    return (
-      new Date().getTime().toString(16) +
-      Math.floor(strong * Math.random()).toString(16)
-    );
+  function getUniqueStr(): number {
+    x++;
+    return x;
   }
 
   const onSend = useCallback((messages: IMessage[] = []) => {
+    messages[0]._id = getUniqueStr();
+    console.log(messages);
     sendMessage(_id, messages);
     // setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])
@@ -73,12 +80,11 @@ export default function Chat({ navigation, route }: props) {
     onImageSend(image);
   }
 
-
   return (
     <View style={styles.container}>
       <View style={{ flex: isShowTemplate ? 6 : 1 }}>
         <GiftedChat
-          messages={talks.get(_id)?.messages.sort((l, r) => { return l.createdAt < r.createdAt ? 1 : -1 })}
+          messages={talks.get(_id)?.messages.sort((l, r) => { return l._id < r._id ? 1 : -1 })}
           placeholder='メッセージを入力'
           onSend={messages => onSend(messages)}
           user={{
@@ -93,6 +99,7 @@ export default function Chat({ navigation, route }: props) {
           renderInputToolbar={Render.renderInputToolbar}
           renderComposer={Render.renderComposer}
           alignTop={true}
+          inverted={true}
         />
       </View>
       {isShowTemplate ? (

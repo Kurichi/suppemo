@@ -48,7 +48,8 @@ export default function Home({ navigation, route }: props) {
           current_ws={current_ws}
           setCurrent={setCurrent}
           isVertical={isVertical}
-          init_index={route.params.init_WS_index} />
+        // init_index={route.params.init_WS_index} />
+        />
       </View>
 
       {/* CardsFolder */}

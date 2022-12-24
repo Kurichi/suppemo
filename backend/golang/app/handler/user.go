@@ -21,6 +21,7 @@ func GetUser(c echo.Context) error {
 
 	user, err := middleware.GetUser(uid)
 	if err != nil {
+		fmt.Printf("[ERROR] %v", err.Error())
 		return c.String(http.StatusBadRequest, "no-user")
 	}
 
