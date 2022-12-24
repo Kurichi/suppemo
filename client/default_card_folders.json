@@ -1,9 +1,9 @@
 [
   {
     "id": 0,
-    "iconName": "shape",
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#E696BC",
     "cards_ids": [
       0,
       1,
@@ -28,10 +28,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "body",
+    "id": 1,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#CE96E6",
     "cards_ids": [
       20,
       21,
@@ -84,10 +84,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "emote",
+    "id": 2,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#AD96E6",
     "cards_ids": [
       68,
       69,
@@ -122,10 +122,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "verb",
+    "id": 3,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#9696E6",
     "cards_ids": [
       98,
       99,
@@ -170,10 +170,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "building",
+    "id": 4,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#96BCE6",
     "cards_ids": [
       138,
       139,
@@ -210,10 +210,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "number",
+    "id": 5,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#96D4E6",
     "cards_ids": [
       170,
       171,
@@ -243,10 +243,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "school",
+    "id": 6,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#96E6D9",
     "cards_ids": [
       195,
       196,
@@ -255,10 +255,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "object",
+    "id": 7,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#96E6BA",
     "cards_ids": [
       199,
       200,
@@ -270,10 +270,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "clock",
+    "id": 8,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#97E696",
     "cards_ids": [
       206,
       207,
@@ -297,10 +297,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "vegetable",
+    "id": 9,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#ABE696",
     "cards_ids": [
       225,
       226,
@@ -335,10 +335,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "person",
+    "id": 10,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#E69996",
     "cards_ids": [
       255,
       256,
@@ -354,10 +354,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "adjective",
+    "id": 11,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#AD57EC",
     "cards_ids": [
       266,
       267,
@@ -394,10 +394,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "useful",
+    "id": 12,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#579CEC",
     "cards_ids": [
       298,
       299,
@@ -410,10 +410,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "fruit",
+    "id": 13,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#57EC61",
     "cards_ids": [
       306,
       307,
@@ -436,10 +436,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "onomatopoeia",
+    "id": 14,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#EC5B57",
     "cards_ids": [
       324,
       325,
@@ -479,10 +479,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "color",
+    "id": 15,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#EC57C6",
     "cards_ids": [
       359,
       360,
@@ -499,10 +499,10 @@
     ]
   },
   {
-    "id": 0,
-    "iconName": "adjective2",
+    "id": 16,
+    "iconName": "star",
     "type": "feather",
-    "background_color": "white",
+    "background_color": "#5CD1DB",
     "cards_ids": [
       371,
       372,
