@@ -11,6 +11,7 @@ export const useCard = () => {
 }
 
 export const CardProvider = ({ children }: PropsWithChildren<{}>) => {
+
   const [cards, setCards] = useState<card_detail[]>([]);
 
   useEffect(() => {

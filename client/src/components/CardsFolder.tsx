@@ -17,8 +17,11 @@ export default function CardsFolder(props: { current_ws: number }) {
   const { modifyTemplate } = useTemplates();
   const { current_ws } = props;
 
-  const folders: folder_type[] = [
-  ];
+  const path = require('../../default_card_folders.json')
+
+
+  const folders: folder_type[] = JSON.parse(path);
+
 
   var ccard_ids: number[] = [];
   for (const _c of cards) if (_c.exists) ccard_ids.push(_c.id);

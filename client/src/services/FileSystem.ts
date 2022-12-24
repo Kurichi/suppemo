@@ -99,6 +99,7 @@ export class FSCard extends multipleFS {
     uri: '',
     count: 0,
     createdDate: '',
+    isDefault: false,
     exists: false,
   }
 
@@ -141,6 +142,7 @@ export class FSCard extends multipleFS {
       uri: imagePath,
       count: 0,
       createdDate: new Date().toISOString(),
+      isDefault: false,
       exists: true,
     });
     FS.writeAsStringAsync(this.file_path, JSON.stringify(card_data));
