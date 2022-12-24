@@ -1,4 +1,4 @@
-import { Button, Icon } from "@rneui/base";
+import { Button, Overlay } from "@rneui/base";
 import React from "react";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View, _Text } from "react-native";
@@ -6,18 +6,15 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth } from "../../contexts/auth";
 import { useChat } from "../../contexts/chat";
 import Login from "../Login";
-
-interface User {
-  id: number,
-  icon: string,
-  userName: string,
-}
+import { User } from "react-native-gifted-chat";
+import QRCodeReader from "./QRCodeReader";
 
 type props = StackScreenProps<NavigationProps, 'ChatSelector'>
 
 export default function ChatSelector({ navigation, route }: props) {
   const { user } = useAuth();
   const { talks } = useChat();
+  const [QRCodeVisible, setQRCodeVisible] = useState<boolean>(false);
 
   if (user == null) {
     Alert.alert(
@@ -39,11 +36,11 @@ export default function ChatSelector({ navigation, route }: props) {
         </View>
       ) : (
         <ScrollView>
-          {talks?.map((talk, index) => {
+          {[...talks].map(([_id, { talk_with }]) => {
             return (
-              <View style={styles.chatCard} key={index}>
+              <View style={styles.chatCard} key={_id}>
                 <Button
-                  title={talk.talk_with.name !== '' ? talk.talk_with.name : 'No name'}
+                  title={talk_with.name !== '' ? talk_with.name : 'No name'}
                   titleStyle={{
                     color: 'black',
                     textAlign: 'left',
@@ -51,8 +48,9 @@ export default function ChatSelector({ navigation, route }: props) {
                   }}
                   type='clear'
                   icon={
+                    talk_with.avatar &&
                     <Image
-                      source={{ uri: talk.talk_with.avatar }}
+                      source={{ uri: talk_with.avatar }}
                       style={{
                         height: 50,
                         width: 50,
@@ -62,11 +60,11 @@ export default function ChatSelector({ navigation, route }: props) {
                       }} />
                   }
                   onPress={() => {
-                    navigation.navigate('Chat', { 'talk': talk });
+                    navigation.navigate('Chat', { '_id': _id });
                   }}
                 />
               </View>
-            )
+            );
           })}
           {/* <View style={styles.chatCard}>
             <Button
@@ -102,10 +100,19 @@ export default function ChatSelector({ navigation, route }: props) {
             size: 32,
           }}
           onPress={() => {
-            navigation.navigate('reader', {});
+            setQRCodeVisible(true);
+            // navigation.navigate('reader', {});
           }}
         />
       </View>
+      <Overlay
+        isVisible={QRCodeVisible}
+        onBackdropPress={() => { setQRCodeVisible(false); }}
+        overlayStyle={styles.overlayStyle}
+      >
+        <QRCodeReader
+          closeOverlay={() => { setQRCodeVisible(false); }} />
+      </Overlay>
     </View >
   );
 }
@@ -135,6 +142,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 4,
+  },
+  overlayStyle: {
+    height: 400,
+    width: '90%',
+    backgroundColor: '#FCD12C',
   }
 
 });

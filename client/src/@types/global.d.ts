@@ -102,7 +102,7 @@ type NavigationProps = {
 
   Login: {},
   SignUp: {},
-  Chat: { talk: Talk },
+  Chat: { _id: string },
 
   reader: {},
   show: {

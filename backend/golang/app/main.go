@@ -31,6 +31,7 @@ func main() {
 	e.GET("/chat", handler.GetMessages)
 	e.POST("/friend", handler.AddFriend)
 	e.GET("/friend", handler.GetFriends)
+	e.GET("/user", handler.GetUser)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
-import { Button } from '@rneui/base';
-import { StackScreenProps } from '@react-navigation/stack';
+import { Button, Image } from '@rneui/base';
+import QRCode from 'react-native-qrcode-svg';
+import { getAuth } from 'firebase/auth';
+import axios from 'axios';
 
-type props = StackScreenProps<NavigationProps, 'reader'>
+export default function QRCodeReader({ closeOverlay }: { closeOverlay: () => void }) {
+  const auth = getAuth();
 
-export default function QRCodeReader({ navigation }: props) {
-
+  const [isReader, setIsReader] = useState<boolean>(true);
   const [hasPermission, setHaspermission] = useState<Boolean | null>(null);
   const [scanned, setScanned] = useState<string>('');
+
+  const [[name, avatar], setUser] = useState(['', '']);
 
 
   useEffect(() => {
@@ -21,16 +25,38 @@ export default function QRCodeReader({ navigation }: props) {
     getBarCodeScannerPermission();
   }, []);
 
-  const handleBarCodeScanned = (({ type, data }: BarCodeScannerResult) => {
+  const handleBarCodeScanned = async ({ type, data }: BarCodeScannerResult) => {
+    if (type !== 'org.iso.QRCode') {
+      Alert.alert('さぽえものQRコードではありません');
+      return;
+    }
+    if (data === '') {
+      return;
+    }
+
+    console.log(data)
+
     setScanned(data);
-  });
+    const token = await auth.currentUser?.getIdToken();
+    axios.get(`http://27.133.132.254/user?uid=${data}`, {
+      headers: { 'Authorization': token },
+    }).then((result) => {
+      setUser([result.data.name, result.data.avatar]);
+    }).catch((error) => {
+      Alert.alert('存在しないユーザーです')
+    });
+  };
 
-  const applyScanned = () => {
-    //友達追加の処理
 
+  const applyScanned = async () => {
+    const token = await auth.currentUser?.getIdToken();
+    await axios.post('http://27.133.132.254/friend', {
+      'friend_uid': scanned,
+    }, {
+      headers: { 'Authorization': token }
+    });
 
-    //戻る
-    navigation.goBack()
+    closeOverlay();
   };
 
   if (hasPermission === null) {
@@ -40,38 +66,52 @@ export default function QRCodeReader({ navigation }: props) {
     return <Text>カメラの許可がありません</Text>;
   }
 
-
   return (
     <View style={styles.container}>
       {!scanned ? (
-        <View>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={styles.scanner}
-          />
+        <View style={styles.qrContainer}>
+          {isReader ?
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              style={styles.scanner}
+            /> :
+            <QRCode
+              value={auth.currentUser?.uid}
+              logo={auth.currentUser?.photoURL ?? require('../../../assets/default_logo_for_qr.png')}
+              size={280}
+              logoSize={140}
+              logoBorderRadius={80}
+              ecl="H"
+            />
+          }
           <Button
-            title={'じぶんのQRコード'}
+            title={isReader ? 'じぶんのQRコード' : 'よみとる'}
             type={'outline'}
             buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('show', { uri: '', height: 100, width: 100 })}
+            onPress={() => { setIsReader(!isReader); }}
           />
         </View>
       ) : (
-        <View>
-          <Text>{scanned}</Text>
-          <Button
-            title={'とりなおす'}
-            onPress={() => setScanned('')}
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonText}
-          />
-          <Button
-            title={'ともだちになる'}
-            onPress={() => applyScanned()}
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonText}
+        <View style={{ width: '100%', height: '100%' }}>
+          <View style={{ width: '100%', height: '80%', }}>
+            <Text>{name}</Text>
+            <Image source={{ uri: avatar }} style={{ width: '80%', paddingTop: '80%' }} />
+          </View>
+          <View style={styles.addFriendContainer}>
+            <Button
+              title={'とりなおす'}
+              onPress={() => setScanned('')}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+            />
+            <Button
+              title={'ともだちになる'}
+              onPress={() => applyScanned()}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
 
-          />
+            />
+          </View>
         </View>
       )}
     </View>
@@ -84,10 +124,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF8B0',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    height: '90%',
+    padding: '10%'
+  },
+  qrContainer: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    marginTop: '10%'
+  },
+  addFriendContainer: {
+    width: '100%',
+    height: '20%',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   scanner: {
-    width: 240,
-    height: 240,
+    width: '80%',
+    // height: '80%',
+    paddingTop: '80%',
   },
   qrCodeButton: {
     bottom: 10,
@@ -109,6 +165,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-
-
 });
+
