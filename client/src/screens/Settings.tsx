@@ -9,13 +9,11 @@ import MyOverlay from '../components/MyOverlay';
 import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updateEmail, updateProfile } from 'firebase/auth';
 import * as ImagePicker from 'expo-image-picker';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { deleteAllCards } from '../contexts/card';
-import { deleteAllTemplates } from '../contexts/template';
-import { downloadAsync } from 'expo-file-system';
-import * as FS from 'expo-file-system';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function Settings() {
+export default function Settings(props: any) {
+  const { navigation } = props;
   const { user } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = useState<boolean>(false);
 
@@ -32,10 +30,6 @@ export default function Settings() {
   const [emailModalVisible, setEmailModalVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(user?.email ?? '');
 
-  const deleteAll = async () => {
-    await deleteAllCards();
-    await deleteAllTemplates();
-  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -80,7 +74,7 @@ export default function Settings() {
           titleStyle={styles.setteingItemButtonText}
           onPress={() => { setNameModalVisible(true); }}
         />
-        <Button
+        {/* <Button
           title='メールアドレスの変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
@@ -90,15 +84,20 @@ export default function Settings() {
           title='パスワードの変更'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
-        />
+        /> */}
       </View>
       <View style={[styles.userSettingsContainer, { position: 'absolute', bottom: 50 }]}>
         <Button
           title='ログアウト'
           buttonStyle={styles.setteingItemButton}
           titleStyle={styles.setteingItemButtonText}
+          onPress={() => {
+            const auth = getAuth();
+            auth.signOut();
+            navigation.navigate('Login');
+          }}
         />
-        <Button
+        {/* <Button
           title='アカウントの削除'
           buttonStyle={[styles.setteingItemButton, {
             backgroundColor: 'red',
@@ -118,7 +117,7 @@ export default function Settings() {
               ]
             )
           }}
-        />
+        /> */}
       </View>
 
       <MyOverlay
@@ -154,14 +153,13 @@ export default function Settings() {
               }
             },
             () => {
-              console.log('complete upload');
               // Upload completed successfully, now we can get the download URL
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log('File available at', downloadURL);
-                updateProfile(getAuth().currentUser, {
-                  photoURL: downloadURL,
-                })
-                console.log(user?.photoURL);
+                const auth = getAuth();
+                if (auth.currentUser)
+                  updateProfile(auth.currentUser, {
+                    photoURL: downloadURL,
+                  });
               });
               setPhotoModalVisible(!photoModalVisible);
             })
